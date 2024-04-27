@@ -1,3 +1,7 @@
 export default function Home() {
-  return <main className="">kanban</main>;
+  return (
+    <div className=" bg-main-light-lines h-screen">
+      main webpage - outside app
+    </div>
+  );
 }

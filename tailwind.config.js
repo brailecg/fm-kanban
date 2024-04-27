@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
+  darkMode: "selector",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -17,7 +17,7 @@ module.exports = {
         "main-dark-lines": "#3E3F4E",
         "main-light-lines": "#E4EBFA",
         "main-medium-grey": "#828FA3",
-        "main-light-lines-grey": "#F4F7FD",
+        "main-light-grey": "#F4F7FD",
         "main-red": "#EA5555",
         "main-red-hover": "#FF9898",
       },

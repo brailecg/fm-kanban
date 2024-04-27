@@ -1,0 +1,17 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "age": 25,
+  "address": {
+    "streetAddress": "21 2nd Street",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10021"
+  },
+  "boardList": [
+    "Platform Launch",
+    "Marketing Plan",
+    "Roadmap",
+    "Another Sample Board"
+  ]
+}
