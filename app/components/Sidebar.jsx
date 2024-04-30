@@ -4,15 +4,18 @@ import Image from "next/image";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { ToggleIconSvg } from "./ToggleIconSvg";
 import { Transition } from "@headlessui/react";
+import IconBoardSvg from "./IconBoardSvg";
 
 const Sidebar = ({
   data,
   closeModal = null,
   isSidebarVisible,
   setIsSidebarVisible,
+  isThemeToggled,
+  setIsThemeToggled,
 }) => {
   const [selected, setSelected] = useState(0);
-  const [isToggled, setToggled] = useState(false);
+
   const handleSelectBoard = (e) => {
     const index = e.target.closest("button").getAttribute("name");
     setSelected(index);
@@ -21,9 +24,10 @@ const Sidebar = ({
     }
   };
   const handleToggleTheme = () => {
-    setToggled((prevState) => !prevState);
+    document.querySelector("body").classList.toggle("dark");
+    setIsThemeToggled((prev) => !prev);
   };
-  const boardList = data?.boardList;
+  const boardList = data?.boardObjectList;
 
   return (
     <>
@@ -36,9 +40,9 @@ const Sidebar = ({
         leave="transition ease-in-out duration-300 transform"
         leaveFrom="translate-x-0"
         leaveTo="-translate-x-full"
-        className={`flex border-r flex-col bg-white pb-8 dark:bg-main-dark-grey sm:w-[300px] rounded-md sm:rounded-none z-10 sm:-mt-1`}>
+        className={`flex border-r dark:border-main-dark-lines  flex-col bg-white pb-8 dark:bg-main-dark-grey sm:w-[300px] rounded-md sm:rounded-none z-10 sm:-mt-1`}>
         <div className="h-full flex flex-col justify-between">
-          <div className="text-main-medium-grey">
+          <div className="text-main-medium-grey py-4">
             <span className="font-semibold text-[12px] pl-8">
               All Boards ({boardList.length})
             </span>
@@ -48,24 +52,22 @@ const Sidebar = ({
                   return (
                     <li
                       key={index}
-                      className={`font-semibold text-[15px] h-12 -ml-8 pl-8  ${
+                      className={`group relative font-semibold text-[15px] h-12 -ml-8 pl-8  ${
                         selected == index
                           ? "bg-main-purple rounded-r-full text-white"
-                          : "bg-transparent"
+                          : "bg-transparent hover:bg-main-light-grey hover:rounded-r-full"
                       }`}>
                       <button
                         name={index}
                         onClick={handleSelectBoard}
                         className="flex items-center space-x-1 h-full">
-                        <Image
-                          src={`/assets/icon-board${
-                            selected == index ? "-selected" : ""
-                          }.svg`}
-                          alt="board icon"
-                          width={16}
-                          height={16}
-                        />
-                        <p>{list}</p>
+                        <IconBoardSvg selected={selected == index} />
+                        <p
+                          className={`${
+                            selected != index && "group-hover:text-main-purple"
+                          }`}>
+                          {list?.boardName}
+                        </p>
                       </button>
                     </li>
                   );
@@ -87,7 +89,7 @@ const Sidebar = ({
             </ul>
           </div>
           <div className=" w-full gap-y-4 grid justify-items-center">
-            <div className="flex items-center space-x-6 justify-center w-[251px] h-12 bg-main-light-grey rounded-md">
+            <div className="flex items-center space-x-6 justify-center w-[251px] h-12 dark:bg-main-very-dark-grey bg-main-light-grey rounded-md">
               <div>
                 <Image
                   src="/assets/icon-light-theme.svg"
@@ -97,7 +99,7 @@ const Sidebar = ({
                 />
               </div>
               <div className="cursor-pointer" onClick={handleToggleTheme}>
-                <ToggleIconSvg isToggled={isToggled} />
+                <ToggleIconSvg isToggled={isThemeToggled} />
               </div>
               <div>
                 <Image

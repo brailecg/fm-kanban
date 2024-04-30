@@ -20,6 +20,7 @@ module.exports = {
         "main-light-grey": "#F4F7FD",
         "main-red": "#EA5555",
         "main-red-hover": "#FF9898",
+        "main-grey-hover": "#979797",
       },
     },
   },

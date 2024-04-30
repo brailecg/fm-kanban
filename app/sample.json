@@ -8,10 +8,154 @@
     "state": "NY",
     "postalCode": "10021"
   },
-  "boardList": [
-    "Platform Launch",
-    "Marketing Plan",
-    "Roadmap",
-    "Another Sample Board"
+  "boardObjectList": [
+    {
+      "boardName": "Platform Launch",
+      "boardDescription": "This board is for the platform launch",
+      "columns": [
+        {
+          "columnName": "To Do",
+          "cards": [
+            {
+              "cardName": "Card 1",
+              "cardDescription": "This is card 1"
+            },
+            {
+              "cardName": "Card 2",
+              "cardDescription": "This is card 2"
+            }
+          ]
+        },
+        {
+          "columnName": "In Progress",
+          "cards": [
+            {
+              "cardName": "Card 3",
+              "cardDescription": "This is card 3"
+            }
+          ]
+        },
+        {
+          "columnName": "Done",
+          "cards": [
+            {
+              "cardName": "Card 4",
+              "cardDescription": "This is card 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boardName": "Marketing Plan",
+      "boardDescription": "This board is for the marketing plan",
+      "columns": [
+        {
+          "columnName": "To Do",
+          "cards": [
+            {
+              "cardName": "Card 1",
+              "cardDescription": "This is card 1"
+            },
+            {
+              "cardName": "Card 2",
+              "cardDescription": "This is card 2"
+            }
+          ]
+        },
+        {
+          "columnName": "In Progress",
+          "cards": [
+            {
+              "cardName": "Card 3",
+              "cardDescription": "This is card 3"
+            }
+          ]
+        },
+        {
+          "columnName": "Done",
+          "cards": [
+            {
+              "cardName": "Card 4",
+              "cardDescription": "This is card 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boardName": "Roadmap",
+      "boardDescription": "This board is for the roadmap",
+      "columns": [
+        {
+          "columnName": "To Do",
+          "cards": [
+            {
+              "cardName": "Card 1",
+              "cardDescription": "This is card 1"
+            },
+            {
+              "cardName": "Card 2",
+              "cardDescription": "This is card 2"
+            }
+          ]
+        },
+        {
+          "columnName": "In Progress",
+          "cards": [
+            {
+              "cardName": "Card 3",
+              "cardDescription": "This is card 3"
+            }
+          ]
+        },
+        {
+          "columnName": "Done",
+          "cards": [
+            {
+              "cardName": "Card 4",
+              "cardDescription": "This is card 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boardName": "Another Sample Board",
+      "boardDescription": "This board is for another sample board",
+      "columns": [
+        {
+          "columnName": "To Do",
+          "cards": [
+            {
+              "cardName": "Card 1",
+              "cardDescription": "This is card 1"
+            },
+            {
+              "cardName": "Card 2",
+              "cardDescription": "This is card 2"
+            }
+          ]
+        },
+        {
+          "columnName": "In Progress",
+          "cards": [
+            {
+              "cardName": "Card 3",
+              "cardDescription": "This is card 3"
+            }
+          ]
+        },
+        {
+          "columnName": "Done",
+          "cards": [
+            {
+              "cardName": "Card 4",
+              "cardDescription": "This is card 4"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
