@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { ToggleIconSvg } from "./ToggleIconSvg";
 import { Transition } from "@headlessui/react";
 import IconBoardSvg from "./IconBoardSvg";
+import IconHideSidebar from "./IconHideSidebar";
 
 const Sidebar = ({
   data,
@@ -13,9 +14,9 @@ const Sidebar = ({
   setIsSidebarVisible,
   isThemeToggled,
   setIsThemeToggled,
+  selected,
+  setSelected,
 }) => {
-  const [selected, setSelected] = useState(0);
-
   const handleSelectBoard = (e) => {
     const index = e.target.closest("button").getAttribute("name");
     setSelected(index);
@@ -40,7 +41,7 @@ const Sidebar = ({
         leave="transition ease-in-out duration-300 transform"
         leaveFrom="translate-x-0"
         leaveTo="-translate-x-full"
-        className={`flex border-r dark:border-main-dark-lines  flex-col bg-white pb-8 dark:bg-main-dark-grey sm:w-[300px] rounded-md sm:rounded-none z-10 sm:-mt-1`}>
+        className={`flex border-r dark:border-main-dark-lines  flex-col bg-white pb-8 dark:bg-main-dark-grey sm:w-[260px] md:w-[300px] rounded-md sm:rounded-none z-10 sm:-mt-1`}>
         <div className="h-full flex flex-col justify-between">
           <div className="text-main-medium-grey py-4">
             <span className="font-semibold text-[12px] pl-8">
@@ -48,23 +49,24 @@ const Sidebar = ({
             </span>
             <ul className="flex flex-col pl-8 pr-6 mt-5">
               {boardList &&
-                boardList.map((list, index) => {
+                boardList.map((list) => {
                   return (
                     <li
-                      key={index}
+                      key={list.boardId}
                       className={`group relative font-semibold text-[15px] h-12 -ml-8 pl-8  ${
-                        selected == index
+                        selected == list.boardId
                           ? "bg-main-purple rounded-r-full text-white"
                           : "bg-transparent hover:bg-main-light-grey hover:rounded-r-full"
                       }`}>
                       <button
-                        name={index}
+                        name={list.boardId}
                         onClick={handleSelectBoard}
                         className="flex items-center space-x-1 h-full">
-                        <IconBoardSvg selected={selected == index} />
+                        <IconBoardSvg selected={selected == list.boardId} />
                         <p
                           className={`${
-                            selected != index && "group-hover:text-main-purple"
+                            selected != list.boardId &&
+                            "group-hover:text-main-purple"
                           }`}>
                           {list?.boardName}
                         </p>
@@ -112,14 +114,9 @@ const Sidebar = ({
             </div>
             <button
               onClick={() => setIsSidebarVisible((prev) => !prev)}
-              className="w-[251px] justify-self-auto hidden sm:flex items-center space-x-2  font-semibold text-[15px] text-main-medium-grey mt-2">
-              <Image
-                src="/assets/icon-hide-sidebar.svg"
-                alt="board icon"
-                width={18}
-                height={16}
-              />
-              <p>Hide Sidebar</p>
+              className="group w-[251px] justify-self-auto hidden sm:flex items-center space-x-2  font-semibold text-[15px] text-main-medium-grey mt-2 hover:bg-main-light-grey hover:rounded-r-full relative h-12 -ml-12 pl-8 ">
+              <IconHideSidebar />
+              <p className="group-hover:text-main-purple">Hide Sidebar</p>
             </button>
           </div>
         </div>

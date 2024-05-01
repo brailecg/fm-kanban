@@ -1,18 +1,32 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Transition } from "@headlessui/react";
+
 import Sidebar from "../components/Sidebar";
 import Nav from "./Nav";
+import ColumnName from "./ColumnName";
+import ColumnItem from "./ColumnItem";
+import ShowSidebarIcon from "./ShowSidebarIcon";
 const Dashboard = ({ data }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
+  const [selected, setSelected] = useState(null);
+
+  const boardList = data?.boardObjectList;
+  useEffect(() => {
+    if (boardList.length > 0 && selected === null) {
+      setSelected(boardList[0].boardId);
+    }
+  }, [boardList]);
+
   return (
     <div className="flex flex-col h-screen dashboard">
       <Nav
         data={data}
         isThemeToggled={isThemeToggled}
         setIsThemeToggled={setIsThemeToggled}
+        selected={selected}
+        setSelected={setSelected}
       />
       <div className="flex flex-grow">
         <div className="hidden sm:flex">
@@ -22,16 +36,17 @@ const Dashboard = ({ data }) => {
             isSidebarVisible={isSidebarVisible}
             isThemeToggled={isThemeToggled}
             setIsThemeToggled={setIsThemeToggled}
+            selected={selected}
+            setSelected={setSelected}
           />
         </div>
-
-        <main className=" bg-main-light-lines dark:bg-main-very-dark-grey grow ">
-          <div className="h-full w-full space-y-8 flex flex-col justify-center items-center">
-            <p className="text-main-medium-grey text-[18px] font-semibold">
+        <main className="overflow-x-auto whitespace-no-wrap bg-main-light-lines dark:bg-main-very-dark-grey grow px-4 sm:px-0 ">
+          <div className="hidden h-full w-full space-y-8 flex-col justify-center items-center">
+            <p className="text-main-medium-grey text-[18px] font-semibold text-center">
               This board is empty. Create a new column to get started.
             </p>
             <button
-              className={`bg-main-purple hover:bg-main-purple-hover w-12 sm:w-auto h-8 sm:h-12 sm:px-6 space-x-1 rounded-full flex justify-center items-center`}>
+              className={`bg-main-purple hover:bg-main-purple-hover h-12 px-6 space-x-1 rounded-full flex justify-center items-center`}>
               <Image
                 src="/assets/icon-add-task-mobile.svg"
                 alt="add task"
@@ -43,26 +58,34 @@ const Dashboard = ({ data }) => {
               </p>
             </button>
           </div>
-          <Transition
-            as="button"
-            show={!isSidebarVisible}
-            enter="transition ease-in-out duration-700 transform"
-            enterFrom="-translate-x-full"
-            enterTo="translate-x-0"
-            leave="transition ease-in-out duration-700 transform"
-            leaveFrom="translate-x-0"
-            leaveTo="-translate-x-full"
-            onClick={() => setIsSidebarVisible((prevState) => !prevState)}
-            className={`absolute flex justify-center items-center w-14 h-12 bg-main-purple hover:bg-main-purple-hover rounded-r-full bottom-8`}>
-            <div className="">
-              <Image
-                src="/assets/icon-show-sidebar.svg"
-                alt="board icon"
-                width={16}
-                height={11}
-              />
-            </div>
-          </Transition>
+          {data?.boardObjectList?.map((board) => {
+            if (selected === board.boardId) {
+              return (
+                <React.Fragment key={board.boardId}>
+                  <div className="flex ">
+                    {board?.columns?.map((column) => {
+                      return (
+                        <div key={column.columnId} className="flex flex-col">
+                          <ColumnName
+                            name={column.columnName}
+                            color={column.columnColor}
+                            count={column.cards.length}
+                          />
+                          {column.cards.map((item) => {
+                            return <ColumnItem key={item.cardId} item={item} />;
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </React.Fragment>
+              );
+            }
+          })}
+          <ShowSidebarIcon
+            isSidebarVisible={isSidebarVisible}
+            setIsSidebarVisible={setIsSidebarVisible}
+          />
         </main>
       </div>
     </div>

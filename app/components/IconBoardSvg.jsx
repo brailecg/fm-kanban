@@ -5,7 +5,7 @@ const IconBoardSvg = ({ selected }) => (
     xmlns="http://www.w3.org/2000/svg"
     width={16}
     height={16}
-    class={`${
+    className={`${
       selected
         ? "fill-white"
         : "group-hover:fill-main-purple fill-main-medium-grey"

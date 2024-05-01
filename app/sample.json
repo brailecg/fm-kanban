@@ -10,35 +10,47 @@
   },
   "boardObjectList": [
     {
+      "boardId": 1,
       "boardName": "Platform Launch",
       "boardDescription": "This board is for the platform launch",
       "columns": [
         {
+          "columnId": "1",
+          "columnColor": "#49C4E5",
           "columnName": "To Do",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 1",
               "cardDescription": "This is card 1"
             },
             {
+              "cardId": 2,
               "cardName": "Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
+          "columnId": "2",
+
+          "columnColor": "#8471F2",
           "columnName": "In Progress",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
+          "columnId": "3",
+          "columnColor": "#67E2AE",
           "columnName": "Done",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 4",
               "cardDescription": "This is card 4"
             }
@@ -47,35 +59,47 @@
       ]
     },
     {
+      "boardId": 2,
       "boardName": "Marketing Plan",
       "boardDescription": "This board is for the marketing plan",
       "columns": [
         {
+          "columnId": "1",
+          "columnColor": "#49C4E5",
           "columnName": "To Do",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 1",
               "cardDescription": "This is card 1"
             },
             {
+              "cardId": 2,
               "cardName": "Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
+          "columnId": "2",
+
+          "columnColor": "#8471F2",
           "columnName": "In Progress",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
+          "columnId": "3",
+          "columnColor": "#67E2AE",
           "columnName": "Done",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 4",
               "cardDescription": "This is card 4"
             }
@@ -84,35 +108,47 @@
       ]
     },
     {
+      "boardId": 3,
       "boardName": "Roadmap",
       "boardDescription": "This board is for the roadmap",
       "columns": [
         {
+          "columnId": "1",
+          "columnColor": "#49C4E5",
           "columnName": "To Do",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 1",
               "cardDescription": "This is card 1"
             },
             {
+              "cardId": 2,
               "cardName": "Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
+          "columnId": "2",
+
+          "columnColor": "#8471F2",
           "columnName": "In Progress",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
+          "columnId": "3",
+          "columnColor": "#67E2AE",
           "columnName": "Done",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 4",
               "cardDescription": "This is card 4"
             }
@@ -121,35 +157,47 @@
       ]
     },
     {
+      "boardId": 4,
       "boardName": "Another Sample Board",
       "boardDescription": "This board is for another sample board",
       "columns": [
         {
+          "columnId": "1",
+          "columnColor": "#49C4E5",
           "columnName": "To Do",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 1",
               "cardDescription": "This is card 1"
             },
             {
+              "cardId": 2,
               "cardName": "Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
+          "columnId": "2",
+
+          "columnColor": "#8471F2",
           "columnName": "In Progress",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
+          "columnId": "3",
+          "columnColor": "#67E2AE",
           "columnName": "Done",
           "cards": [
             {
+              "cardId": 1,
               "cardName": "Card 4",
               "cardDescription": "This is card 4"
             }

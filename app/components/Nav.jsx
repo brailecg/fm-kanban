@@ -4,7 +4,13 @@ import Image from "next/image";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 import Sidebar from "./Sidebar";
-const Nav = ({ data, isThemeToggled, setIsThemeToggled }) => {
+const Nav = ({
+  data,
+  isThemeToggled,
+  setIsThemeToggled,
+  selected,
+  setSelected,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
@@ -17,7 +23,7 @@ const Nav = ({ data, isThemeToggled, setIsThemeToggled }) => {
     <>
       <nav className="flex z-0 bg-white h-16 sm:h-20 lg:h-24 dark:bg-main-dark-grey ">
         <div
-          className={`hidden border-r dark:border-main-dark-lines pl-8 w-[300px] border-b sm:flex items-center `}>
+          className={`hidden border-r dark:border-main-dark-lines pl-8 sm:w-[260px] md:w-[300px] border-b sm:flex items-center `}>
           <div>
             <Image
               src={`/assets/logo-${isThemeToggled ? "light" : "dark"}.svg`}
@@ -41,7 +47,7 @@ const Nav = ({ data, isThemeToggled, setIsThemeToggled }) => {
               />
             </div>
             <div className="flex items-center space-x-1">
-              <p className=" font-bold text-lg dark:text-white">
+              <p className=" font-bold dark:text-white text-2xl">
                 Platform Launch
               </p>
               <ChevronDownIcon className="flex sm:hidden h-4 w-4" />
@@ -145,6 +151,8 @@ const Nav = ({ data, isThemeToggled, setIsThemeToggled }) => {
                     data={data}
                     isThemeToggled={isThemeToggled}
                     setIsThemeToggled={setIsThemeToggled}
+                    selected={selected}
+                    setSelected={setSelected}
                   />
                 </Dialog.Panel>
               </Transition.Child>
