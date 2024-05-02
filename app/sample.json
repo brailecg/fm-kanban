@@ -15,43 +15,43 @@
       "boardDescription": "This board is for the platform launch",
       "columns": [
         {
-          "columnId": "1",
+          "columnId": 1,
           "columnColor": "#49C4E5",
-          "columnName": "To Do",
+          "columnName": "To Do Platform",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 1",
+              "cardId": 111,
+              "cardName": "Platform Card 1",
               "cardDescription": "This is card 1"
             },
             {
-              "cardId": 2,
-              "cardName": "Card 2",
+              "cardId": 112,
+              "cardName": "Platform Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
-          "columnId": "2",
+          "columnId": 2,
 
           "columnColor": "#8471F2",
-          "columnName": "In Progress",
+          "columnName": "In Progress Platform",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 3",
+              "cardId": 121,
+              "cardName": "Platform Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
-          "columnId": "3",
+          "columnId": 3,
           "columnColor": "#67E2AE",
-          "columnName": "Done",
+          "columnName": "Done Platform",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 4",
+              "cardId": 131,
+              "cardName": "Platform Card 4",
               "cardDescription": "This is card 4"
             }
           ]
@@ -64,43 +64,43 @@
       "boardDescription": "This board is for the marketing plan",
       "columns": [
         {
-          "columnId": "1",
+          "columnId": 1,
           "columnColor": "#49C4E5",
-          "columnName": "To Do",
+          "columnName": "To Do Marketing",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 1",
+              "cardId": 211,
+              "cardName": "Marketing Card 1",
               "cardDescription": "This is card 1"
             },
             {
-              "cardId": 2,
-              "cardName": "Card 2",
+              "cardId": 212,
+              "cardName": "Marketing Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
-          "columnId": "2",
+          "columnId": 2,
 
           "columnColor": "#8471F2",
-          "columnName": "In Progress",
+          "columnName": "In Progress Marketing",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 3",
+              "cardId": 221,
+              "cardName": "Marketing Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
-          "columnId": "3",
+          "columnId": 3,
           "columnColor": "#67E2AE",
-          "columnName": "Done",
+          "columnName": "Done Marketing",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 4",
+              "cardId": 231,
+              "cardName": "Marketing Card 4",
               "cardDescription": "This is card 4"
             }
           ]
@@ -113,43 +113,43 @@
       "boardDescription": "This board is for the roadmap",
       "columns": [
         {
-          "columnId": "1",
+          "columnId": 1,
           "columnColor": "#49C4E5",
-          "columnName": "To Do",
+          "columnName": "To Do Roadmap",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 1",
+              "cardId": 311,
+              "cardName": "Roadmap Card 1",
               "cardDescription": "This is card 1"
             },
             {
-              "cardId": 2,
-              "cardName": "Card 2",
+              "cardId": 312,
+              "cardName": "Roadmap Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
-          "columnId": "2",
+          "columnId": 2,
 
           "columnColor": "#8471F2",
-          "columnName": "In Progress",
+          "columnName": "In Progress Roadmap",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 3",
+              "cardId": 321,
+              "cardName": "Roadmap Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
-          "columnId": "3",
+          "columnId": 3,
           "columnColor": "#67E2AE",
-          "columnName": "Done",
+          "columnName": "Done Roadmap",
           "cards": [
             {
-              "cardId": 1,
-              "cardName": "Card 4",
+              "cardId": 331,
+              "cardName": "Roadmap Card 4",
               "cardDescription": "This is card 4"
             }
           ]
@@ -162,48 +162,54 @@
       "boardDescription": "This board is for another sample board",
       "columns": [
         {
-          "columnId": "1",
+          "columnId": 1,
           "columnColor": "#49C4E5",
-          "columnName": "To Do",
+          "columnName": "To Do Another",
           "cards": [
             {
               "cardId": 1,
-              "cardName": "Card 1",
+              "cardName": "Another Card 1",
               "cardDescription": "This is card 1"
             },
             {
               "cardId": 2,
-              "cardName": "Card 2",
+              "cardName": "Another Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
-          "columnId": "2",
+          "columnId": 2,
 
           "columnColor": "#8471F2",
-          "columnName": "In Progress",
+          "columnName": "In Progress Another",
           "cards": [
             {
               "cardId": 1,
-              "cardName": "Card 3",
+              "cardName": "Another Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
-          "columnId": "3",
+          "columnId": 3,
           "columnColor": "#67E2AE",
-          "columnName": "Done",
+          "columnName": "Done Another",
           "cards": [
             {
               "cardId": 1,
-              "cardName": "Card 4",
+              "cardName": "Another Card 4",
               "cardDescription": "This is card 4"
             }
           ]
         }
       ]
+    },
+    {
+      "boardId": 5,
+      "boardName": "Empty Sample Board",
+      "boardDescription": "This board is for another sample board",
+      "columns": []
     }
   ]
 }

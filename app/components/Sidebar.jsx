@@ -19,7 +19,7 @@ const Sidebar = ({
 }) => {
   const handleSelectBoard = (e) => {
     const index = e.target.closest("button").getAttribute("name");
-    setSelected(index);
+    setSelected(parseInt(index));
     if (closeModal) {
       closeModal();
     }
