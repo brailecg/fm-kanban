@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-
+import { DndContext } from "@dnd-kit/core";
 import Sidebar from "../components/Sidebar";
 import Nav from "./Nav";
 import ShowSidebarIcon from "./ShowSidebarIcon";
@@ -10,12 +10,89 @@ const Dashboard = ({ data }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  const [isDropped, setIsDropped] = useState(false);
   const boardList = data?.boardObjectList;
   useEffect(() => {
     if (boardList.length > 0 && selected === null) {
       setSelected(boardList[0].boardId);
     }
   }, [boardList, selected]);
+
+  const moveCard = (
+    boardList,
+    selectedBoardId,
+    fromColumnId,
+    toColumnId,
+    cardId,
+    toIndex
+  ) => {
+    let cardToMove = null;
+
+    // Find the board
+    const board = boardList.find((board) => board.boardId === selectedBoardId);
+    if (!board) {
+      console.log("Board not found.");
+      return;
+    }
+
+    // Find and remove the card from the original column
+    const fromColumn = board.columns.find(
+      (column) => column.columnId === fromColumnId
+    );
+    if (fromColumn) {
+      const cardIndex = fromColumn.cards.findIndex(
+        (card) => card.cardId === cardId
+      );
+      if (cardIndex > -1) {
+        cardToMove = fromColumn.cards.splice(cardIndex, 1)[0];
+      } else {
+        console.log("Card not found in the source column.");
+        return;
+      }
+    } else {
+      console.log("Source column not found.");
+      return;
+    }
+
+    // Find and insert the card into the target column at the specified index
+    const toColumn = board.columns.find(
+      (column) => column.columnId === toColumnId
+    );
+    if (toColumn && cardToMove) {
+      // Ensure the index is within the bounds of the target array
+      const validIndex = Math.min(toColumn.cards.length, toIndex);
+      toColumn.cards.splice(validIndex, 0, cardToMove);
+      console.log("Card moved successfully.");
+    } else if (!toColumn) {
+      console.log("Target column not found.");
+    }
+  };
+
+  const handleDragend = (event) => {
+    const { over, active } = event;
+
+    // If the item is dropped over a container, set it as the parent
+    // otherwise reset the parent to `null`
+    if (over === null || over.data === null) return;
+    const overData = over.data.current;
+    const activeData = active.data.current;
+
+    const columnToId = overData.colId;
+    const columnToIndex = overData.idx;
+    const columnFromId = activeData.colId;
+    const cardId = active.id;
+
+    moveCard(
+      boardList,
+      selected,
+      columnFromId,
+      columnToId,
+      cardId,
+      columnToIndex
+    );
+    setIsDropped((prev) => !prev);
+  };
 
   return (
     <div className="flex flex-col h-screen dashboard">
@@ -38,49 +115,54 @@ const Dashboard = ({ data }) => {
             setSelected={setSelected}
           />
         </div>
-        <main className="overflow-x-auto whitespace-no-wrap bg-main-light-lines dark:bg-main-very-dark-grey grow px-4 sm:px-0 ">
-          {boardList.length > 0 &&
-            boardList?.map((board) => {
-              if (selected === board.boardId) {
-                return (
-                  <React.Fragment key={board.boardId}>
-                    {board?.columns.length == 0 && (
-                      <div className="flex h-full w-full space-y-8 flex-col justify-center items-center">
-                        <p className="text-main-medium-grey text-[18px] font-semibold text-center">
-                          This board is empty. Create a new column to get
-                          started.
-                        </p>
-                        <button
-                          className={`bg-main-purple hover:bg-main-purple-hover h-12 px-6 space-x-1 rounded-full flex justify-center items-center`}>
-                          <Image
-                            src="/assets/icon-add-task-mobile.svg"
-                            alt="add task"
-                            width={12}
-                            height={12}
-                          />
-                          <p className=" text-white text-[15px] font-semibold">
-                            Add New Column
+        <DndContext onDragEnd={handleDragend}>
+          <main className="overflow-x-auto whitespace-no-wrap bg-main-light-lines dark:bg-main-very-dark-grey grow px-4 sm:px-0 max-h-[calc(100vh-64px)] overflow-y-auto">
+            {boardList.length > 0 &&
+              boardList?.map((board) => {
+                if (selected === board.boardId) {
+                  return (
+                    <React.Fragment key={board.boardId}>
+                      {board?.columns.length == 0 && (
+                        <div className="flex h-full w-full space-y-8 flex-col justify-center items-center">
+                          <p className="text-main-medium-grey text-[18px] font-semibold text-center">
+                            This board is empty. Create a new column to get
+                            started.
                           </p>
-                        </button>
+                          <button
+                            className={`bg-main-purple hover:bg-main-purple-hover h-12 px-6 space-x-1 rounded-full flex justify-center items-center`}>
+                            <Image
+                              src="/assets/icon-add-task-mobile.svg"
+                              alt="add task"
+                              width={12}
+                              height={12}
+                            />
+                            <p className=" text-white text-[15px] font-semibold">
+                              Add New Column
+                            </p>
+                          </button>
+                        </div>
+                      )}
+                      <div className="flex ">
+                        {board?.columns.length > 0 &&
+                          board?.columns?.map((column) => {
+                            return (
+                              <ColumnArea
+                                key={column.columnId}
+                                column={column}
+                              />
+                            );
+                          })}
                       </div>
-                    )}
-                    <div className="flex ">
-                      {board?.columns.length > 0 &&
-                        board?.columns?.map((column) => {
-                          return (
-                            <ColumnArea key={column.columnId} column={column} />
-                          );
-                        })}
-                    </div>
-                  </React.Fragment>
-                );
-              }
-            })}
-          <ShowSidebarIcon
-            isSidebarVisible={isSidebarVisible}
-            setIsSidebarVisible={setIsSidebarVisible}
-          />
-        </main>
+                    </React.Fragment>
+                  );
+                }
+              })}
+            <ShowSidebarIcon
+              isSidebarVisible={isSidebarVisible}
+              setIsSidebarVisible={setIsSidebarVisible}
+            />
+          </main>
+        </DndContext>
       </div>
     </div>
   );

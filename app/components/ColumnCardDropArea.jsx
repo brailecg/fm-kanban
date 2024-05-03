@@ -1,16 +1,20 @@
 import React, { useState } from "react";
+import { useDroppable } from "@dnd-kit/core";
 
-const ColumnCardDropArea = () => {
-  const [showDrop, setShowDrop] = useState(false);
+const ColumnCardDropArea = ({ id, colId, idx }) => {
+  const { isOver, setNodeRef } = useDroppable({
+    id: id,
+    data: { colId: colId, idx: idx },
+  });
   return (
     <div
-      onDragEnter={() => setShowDrop(true)}
-      onDragLeave={() => setShowDrop(false)}
+      ref={setNodeRef}
       className={`${
-        showDrop
-          ? "flex w-[280px]  opacity-100 transition-all delay-200 ease-in-out h-[88px] bg-white dark:bg-main-dark-grey rounded-md p-4 mb-4"
-          : "opacity-0 transition-all delay-200 ease-in-out"
-      }  `}></div>
+        isOver
+          ? "border border-red-500 flex min-h-[88px] p-4 mb-4"
+          : " invisible h-1"
+      }  w-[280px]  bg-white dark:bg-main-dark-grey rounded-md 
+           `}></div>
   );
 };
 
