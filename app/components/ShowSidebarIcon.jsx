@@ -13,7 +13,7 @@ const ShowSidebarIcon = ({ isSidebarVisible, setIsSidebarVisible }) => {
       leaveFrom="translate-x-0"
       leaveTo="-translate-x-full"
       onClick={() => setIsSidebarVisible((prevState) => !prevState)}
-      className={`absolute flex justify-center items-center w-14 h-12 bg-main-purple hover:bg-main-purple-hover rounded-r-full bottom-8`}>
+      className={`absolute flex justify-center items-center w-14 h-12 bg-main-purple hover:bg-main-purple-hover rounded-r-full bottom-8 -ml-6`}>
       <div className="">
         <Image
           src="/assets/icon-show-sidebar.svg"

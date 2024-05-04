@@ -11,103 +11,87 @@
   "boardObjectList": [
     {
       "boardId": 1,
-      "boardName": "Platform Launch",
+      "boardName": "Platform UI",
       "boardDescription": "This board is for the platform launch",
       "columns": [
         {
           "columnId": 1,
           "columnColor": "#49C4E5",
-          "columnName": "To Do Platform",
+          "columnName": "To Do",
           "cards": [
             {
               "cardId": 111,
-              "cardName": "Platform Card 1",
-              "cardDescription": "This is card 1"
+              "cardName": "Create Desktop Figma design",
+              "cardDescription": "Make this cover anything wider than 13-inch screens",
+              "subtasks": [
+                {
+                  "status": false,
+                  "subTaskDescription": "Create the one for light theme"
+                },
+                {
+                  "status": false,
+                  "subTaskDescription": "Create the one for dark theme"
+                }
+              ]
             },
             {
               "cardId": 112,
-              "cardName": "Platform Card 2",
-              "cardDescription": "This is card 2"
-            },
-            {
-              "cardId": 113,
-              "cardName": "Platform Card 3",
-              "cardDescription": "This is card 3"
-            },
-            {
-              "cardId": 114,
-              "cardName": "Platform Card 4",
-              "cardDescription": "This is card 4"
-            },
-            {
-              "cardId": 115,
-              "cardName": "Platform Card 5",
-              "cardDescription": "This is card 5"
-            },
-            {
-              "cardId": 116,
-              "cardName": "Platform Card 6",
-              "cardDescription": "This is card 6"
-            },
-            {
-              "cardId": 117,
-              "cardName": "Platform Card 7",
-              "cardDescription": "This is card 7"
-            },
-            {
-              "cardId": 118,
-              "cardName": "Platform Card 8",
-              "cardDescription": "This is card 8"
-            },
-            {
-              "cardId": 119,
-              "cardName": "Platform Card 9",
-              "cardDescription": "This is card 9"
-            },
-            {
-              "cardId": 120,
-              "cardName": "Platform Card 10",
-              "cardDescription": "This is card 10"
-            },
-            {
-              "cardId": 121,
-              "cardName": "Platform Card 11",
-              "cardDescription": "This is card 11"
-            },
-            {
-              "cardId": 122,
-              "cardName": "Platform Card 12",
-              "cardDescription": "This is card 12"
-            },
-            {
-              "cardId": 123,
-              "cardName": "Platform Card 13",
-              "cardDescription": "This is card 13"
+              "cardName": "Review Accessibility Standards",
+              "cardDescription": "Ensure designs meet all accessibility requirements",
+              "subtasks": [
+                {
+                  "status": false,
+                  "subTaskDescription": "Check color contrast ratios"
+                },
+                {
+                  "status": false,
+                  "subTaskDescription": "Validate tab navigation"
+                }
+              ]
             }
           ]
         },
         {
           "columnId": 2,
-
           "columnColor": "#8471F2",
-          "columnName": "In Progress Platform",
+          "columnName": "In Progress",
           "cards": [
             {
-              "cardId": 1212,
-              "cardName": "Platform Card 3",
-              "cardDescription": "This is card 3"
+              "cardId": 113,
+              "cardName": "Implement Responsive Layout",
+              "cardDescription": "Adjust layouts for tablets and mobile devices",
+              "subtasks": [
+                {
+                  "status": true,
+                  "subTaskDescription": "Complete mobile layout"
+                },
+                {
+                  "status": false,
+                  "subTaskDescription": "Start tablet adaptation"
+                }
+              ]
             }
           ]
         },
         {
           "columnId": 3,
           "columnColor": "#67E2AE",
-          "columnName": "Done Platform",
+          "columnName": "Done",
           "cards": [
             {
-              "cardId": 131,
-              "cardName": "Platform Card 4",
-              "cardDescription": "This is card 4"
+              "cardId": 114,
+              "cardName": "Finalize Icon Set",
+              "cardDescription": "Complete the design for all required icons",
+              "subtasks": [
+                {
+                  "status": true,
+                  "subTaskDescription": "Design main navigation icons"
+                },
+                {
+                  "status": true,
+                  "subTaskDescription": "Create alert and notification icons"
+                }
+              ]
             }
           ]
         }
@@ -115,106 +99,102 @@
     },
     {
       "boardId": 2,
-      "boardName": "Marketing Plan",
-      "boardDescription": "This board is for the marketing plan",
+      "boardName": "Platform Backend Architecture",
+      "boardDescription": "What Backend tech stack will be used and how to build them",
       "columns": [
         {
-          "columnId": 1,
+          "columnId": 4,
           "columnColor": "#49C4E5",
-          "columnName": "To Do Marketing",
+          "columnName": "To Do",
           "cards": [
             {
               "cardId": 211,
-              "cardName": "Marketing Card 1",
-              "cardDescription": "This is card 1"
-            },
+              "cardName": "Define Database Schema",
+              "cardDescription": "Plan and document the initial database schema for user data handling",
+              "subtasks": [
+                {
+                  "status": false,
+                  "subTaskDescription": "Design user tables"
+                },
+                {
+                  "status": false,
+                  "subTaskDescription": "Define relationships"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "columnId": 5,
+          "columnColor": "#8471F2",
+          "columnName": "In Progress",
+          "cards": [
             {
               "cardId": 212,
-              "cardName": "Marketing Card 2",
-              "cardDescription": "This is card 2"
+              "cardName": "Setup DevOps Pipeline",
+              "cardDescription": "Create pipelines for continuous integration and deployment",
+              "subtasks": [
+                {
+                  "status": true,
+                  "subTaskDescription": "Configure GitHub Actions"
+                },
+                {
+                  "status": false,
+                  "subTaskDescription": "Integrate with deployment server"
+                }
+              ]
             }
           ]
         },
         {
-          "columnId": 2,
-
-          "columnColor": "#8471F2",
-          "columnName": "In Progress Marketing",
-          "cards": [
-            {
-              "cardId": 221,
-              "cardName": "Marketing Card 3",
-              "cardDescription": "This is card 3"
-            }
-          ]
-        },
-        {
-          "columnId": 3,
+          "columnId": 6,
           "columnColor": "#67E2AE",
-          "columnName": "Done Marketing",
-          "cards": [
-            {
-              "cardId": 231,
-              "cardName": "Marketing Card 4",
-              "cardDescription": "This is card 4"
-            }
-          ]
+          "columnName": "Done",
+          "cards": []
         }
       ]
     },
     {
       "boardId": 3,
-      "boardName": "Roadmap",
-      "boardDescription": "This board is for the roadmap",
+      "boardName": "Platform Frontend Architecture",
+      "boardDescription": "What frontend will be used and how to build them",
       "columns": [
         {
-          "columnId": 1,
+          "columnId": 7,
           "columnColor": "#49C4E5",
-          "columnName": "To Do Roadmap",
+          "columnName": "To Do",
           "cards": [
             {
               "cardId": 311,
-              "cardName": "Roadmap Card 1",
-              "cardDescription": "This is card 1"
-            },
-            {
-              "cardId": 312,
-              "cardName": "Roadmap Card 2",
-              "cardDescription": "This is card 2"
+              "cardName": "Select JavaScript Framework",
+              "cardDescription": "Decide on the JavaScript framework to be used across the platform",
+              "subtasks": [
+                {
+                  "status": false,
+                  "subTaskDescription": "Evaluate React vs Vue vs Angular"
+                }
+              ]
             }
           ]
         },
         {
-          "columnId": 2,
-
+          "columnId": 8,
           "columnColor": "#8471F2",
-          "columnName": "In Progress Roadmap",
-          "cards": [
-            {
-              "cardId": 321,
-              "cardName": "Roadmap Card 3",
-              "cardDescription": "This is card 3"
-            }
-          ]
+          "columnName": "In Progress",
+          "cards": []
         },
         {
-          "columnId": 3,
+          "columnId": 9,
           "columnColor": "#67E2AE",
-          "columnName": "Done Roadmap",
-          "cards": [
-            {
-              "cardId": 331,
-              "cardName": "Roadmap Card 4",
-              "cardDescription": "This is card 4"
-            }
-          ]
+          "columnName": "Done",
+          "cards": []
         }
       ]
     },
     {
       "boardId": 4,
-      "boardName": "Another Sample Board",
-      "boardDescription": "This board is for another sample board",
+      "boardName": "Another Sample Board With Long Title for Sampling, Making it Longer",
+      "boardDescription": "What frontend will be used and how to build them",
       "columns": [
         {
           "columnId": 1,

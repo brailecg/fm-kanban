@@ -12,6 +12,7 @@ const Nav = ({
   setSelected,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [addTaskModal, setAddTaskModal] = useState(false);
   function closeModal() {
     setIsOpen(false);
   }
@@ -55,6 +56,7 @@ const Nav = ({
           </div>
           <div className="flex items-center space-x-6">
             <button
+              onClick={() => setAddTaskModal(true)}
               className={`${
                 data?.boardObjectList.length > 0
                   ? "bg-main-purple"
@@ -154,6 +156,40 @@ const Nav = ({
                     selected={selected}
                     setSelected={setSelected}
                   />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={addTaskModal} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20"
+          onClose={() => setAddTaskModal(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0">
+            <div className="fixed inset-0 bg-black/25 darkbg" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto top-16">
+            <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95">
+                <Dialog.Panel className="w-full max-w-80 transform overflow-hidden bg-[var(--menu-background-color)] px-6 text-left align-middle  transition-all space-y-3">
+                  View Add Task
                 </Dialog.Panel>
               </Transition.Child>
             </div>

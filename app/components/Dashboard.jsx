@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import Nav from "./Nav";
 import ShowSidebarIcon from "./ShowSidebarIcon";
 import ColumnArea from "./ColumnArea";
+import ColumnName from "./ColumnName";
 const Dashboard = ({ data }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
@@ -95,7 +96,7 @@ const Dashboard = ({ data }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen dashboard">
+    <div className="flex flex-col h-screen dashboard ">
       <Nav
         data={data}
         isThemeToggled={isThemeToggled}
@@ -103,7 +104,7 @@ const Dashboard = ({ data }) => {
         selected={selected}
         setSelected={setSelected}
       />
-      <div className="flex flex-grow">
+      <div className="flex flex-grow bg-main-light-lines dark:bg-main-very-dark-grey ">
         <div className="hidden sm:flex">
           <Sidebar
             data={data}
@@ -116,7 +117,7 @@ const Dashboard = ({ data }) => {
           />
         </div>
         <DndContext onDragEnd={handleDragend}>
-          <main className="overflow-x-auto whitespace-no-wrap bg-main-light-lines dark:bg-main-very-dark-grey grow px-4 sm:px-0 max-h-[calc(100vh-64px)] overflow-y-auto">
+          <main className="overflow-y-auto overflow-x-auto flex-grow p-4 sm:p-6 max-h-[calc(100vh-64px)]">
             {boardList.length > 0 &&
               boardList?.map((board) => {
                 if (selected === board.boardId) {
@@ -142,16 +143,36 @@ const Dashboard = ({ data }) => {
                           </button>
                         </div>
                       )}
-                      <div className="flex ">
+                      <div className="flex space-x-3">
                         {board?.columns.length > 0 &&
                           board?.columns?.map((column) => {
                             return (
-                              <ColumnArea
-                                key={column.columnId}
-                                column={column}
-                              />
+                              <div key={column.columnId}>
+                                <ColumnName
+                                  name={column.columnName}
+                                  color={column.columnColor}
+                                  count={column.cards.length}
+                                />
+                                <ColumnArea column={column} />
+                              </div>
                             );
                           })}
+                        <button className="flex items-center justify-center bg-[#E9EFFA] dark:bg-[#2B2C37] rounded-md min-w-[280px] text-2xl font-semibold text-main-medium-grey mt-9 min-h-screen">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={3}
+                            stroke="currentColor"
+                            className="w-6 h-6">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 4.5v15m7.5-7.5h-15"
+                            />
+                          </svg>
+                          New Column
+                        </button>
                       </div>
                     </React.Fragment>
                   );

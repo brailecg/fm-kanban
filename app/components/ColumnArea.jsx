@@ -5,11 +5,6 @@ import ColumnCardDropArea from "./ColumnCardDropArea";
 const ColumnArea = ({ column }) => {
   return (
     <div className="flex flex-col ">
-      <ColumnName
-        name={column.columnName}
-        color={column.columnColor}
-        count={column.cards.length}
-      />
       <ColumnCardDropArea
         id={column.columnId + "-0"}
         colId={column.columnId}

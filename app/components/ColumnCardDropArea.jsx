@@ -11,9 +11,9 @@ const ColumnCardDropArea = ({ id, colId, idx }) => {
       ref={setNodeRef}
       className={`${
         isOver
-          ? "border border-red-500 flex min-h-[88px] p-4 mb-4"
+          ? "border border-main-purple flex min-h-[88px] p-4 mb-4 transition-all ease-in-out"
           : " invisible h-1"
-      }  w-[280px]  bg-white dark:bg-main-dark-grey rounded-md 
+      }  min-w-[280px]  bg-white dark:bg-main-dark-grey rounded-md 
            `}></div>
   );
 };
