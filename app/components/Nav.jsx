@@ -2,29 +2,13 @@
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
 import { useForm, useFieldArray } from "react-hook-form";
-
+import { ErrorMessage } from "@hookform/error-message";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 import Sidebar from "./Sidebar";
 
-import { Button } from "./ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+import { Input } from "./ui/Input";
+import { Label } from "./ui/label";
 
 const Nav = ({
   data,
@@ -222,8 +206,26 @@ const Nav = ({
                   <div className="">
                     <p className=" font-semibold text-[18px]">Add New Task</p>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      {/* register your input into the hook by invoking the "register" function */}
-                      <input defaultValue="test" {...register("example")} />
+                      <div>
+                        <Label name="Title" />
+                        <Input
+                          {...register("title", {
+                            required: "This field is required",
+                          })}
+                          className={
+                            errors.title
+                              ? "border-red-500 focus:border-red-500 focus:outline-none"
+                              : "focus:outline-main-purple"
+                          }
+                        />
+                        <ErrorMessage
+                          name={"title"}
+                          errors={errors}
+                          render={({ message }) => (
+                            <p className="text-red-500">{message}</p>
+                          )}
+                        />
+                      </div>
 
                       {/* include validation with required or other standard HTML validation rules */}
                       <input
