@@ -1,9 +1,31 @@
 "use client";
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
+import { useForm, useFieldArray } from "react-hook-form";
+
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 import Sidebar from "./Sidebar";
+
+import { Button } from "./ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+
 const Nav = ({
   data,
   isThemeToggled,
@@ -11,6 +33,14 @@ const Nav = ({
   selected,
   setSelected,
 }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   const [isOpen, setIsOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false);
   function closeModal() {
@@ -22,7 +52,7 @@ const Nav = ({
 
   return (
     <>
-      <nav className="flex z-0 bg-white h-16 sm:h-20 lg:h-24 dark:bg-main-dark-grey ">
+      <nav className="flex z-0 bg-white min-h-16 sm:min-h-20 lg:min-h-24 dark:bg-main-dark-grey ">
         <div
           className={`hidden border-r dark:border-main-dark-lines pl-8 sm:w-[260px] md:w-[300px] border-b sm:flex items-center `}>
           <div>
@@ -179,7 +209,7 @@ const Nav = ({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto top-16">
-            <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+            <div className="flex max-h-fit justify-center w-screen">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -188,8 +218,25 @@ const Nav = ({
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <Dialog.Panel className="w-full max-w-80 transform overflow-hidden bg-[var(--menu-background-color)] px-6 text-left align-middle  transition-all space-y-3">
-                  View Add Task
+                <Dialog.Panel className=" w-[480px] p-8 overflow-hidden bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
+                  <div className="">
+                    <p className=" font-semibold text-[18px]">Add New Task</p>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      {/* register your input into the hook by invoking the "register" function */}
+                      <input defaultValue="test" {...register("example")} />
+
+                      {/* include validation with required or other standard HTML validation rules */}
+                      <input
+                        {...register("exampleRequired", { required: true })}
+                      />
+                      {/* errors will return when field validation fails  */}
+                      {errors.exampleRequired && (
+                        <span>This field is required</span>
+                      )}
+
+                      <input type="submit" />
+                    </form>
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

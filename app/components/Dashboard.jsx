@@ -117,7 +117,7 @@ const Dashboard = ({ data }) => {
           />
         </div>
         <DndContext onDragEnd={handleDragend}>
-          <main className="overflow-y-auto overflow-x-auto flex-grow p-4 sm:p-6 max-h-[calc(100vh-64px)]">
+          <main className="overflow-y-auto overflow-x-auto flex-grow p-4 sm:p-6 min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-96px)]">
             {boardList.length > 0 &&
               boardList?.map((board) => {
                 if (selected === board.boardId) {
@@ -157,7 +157,7 @@ const Dashboard = ({ data }) => {
                               </div>
                             );
                           })}
-                        <button className="flex items-center justify-center bg-[#E9EFFA] dark:bg-[#2B2C37] rounded-md min-w-[280px] text-2xl font-semibold text-main-medium-grey mt-9 min-h-screen">
+                        <button className="flex items-center justify-center bg-[#E9EFFA] dark:bg-[#2B2C37] rounded-md min-w-[280px] text-2xl font-semibold text-main-medium-grey mt-9 min-h-[75vh]">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
