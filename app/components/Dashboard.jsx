@@ -95,6 +95,12 @@ const Dashboard = ({ data }) => {
     setIsDropped((prev) => !prev);
   };
 
+  const columns = data?.boardObjectList.find(
+    (board) => board.boardId === selected
+  )?.columns;
+
+  const selectedCol = columns ? columns[0] : null;
+
   return (
     <div className="flex flex-col h-screen dashboard ">
       <Nav
@@ -103,6 +109,8 @@ const Dashboard = ({ data }) => {
         setIsThemeToggled={setIsThemeToggled}
         selected={selected}
         setSelected={setSelected}
+        columns={columns}
+        selectedCol={selectedCol}
       />
       <div className="flex flex-grow bg-main-light-lines dark:bg-main-very-dark-grey ">
         <div className="hidden sm:flex">
@@ -153,7 +161,11 @@ const Dashboard = ({ data }) => {
                                   color={column.columnColor}
                                   count={column.cards.length}
                                 />
-                                <ColumnArea column={column} />
+                                <ColumnArea
+                                  column={column}
+                                  columns={columns}
+                                  selectedCol={selectedCol}
+                                />
                               </div>
                             );
                           })}

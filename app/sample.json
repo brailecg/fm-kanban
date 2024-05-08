@@ -25,10 +25,12 @@
               "cardDescription": "Make this cover anything wider than 13-inch screens",
               "subtasks": [
                 {
+                  "id": 1111,
                   "status": false,
                   "subTaskDescription": "Create the one for light theme"
                 },
                 {
+                  "id": 1112,
                   "status": false,
                   "subTaskDescription": "Create the one for dark theme"
                 }
@@ -40,10 +42,12 @@
               "cardDescription": "Ensure designs meet all accessibility requirements",
               "subtasks": [
                 {
+                  "id": 1121,
                   "status": false,
                   "subTaskDescription": "Check color contrast ratios"
                 },
                 {
+                  "id": 1122,
                   "status": false,
                   "subTaskDescription": "Validate tab navigation"
                 }
@@ -62,10 +66,12 @@
               "cardDescription": "Adjust layouts for tablets and mobile devices",
               "subtasks": [
                 {
+                  "id": 1131,
                   "status": true,
                   "subTaskDescription": "Complete mobile layout"
                 },
                 {
+                  "id": 1132,
                   "status": false,
                   "subTaskDescription": "Start tablet adaptation"
                 }
@@ -84,10 +90,12 @@
               "cardDescription": "Complete the design for all required icons",
               "subtasks": [
                 {
+                  "id": 1141,
                   "status": true,
                   "subTaskDescription": "Design main navigation icons"
                 },
                 {
+                  "id": 1142,
                   "status": true,
                   "subTaskDescription": "Create alert and notification icons"
                 }
@@ -113,10 +121,12 @@
               "cardDescription": "Plan and document the initial database schema for user data handling",
               "subtasks": [
                 {
+                  "id": 2111,
                   "status": false,
                   "subTaskDescription": "Design user tables"
                 },
                 {
+                  "id": 2112,
                   "status": false,
                   "subTaskDescription": "Define relationships"
                 }
@@ -135,10 +145,12 @@
               "cardDescription": "Create pipelines for continuous integration and deployment",
               "subtasks": [
                 {
+                  "id": 2121,
                   "status": true,
                   "subTaskDescription": "Configure GitHub Actions"
                 },
                 {
+                  "id": 2122,
                   "status": false,
                   "subTaskDescription": "Integrate with deployment server"
                 }
@@ -170,6 +182,7 @@
               "cardDescription": "Decide on the JavaScript framework to be used across the platform",
               "subtasks": [
                 {
+                  "id": 3111,
                   "status": false,
                   "subTaskDescription": "Evaluate React vs Vue vs Angular"
                 }

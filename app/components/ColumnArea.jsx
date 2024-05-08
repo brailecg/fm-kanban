@@ -1,8 +1,8 @@
 import React from "react";
 import ColumnItem from "./ColumnItem";
-import ColumnName from "./ColumnName";
+
 import ColumnCardDropArea from "./ColumnCardDropArea";
-const ColumnArea = ({ column }) => {
+const ColumnArea = ({ column, columns, selectedCol }) => {
   return (
     <div className="flex flex-col ">
       <ColumnCardDropArea
@@ -13,7 +13,12 @@ const ColumnArea = ({ column }) => {
       {column.cards.map((item, index) => {
         return (
           <React.Fragment key={item.cardId}>
-            <ColumnItem item={item} colId={column.columnId} />
+            <ColumnItem
+              item={item}
+              colId={column.columnId}
+              columns={columns}
+              selectedCol={selectedCol}
+            />
             <ColumnCardDropArea
               id={column.columnId + "-" + (index + 1).toString()}
               colId={column.columnId}

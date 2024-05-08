@@ -1,26 +1,19 @@
 "use client";
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
-import {
-  useForm,
-  useFieldArray,
-  useController,
-  Controller,
-} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import {
-  ChevronDownIcon,
-  CheckIcon,
-  ChevronUpDownIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Menu, Listbox } from "@headlessui/react";
 
 import Sidebar from "./Sidebar";
 
-import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
-import { Textarea } from "./ui/Textarea";
+
 import { Button } from "./ui/Button";
+import FormInput from "./FormInput";
+import FormTextArea from "./FormTextArea";
+import FormMultiInput from "./FormMultiInput";
 
 const Nav = ({
   data,
@@ -28,6 +21,8 @@ const Nav = ({
   setIsThemeToggled,
   selected,
   setSelected,
+  columns,
+  selectedCol,
 }) => {
   const {
     register,
@@ -36,17 +31,6 @@ const Nav = ({
     formState: { errors },
   } = useForm();
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "subtasks",
-  });
-  const handleAddSubtask = () => {
-    append(); // Append a new empty subtask
-  };
-
-  const handleRemoveSubtask = (index) => {
-    remove(index); // Remove the subtask at given index
-  };
   const onSubmit = (data) => console.log(data);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -58,11 +42,6 @@ const Nav = ({
     setIsOpen(true);
   }
 
-  const columns = data?.boardObjectList.find(
-    (board) => board.boardId === selected
-  )?.columns;
-
-  const selectedCol = columns ? columns[0] : null;
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
@@ -71,7 +50,7 @@ const Nav = ({
     <>
       <nav className="flex z-0 bg-white min-h-16 sm:min-h-20 lg:min-h-24 dark:bg-main-dark-grey ">
         <div
-          className={`hidden border-r dark:border-main-dark-lines pl-8 sm:w-[260px] md:w-[300px] border-b sm:flex items-center `}>
+          className={`hidden border-r dark:border-main-dark-lines pl-8 min-w-[260px] md:w-[300px] border-b sm:flex items-center `}>
           <div>
             <Image
               src={`/assets/logo-${isThemeToggled ? "light" : "dark"}.svg`}
@@ -158,7 +137,7 @@ const Nav = ({
                           className={`${
                             active ? "bg-main-light-grey " : "text-gray-900 "
                           } text-main-red group flex rounded-md items-center w-full px-2 py-2 text-sm `}>
-                          <p className="ml-2 "></p>
+                          <p className="ml-2 ">Delete Board</p>
                         </button>
                       )}
                     </Menu.Item>
@@ -212,7 +191,7 @@ const Nav = ({
       <Transition appear show={addTaskModal} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-20"
+          className="relative z-20 max-h-screen"
           onClose={() => setAddTaskModal(false)}>
           <Transition.Child
             as={Fragment}
@@ -226,7 +205,7 @@ const Nav = ({
           </Transition.Child>
 
           <div className="fixed inset-0  top-16">
-            <div className="flex max-h-fit justify-center w-screen">
+            <div className="flex justify-center w-screen ">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -235,110 +214,33 @@ const Nav = ({
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <Dialog.Panel className=" w-[480px] p-8  bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
+                <Dialog.Panel className=" w-[480px] max-h-[600px] p-8 overflow-y-auto bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
                   <div className="">
                     <p className=" font-semibold text-[18px]">Add New Task</p>
                     <form
                       className=" space-y-6"
                       onSubmit={handleSubmit(onSubmit)}>
-                      <div className="space-y-2">
-                        <Label name="Title" />
-                        <Input
-                          placeholder="e.g. Take coffee break"
-                          {...register("title", {
-                            required: "This field is required",
-                          })}
-                          className={
-                            errors.title
-                              ? "border-red-500 focus:border-red-500 focus:outline-none"
-                              : "focus:outline-main-purple"
-                          }
-                        />
-                        <ErrorMessage
-                          name={"title"}
-                          errors={errors}
-                          render={({ message }) => (
-                            <p className="text-red-500">{message}</p>
-                          )}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label name="Description" />
-                        <Textarea
-                          placeholder="e.g. It's always good to take a break. This 15 minute break will 
-                        recharge the batteries a little."
-                          {...register("description", {
-                            required: "This field is required",
-                          })}
-                          className={
-                            errors.title
-                              ? "border-red-500 focus:border-red-500 focus:outline-none"
-                              : "focus:outline-main-purple"
-                          }
-                        />
+                      <FormInput
+                        label={"Title"}
+                        name={"title"}
+                        register={register}
+                        errors={errors}
+                      />
 
-                        <ErrorMessage
-                          name={"description"}
-                          errors={errors}
-                          render={({ message }) => (
-                            <p className="text-red-500">{message}</p>
-                          )}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label name="SubTasks" />
+                      <FormTextArea
+                        label={"Description"}
+                        name={"description"}
+                        register={register}
+                        errors={errors}
+                      />
 
-                        {fields.map((item, index) => {
-                          return (
-                            <div key={item.id}>
-                              <div className="flex w-full items-center space-x-2">
-                                <Input
-                                  className={
-                                    errors.subtasks
-                                      ? "border-red-500 focus:border-red-500 focus:outline-none"
-                                      : "focus:outline-main-purple"
-                                  }
-                                  placeholder="e.g. Make Cofee"
-                                  {...register(`subtasks[${index}].subtask`, {
-                                    required: "This field is required",
-                                  })}
-                                />
-
-                                <Button
-                                  className="flex items-center"
-                                  onClick={() => handleRemoveSubtask(index)}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={2}
-                                    stroke="currentColor"
-                                    className="w-6 h-6">
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M6 18 18 6M6 6l12 12"
-                                    />
-                                  </svg>
-                                </Button>
-                              </div>
-                              <ErrorMessage
-                                name={`subtasks[${index}].subtask`}
-                                errors={errors}
-                                render={({ message }) => (
-                                  <p className="text-red-500">{message}</p>
-                                )}
-                              />
-                            </div>
-                          );
-                        })}
-                        <Button
-                          className="text-main-purple w-full rounded-full bg-[#635FC7] bg-opacity-10 hover:bg-opacity-25 cursor-pointer"
-                          type="button"
-                          onClick={handleAddSubtask}>
-                          + Add New Subtask
-                        </Button>
-                      </div>
+                      <FormMultiInput
+                        label={"SubTasks"}
+                        name={"subtasks"}
+                        register={register}
+                        errors={errors}
+                        control={control}
+                      />
                       <div className="flex flex-col space-y-2">
                         <Controller
                           name="status"
@@ -394,21 +296,6 @@ const Nav = ({
                                                   )}>
                                                   {col.columnName}
                                                 </span>
-
-                                                {selectedCol ? (
-                                                  <span
-                                                    className={classNames(
-                                                      active
-                                                        ? "text-white"
-                                                        : "text-indigo-600",
-                                                      "absolute inset-y-0 right-0 flex items-center pr-4"
-                                                    )}>
-                                                    <CheckIcon
-                                                      className="h-5 w-5"
-                                                      aria-hidden="true"
-                                                    />
-                                                  </span>
-                                                ) : null}
                                               </>
                                             )}
                                           </Listbox.Option>
