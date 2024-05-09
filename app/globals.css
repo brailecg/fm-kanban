@@ -4,7 +4,14 @@
 
 @layer base {
   [type="checkbox"]:focus,
-  [type="text"]:focus {
+  [type="text"]:focus,
+  textarea:focus {
     --tw-ring-color: transparent;
+    outline-offset: 0;
+  }
+  [type="checkbox"],
+  [type="text"],
+  textarea {
+    border-color: rgba(129, 142, 162, 0.25);
   }
 }

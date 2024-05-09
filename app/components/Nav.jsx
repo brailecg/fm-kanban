@@ -1,19 +1,18 @@
 "use client";
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
-import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import { ChevronDownIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { Dialog, Transition, Menu, Listbox } from "@headlessui/react";
+import { useForm } from "react-hook-form";
+
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Dialog, Transition, Menu } from "@headlessui/react";
 
 import Sidebar from "./Sidebar";
-
-import { Label } from "./ui/Label";
 
 import { Button } from "./ui/Button";
 import FormInput from "./FormInput";
 import FormTextArea from "./FormTextArea";
 import FormMultiInput from "./FormMultiInput";
+import FormStatus from "./FormStatus";
 
 const Nav = ({
   data,
@@ -35,16 +34,6 @@ const Nav = ({
 
   const [isOpen, setIsOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false);
-  function closeModal() {
-    setIsOpen(false);
-  }
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
 
   return (
     <>
@@ -63,7 +52,7 @@ const Nav = ({
         </div>
         <div className="flex border-b dark:border-main-dark-lines px-6 flex-grow justify-between">
           <div
-            onClick={openModal}
+            onClick={() => setIsOpen(true)}
             className="flex  cursor-pointer sm:cursor-default items-center space-x-2">
             <div className={`w-6 h-[25px] flex sm:hidden`}>
               <Image
@@ -152,7 +141,7 @@ const Nav = ({
         <Dialog
           as="div"
           className="relative flex sm:hidden"
-          onClose={closeModal}>
+          onClose={() => setIsOpen(false)}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -214,7 +203,7 @@ const Nav = ({
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <Dialog.Panel className=" w-[480px] max-h-[600px] p-8 overflow-y-auto bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
+                <Dialog.Panel className=" overflow-visible w-[480px] max-h-[600px] p-8 overflow-y-auto bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
                   <div className="">
                     <p className=" font-semibold text-[18px]">Add New Task</p>
                     <form
@@ -241,74 +230,14 @@ const Nav = ({
                         errors={errors}
                         control={control}
                       />
-                      <div className="flex flex-col space-y-2">
-                        <Controller
-                          name="status"
-                          control={control}
-                          rules={{ required: true }}
-                          defaultValue={selectedCol}
-                          render={({ field: { onChange, value } }) => (
-                            <Listbox value={value} onChange={onChange}>
-                              {({ open }) => (
-                                <>
-                                  <Label name="Status" />
+                      <FormStatus
+                        name="status"
+                        label="Status"
+                        columns={columns}
+                        control={control}
+                        selectedCol={selectedCol}
+                      />
 
-                                  <div className="relative mt-2">
-                                    <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                      <span className="block truncate">
-                                        {value?.columnName}
-                                      </span>
-                                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                        <ChevronUpDownIcon
-                                          className="h-5 w-5 text-gray-400"
-                                          aria-hidden="true"
-                                        />
-                                      </span>
-                                    </Listbox.Button>
-
-                                    <Transition
-                                      show={open}
-                                      as={Fragment}
-                                      leave="transition ease-in duration-100"
-                                      leaveFrom="opacity-100"
-                                      leaveTo="opacity-0">
-                                      <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {columns.map((col) => (
-                                          <Listbox.Option
-                                            key={col.columnId}
-                                            className={({ active }) =>
-                                              classNames(
-                                                active
-                                                  ? "bg-indigo-600 text-white"
-                                                  : "text-gray-900",
-                                                "relative cursor-default select-none py-2 pl-3 pr-9"
-                                              )
-                                            }
-                                            value={col}>
-                                            {({ selectedCol, active }) => (
-                                              <>
-                                                <span
-                                                  className={classNames(
-                                                    selectedCol
-                                                      ? "font-semibold"
-                                                      : "font-normal",
-                                                    "block truncate"
-                                                  )}>
-                                                  {col.columnName}
-                                                </span>
-                                              </>
-                                            )}
-                                          </Listbox.Option>
-                                        ))}
-                                      </Listbox.Options>
-                                    </Transition>
-                                  </div>
-                                </>
-                              )}
-                            </Listbox>
-                          )}
-                        />
-                      </div>
                       <Button
                         className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer"
                         asChild>

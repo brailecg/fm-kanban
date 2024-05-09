@@ -2,11 +2,12 @@ import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
-const FormInput = ({ label, name, register, errors }) => {
+const FormInput = ({ label, name, register, errors, value }) => {
   return (
     <div className="space-y-2">
       <Label name={label} />
       <Input
+        value={value}
         placeholder="e.g. Take coffee break"
         {...register(name, {
           required: "Title is required",
