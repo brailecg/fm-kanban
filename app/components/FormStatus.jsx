@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Controller } from "react-hook-form";
 import { Transition, Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
@@ -7,14 +7,18 @@ import { Label } from "./ui/Label";
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
-const FormStatus = ({ name, label, columns, control, selectedCol }) => {
+const FormStatus = ({ name, label, columns, control, selectedCol, colId }) => {
+  const colIn = colId
+    ? columns.find((col) => col.columnId === colId)
+    : selectedCol;
+
   return (
     <div className="flex flex-col space-y-2">
       <Controller
         name={name}
         control={control}
         rules={{ required: true }}
-        defaultValue={selectedCol}
+        defaultValue={colIn}
         render={({ field: { onChange, value } }) => (
           <Listbox value={value} onChange={onChange}>
             {({ open }) => (

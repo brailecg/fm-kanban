@@ -4,6 +4,7 @@ import { useDraggable } from "@dnd-kit/core";
 import { Dialog, Transition, Menu, Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Label } from "./ui/Label";
+import FormTask from "./FormTask";
 
 const ColumnItem = ({ item, colId, columns }) => {
   const colIn = columns.find((col) => col.columnId === colId);
@@ -21,9 +22,7 @@ const ColumnItem = ({ item, colId, columns }) => {
       }
     : undefined;
 
-  const getAllSubtasks = () => {
-    return item?.subtasks ? item?.subtasks : null;
-  };
+  const allSubtasks = item?.subtasks ? item?.subtasks : null;
 
   const getCompletedSubtasks = () => {
     const completedSubtasks = item?.subtasks?.filter(
@@ -54,6 +53,7 @@ const ColumnItem = ({ item, colId, columns }) => {
 
   const handleTaskButton = () => {
     setIsOpenView(false);
+    setIsEditViewOpen(true);
   };
   return (
     <React.Fragment>
@@ -161,16 +161,16 @@ const ColumnItem = ({ item, colId, columns }) => {
                     {item.cardDescription}
                   </p>
 
-                  {getAllSubtasks() && (
+                  {allSubtasks && (
                     <div className=" space-y-2">
                       <p className=" text-xs font-bold text-main-medium-grey">
                         Subtasks(
                         {completedSubtask.length} of{" "}
-                        {getAllSubtasks() ? getAllSubtasks().length : 0})
+                        {allSubtasks ? allSubtasks.length : 0})
                       </p>
                       <fieldset className="space-y-2">
                         <legend className="sr-only">Subtasks</legend>
-                        {getAllSubtasks().map((task) => {
+                        {allSubtasks.map((task) => {
                           const isChecked =
                             completedSubtask.find((id) => id === task.id) !==
                             undefined
@@ -277,6 +277,16 @@ const ColumnItem = ({ item, colId, columns }) => {
           </div>
         </Dialog>
       </Transition>
+      <FormTask
+        label="Edit Task"
+        item={item}
+        colId={colId}
+        columns={columns}
+        selectedCol={selectedCol}
+        isEditViewOpen={isEditViewOpen}
+        setIsEditViewOpen={setIsEditViewOpen}
+        allSubtasks={allSubtasks}
+      />
     </React.Fragment>
   );
 };

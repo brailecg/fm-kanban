@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 
 import { useForm } from "react-hook-form";
 
-import { Dialog, Transition, Menu } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 
 import { Button } from "./ui/Button";
 import FormInput from "./FormInput";
@@ -10,21 +10,34 @@ import FormTextArea from "./FormTextArea";
 import FormMultiInput from "./FormMultiInput";
 import FormStatus from "./FormStatus";
 
-const FormTask = () => {
+const FormTask = ({
+  label,
+  item,
+  colId,
+  columns,
+  selectedCol,
+  isEditViewOpen,
+  setIsEditViewOpen,
+  allSubtasks,
+}) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+    reset,
+  } = useForm({
+    defaultValues: {
+      subtasks: allSubtasks ? allSubtasks : [],
+    },
+  });
   const onSubmit = (data) => console.log(data);
-  const [addTaskModal, setAddTaskModal] = useState(false);
   return (
-    <Transition appear show={addTaskModal} as={Fragment}>
+    <Transition appear show={isEditViewOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-20 max-h-screen"
-        onClose={() => setAddTaskModal(false)}>
+        onClose={() => setIsEditViewOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -48,7 +61,7 @@ const FormTask = () => {
               leaveTo="opacity-0 scale-95">
               <Dialog.Panel className=" overflow-visible w-[480px] max-h-[600px] p-8 overflow-y-auto bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
                 <div className="">
-                  <p className=" font-semibold text-[18px]">Add New Task</p>
+                  <p className=" font-semibold text-[18px]">{label}</p>
                   <form
                     className=" space-y-6"
                     onSubmit={handleSubmit(onSubmit)}>
@@ -57,6 +70,7 @@ const FormTask = () => {
                       name={"title"}
                       register={register}
                       errors={errors}
+                      value={item.cardName}
                     />
 
                     <FormTextArea
@@ -64,6 +78,7 @@ const FormTask = () => {
                       name={"description"}
                       register={register}
                       errors={errors}
+                      value={item.cardDescription}
                     />
 
                     <FormMultiInput
@@ -72,6 +87,8 @@ const FormTask = () => {
                       register={register}
                       errors={errors}
                       control={control}
+                      allSubtasks={allSubtasks}
+                      reset={reset}
                     />
                     <FormStatus
                       name="status"
@@ -79,6 +96,7 @@ const FormTask = () => {
                       columns={columns}
                       control={control}
                       selectedCol={selectedCol}
+                      colId={colId}
                     />
 
                     <Button
@@ -96,7 +114,5 @@ const FormTask = () => {
     </Transition>
   );
 };
-const onSubmit = (data) => console.log(data);
 
-const [addTaskModal, setAddTaskModal] = useState(false);
 export default FormTask;

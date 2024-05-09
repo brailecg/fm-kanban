@@ -3,11 +3,12 @@ import { ErrorMessage } from "@hookform/error-message";
 import { Textarea } from "./ui/Textarea";
 import { Label } from "./ui/Label";
 
-const FormTextArea = ({ label, name, register, errors }) => {
+const FormTextArea = ({ label, name, register, errors, value }) => {
   return (
     <div className="space-y-2">
       <Label name={label} />
       <Textarea
+        value={value}
         placeholder="e.g. It's always good to take a break. This 15 minute break will 
   recharge the batteries a little."
         {...register(name, {

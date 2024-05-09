@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
 import { Button } from "./ui/Button";
 import { useFieldArray } from "react-hook-form";
 
-const FormMultiInput = ({ label, name, register, errors, control }) => {
+const FormMultiInput = ({
+  label,
+  name,
+  register,
+  errors,
+  control,
+  allSubtasks,
+  reset,
+}) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name,
@@ -17,6 +25,8 @@ const FormMultiInput = ({ label, name, register, errors, control }) => {
   const handleRemoveSubtask = (index) => {
     remove(index); // Remove the subtask at given index
   };
+
+  console.log({ fields });
   return (
     <div className="space-y-2">
       <Label name={label} />
@@ -26,6 +36,7 @@ const FormMultiInput = ({ label, name, register, errors, control }) => {
           <div key={item.id}>
             <div className="flex w-full items-center space-x-2">
               <Input
+                value={item.subTaskDescription}
                 className={
                   errors[name]
                     ? "border-red-500 focus:border-red-500 focus:outline-none"

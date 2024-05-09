@@ -21,7 +21,6 @@ const Nav = ({
   selected,
   setSelected,
   columns,
-  selectedCol,
 }) => {
   const {
     register,
@@ -34,6 +33,8 @@ const Nav = ({
 
   const [isOpen, setIsOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false);
+
+  const selectedCol = columns ? columns[0] : null;
 
   return (
     <>

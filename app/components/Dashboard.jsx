@@ -99,8 +99,6 @@ const Dashboard = ({ data }) => {
     (board) => board.boardId === selected
   )?.columns;
 
-  const selectedCol = columns ? columns[0] : null;
-
   return (
     <div className="flex flex-col h-screen dashboard ">
       <Nav
@@ -110,7 +108,6 @@ const Dashboard = ({ data }) => {
         selected={selected}
         setSelected={setSelected}
         columns={columns}
-        selectedCol={selectedCol}
       />
       <div className="flex flex-grow bg-main-light-lines dark:bg-main-very-dark-grey ">
         <div className="hidden sm:flex">
@@ -161,11 +158,7 @@ const Dashboard = ({ data }) => {
                                   color={column.columnColor}
                                   count={column.cards.length}
                                 />
-                                <ColumnArea
-                                  column={column}
-                                  columns={columns}
-                                  selectedCol={selectedCol}
-                                />
+                                <ColumnArea column={column} columns={columns} />
                               </div>
                             );
                           })}
