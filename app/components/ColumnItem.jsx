@@ -5,11 +5,13 @@ import { Dialog, Transition, Menu, Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Label } from "./ui/Label";
 import FormTask from "./FormTask";
+import { Button } from "./ui/Button";
 
 const ColumnItem = ({ item, colId, columns }) => {
   const colIn = columns.find((col) => col.columnId === colId);
   const [isOpenView, setIsOpenView] = useState(false);
   const [isEditViewOpen, setIsEditViewOpen] = useState(false);
+  const [isDeleteViewOpen, setIsDeleteViewOpen] = useState(false);
   const [selectedCol, setSelectedCol] = useState(colIn);
 
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -24,17 +26,11 @@ const ColumnItem = ({ item, colId, columns }) => {
 
   const allSubtasks = item?.subtasks ? item?.subtasks : null;
 
-  const getCompletedSubtasks = () => {
-    const completedSubtasks = item?.subtasks?.filter(
-      (sub) => sub.status == true
-    );
-    return completedSubtasks ? completedSubtasks : null;
-  };
+  const allCompletedTaskIds = item?.subtasks
+    ?.filter((sub) => sub.status == true)
+    .map((task) => task.id);
 
-  const subTasksIdsArray = getCompletedSubtasks()
-    ? getCompletedSubtasks().map((task) => task.id)
-    : [];
-  const [completedSubtask, setCompletedSubtask] = useState(subTasksIdsArray);
+  const [completedSubtask, setCompletedSubtask] = useState(allCompletedTaskIds);
 
   const handleCheckboxChange = (isChecked, taskId) => {
     let newCompletedTask;
@@ -47,13 +43,16 @@ const ColumnItem = ({ item, colId, columns }) => {
     setCompletedSubtask(newCompletedTask);
   };
 
-  const classNames = (...classes) => {
-    return classes.filter(Boolean).join(" ");
-  };
-
   const handleTaskButton = () => {
+    setIsDeleteViewOpen(false);
     setIsOpenView(false);
     setIsEditViewOpen(true);
+  };
+
+  const handleDeleteButton = () => {
+    setIsOpenView(false);
+    setIsEditViewOpen(false);
+    setIsDeleteViewOpen(true);
   };
   return (
     <React.Fragment>
@@ -143,6 +142,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                             <Menu.Item>
                               {({ active }) => (
                                 <button
+                                  onClick={handleDeleteButton}
                                   className={`${
                                     active
                                       ? "bg-main-light-grey "
@@ -241,23 +241,21 @@ const ColumnItem = ({ item, colId, columns }) => {
                                   <Listbox.Option
                                     key={col.columnId}
                                     className={({ active }) =>
-                                      classNames(
+                                      `relative cursor-default select-none py-2 pl-3 pr-9 ${
                                         active
                                           ? "bg-indigo-600 text-white"
-                                          : "text-gray-900",
-                                        "relative cursor-default select-none py-2 pl-3 pr-9"
-                                      )
+                                          : "text-gray-900"
+                                      }`
                                     }
                                     value={col}>
                                     {({ selectedCol }) => (
                                       <>
                                         <span
-                                          className={classNames(
+                                          className={`block truncate ${
                                             selectedCol
                                               ? "font-semibold"
-                                              : "font-normal",
-                                            "block truncate"
-                                          )}>
+                                              : "font-normal"
+                                          }`}>
                                           {col.columnName}
                                         </span>
                                       </>
@@ -283,10 +281,60 @@ const ColumnItem = ({ item, colId, columns }) => {
         colId={colId}
         columns={columns}
         selectedCol={selectedCol}
-        isEditViewOpen={isEditViewOpen}
-        setIsEditViewOpen={setIsEditViewOpen}
+        isViewOpen={isEditViewOpen}
+        setIsViewOpen={setIsEditViewOpen}
         allSubtasks={allSubtasks}
       />
+      <Transition appear show={isDeleteViewOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20"
+          onClose={() => setIsDeleteViewOpen(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0">
+            <div className="fixed inset-0 bg-black/25 darkbg" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto top-16">
+            <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95">
+                <Dialog.Panel className="w-[480px] p-6 text-left bg-white dark:bg-main-dark-grey rounded-md space-y-6">
+                  <Dialog.Title className=" text-red-500 text-[18px] font-semibold">
+                    Delete this task?
+                  </Dialog.Title>
+                  <p className="text-sm text-main-medium-grey">
+                    Are you sure you want to delete the {"'"}
+                    {item.cardName}
+                    {"' "}
+                    task and its subtasks? This action cannot be reversed.
+                  </p>
+                  <div className="flex space-x-2 justify-between">
+                    <Button className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
+                      Delete
+                    </Button>
+                    <Button className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">
+                      Cancel
+                    </Button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </React.Fragment>
   );
 };

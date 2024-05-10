@@ -16,8 +16,8 @@ const FormTask = ({
   colId,
   columns,
   selectedCol,
-  isEditViewOpen,
-  setIsEditViewOpen,
+  isViewOpen,
+  setIsViewOpen,
   allSubtasks,
 }) => {
   const {
@@ -33,11 +33,11 @@ const FormTask = ({
   });
   const onSubmit = (data) => console.log(data);
   return (
-    <Transition appear show={isEditViewOpen} as={Fragment}>
+    <Transition appear show={isViewOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-20 max-h-screen"
-        onClose={() => setIsEditViewOpen(false)}>
+        onClose={() => setIsViewOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -69,16 +69,22 @@ const FormTask = ({
                       label={"Title"}
                       name={"title"}
                       register={register}
+                      control={control}
                       errors={errors}
-                      value={item.cardName}
+                      value={item && item?.cardName ? item.cardName : ""}
                     />
 
                     <FormTextArea
                       label={"Description"}
                       name={"description"}
                       register={register}
+                      control={control}
                       errors={errors}
-                      value={item.cardDescription}
+                      value={
+                        item && item?.cardDescription
+                          ? item.cardDescription
+                          : ""
+                      }
                     />
 
                     <FormMultiInput
@@ -87,8 +93,6 @@ const FormTask = ({
                       register={register}
                       errors={errors}
                       control={control}
-                      allSubtasks={allSubtasks}
-                      reset={reset}
                     />
                     <FormStatus
                       name="status"
@@ -102,7 +106,10 @@ const FormTask = ({
                     <Button
                       className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer"
                       asChild>
-                      <input type="submit" value="Create Task" />
+                      <input
+                        type="submit"
+                        value={`${colId ? "Save Changes" : "Create Task"} `}
+                      />
                     </Button>
                   </form>
                 </div>

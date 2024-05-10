@@ -1,19 +1,12 @@
 import React, { useEffect } from "react";
 import { ErrorMessage } from "@hookform/error-message";
+import { Controller } from "react-hook-form";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
 import { Button } from "./ui/Button";
 import { useFieldArray } from "react-hook-form";
 
-const FormMultiInput = ({
-  label,
-  name,
-  register,
-  errors,
-  control,
-  allSubtasks,
-  reset,
-}) => {
+const FormMultiInput = ({ label, name, register, errors, control }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name,
@@ -26,53 +19,61 @@ const FormMultiInput = ({
     remove(index); // Remove the subtask at given index
   };
 
-  console.log({ fields });
   return (
     <div className="space-y-2">
       <Label name={label} />
 
       {fields.map((item, index) => {
         return (
-          <div key={item.id}>
-            <div className="flex w-full items-center space-x-2">
-              <Input
-                value={item.subTaskDescription}
-                className={
-                  errors[name]
-                    ? "border-red-500 focus:border-red-500 focus:outline-none"
-                    : "focus:outline-main-purple"
-                }
-                placeholder="e.g. Make Cofee"
-                {...register(`${name}[${index}].title`, {
-                  required: "This field is required",
-                })}
+          <div key={item.id} className="flex w-full items-center space-x-2">
+            <div className="grow">
+              <Controller
+                name={`${name}[${index}].title`}
+                control={control}
+                defaultValue={item ? item?.subTaskDescription : ""}
+                render={() => {
+                  return (
+                    <React.Fragment>
+                      <Input
+                        className={`${
+                          errors[name]
+                            ? "border-red-500 focus:border-red-500 focus:outline-none"
+                            : "focus:outline-main-purple"
+                        } dark:bg-main-dark-grey`}
+                        placeholder="e.g. Make Cofee"
+                        {...register(`${name}[${index}].title`, {
+                          required: "This field is required",
+                        })}
+                      />
+                      <ErrorMessage
+                        name={`${name}[${index}].title`}
+                        errors={errors}
+                        render={({ message }) => (
+                          <p className="text-red-500 text-xs">{message}</p>
+                        )}
+                      />
+                    </React.Fragment>
+                  );
+                }}
               />
-
-              <Button
-                className="flex items-center"
-                onClick={() => handleRemoveSubtask(index)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-6 h-6">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18 18 6M6 6l12 12"
-                  />
-                </svg>
-              </Button>
             </div>
-            <ErrorMessage
-              name={`${name}[${index}].title`}
-              errors={errors}
-              render={({ message }) => (
-                <p className="text-red-500 text-xs">{message}</p>
-              )}
-            />
+            <Button
+              className="flex items-center"
+              onClick={() => handleRemoveSubtask(index)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </Button>
           </div>
         );
       })}
