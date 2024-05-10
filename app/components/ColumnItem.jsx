@@ -179,7 +179,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                           const taskId = task.id;
                           return (
                             <div key={task.id} className="space-y-5">
-                              <div className="relative rounded flex items-start bg-main-light-grey p-3 hover:bg-main-purple hover:opacity-25">
+                              <div className="relative rounded flex items-start bg-main-light-grey p-3 hover:bg-main-purple hover:opacity-25 dark:bg-main-very-dark-grey ">
                                 <div className="flex h-6 items-center">
                                   <input
                                     checked={isChecked}
@@ -190,13 +190,13 @@ const ColumnItem = ({ item, colId, columns }) => {
                                     aria-describedby={task.subTaskDescription}
                                     name={task.id}
                                     type="checkbox"
-                                    className="h-4 w-4 rounded-sm border-gray-300 text-main-purple "
+                                    className="h-4 w-4 rounded-sm border-gray-300 text-main-purple"
                                   />
                                 </div>
                                 <div className="ml-3 text-sm leading-6">
                                   <label
                                     htmlFor={task.id}
-                                    className={`font-xs font-bold ${
+                                    className={`font-xs font-bold dark:text-white ${
                                       isChecked
                                         ? "line-through text-main-medium-grey"
                                         : "text-gray-900"
@@ -218,7 +218,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                           <Label name="Current Status" />
 
                           <div className="relative mt-2">
-                            <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-main-dark-grey dark:text-white">
                               <span className="block truncate">
                                 {selectedCol?.columnName}
                               </span>
@@ -236,12 +236,12 @@ const ColumnItem = ({ item, colId, columns }) => {
                               leave="transition ease-in duration-100"
                               leaveFrom="opacity-100"
                               leaveTo="opacity-0">
-                              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:bg-main-dark-grey dark:text-white">
                                 {columns.map((col) => (
                                   <Listbox.Option
                                     key={col.columnId}
                                     className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-3 pr-9 ${
+                                      `relative cursor-default select-none py-2 pl-3 pr-9 dark:bg-main-dark-grey dark:text-white ${
                                         active
                                           ? "bg-indigo-600 text-white"
                                           : "text-gray-900"

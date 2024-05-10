@@ -6,37 +6,39 @@ import { Label } from "./ui/Label";
 import { Button } from "./ui/Button";
 import { useFieldArray } from "react-hook-form";
 
-const FormMultiInput = ({ label, name, register, errors, control }) => {
+const FormMultiInput = ({ label, name, register, errors, control, from }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name,
   });
-  const handleAddSubtask = () => {
+  const handleAddInput = () => {
     append(); // Append a new empty subtask
   };
 
-  const handleRemoveSubtask = (index) => {
+  const handleRemoveInput = (index) => {
     remove(index); // Remove the subtask at given index
   };
-
+  console.log({ fields });
   return (
     <div className="space-y-2">
       <Label name={label} />
 
       {fields.map((item, index) => {
         return (
-          <div key={item.id} className="flex w-full items-center space-x-2">
+          <div key={index} className="flex w-full items-center space-x-2">
             <div className="grow">
               <Controller
                 name={`${name}[${index}].title`}
                 control={control}
-                defaultValue={item ? item?.subTaskDescription : ""}
+                defaultValue={
+                  from === "board" ? item?.columnName : item?.subTaskDescription
+                }
                 render={() => {
                   return (
                     <React.Fragment>
                       <Input
                         className={`${
-                          errors[name]
+                          errors[name] // TODO: all inputs get the border red even when only one has error. errors[name][index] does not work for empty
                             ? "border-red-500 focus:border-red-500 focus:outline-none"
                             : "focus:outline-main-purple"
                         } dark:bg-main-dark-grey`}
@@ -59,7 +61,7 @@ const FormMultiInput = ({ label, name, register, errors, control }) => {
             </div>
             <Button
               className="flex items-center"
-              onClick={() => handleRemoveSubtask(index)}>
+              onClick={() => handleRemoveInput(index)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -78,10 +80,10 @@ const FormMultiInput = ({ label, name, register, errors, control }) => {
         );
       })}
       <Button
-        className="text-main-purple w-full rounded-full bg-[#635FC7] bg-opacity-10 hover:bg-opacity-25 cursor-pointer"
+        className="text-main-purple w-full rounded-full dark:bg-white bg-[#635FC7] bg-opacity-10 hover:bg-opacity-25 cursor-pointer"
         type="button"
-        onClick={handleAddSubtask}>
-        + Add New Subtask
+        onClick={handleAddInput}>
+        + Add New Column
       </Button>
     </div>
   );

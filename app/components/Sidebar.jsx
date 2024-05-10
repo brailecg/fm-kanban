@@ -6,6 +6,7 @@ import { ToggleIconSvg } from "./ToggleIconSvg";
 import { Transition } from "@headlessui/react";
 import IconBoardSvg from "./IconBoardSvg";
 import IconHideSidebar from "./IconHideSidebar";
+import FormBoard from "./FormBoard";
 
 const Sidebar = ({
   data,
@@ -17,6 +18,8 @@ const Sidebar = ({
   selected,
   setSelected,
 }) => {
+  const [isAddBoardOpen, setIsAddBoardOpen] = useState(false);
+
   const handleSelectBoard = (e) => {
     const index = e.target.closest("button").getAttribute("name");
     setSelected(parseInt(index));
@@ -29,6 +32,10 @@ const Sidebar = ({
     setIsThemeToggled((prev) => !prev);
   };
   const boardList = data?.boardObjectList;
+
+  const handleAddBoardButton = () => {
+    setIsAddBoardOpen(true);
+  };
 
   return (
     <>
@@ -79,7 +86,9 @@ const Sidebar = ({
                   );
                 })}
               <li className="font-semibold text-[15px] h-12">
-                <button className="flex items-center space-x-1 h-full">
+                <button
+                  onClick={handleAddBoardButton}
+                  className="flex items-center space-x-1 h-full">
                   <Image
                     src="/assets/icon-board-filled.svg"
                     alt="board icon"
@@ -91,6 +100,11 @@ const Sidebar = ({
                     <span className=" text-main-purple"> Create New Board</span>
                   </p>
                 </button>
+                <FormBoard
+                  label={"Add New Board"}
+                  isViewOpen={isAddBoardOpen}
+                  setIsViewOpen={setIsAddBoardOpen}
+                />
               </li>
             </ul>
           </div>

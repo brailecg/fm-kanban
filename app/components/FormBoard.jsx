@@ -6,19 +6,14 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { Button } from "./ui/Button";
 import FormInput from "./FormInput";
-import FormTextArea from "./FormTextArea";
 import FormMultiInput from "./FormMultiInput";
-import FormStatus from "./FormStatus";
 
-const FormTask = ({
+const FormBoard = ({
   label,
-  item,
-  colId,
-  columns,
-  selectedCol,
   isViewOpen,
   setIsViewOpen,
-  allSubtasks,
+  allColumns,
+  boardIn,
 }) => {
   const {
     register,
@@ -27,9 +22,10 @@ const FormTask = ({
     formState: { errors },
   } = useForm({
     defaultValues: {
-      subtasks: allSubtasks ? allSubtasks : [],
+      columns: allColumns ? allColumns : [],
     },
   });
+
   const onSubmit = (data) => console.log(data);
   return (
     <Transition appear show={isViewOpen} as={Fragment}>
@@ -65,41 +61,21 @@ const FormTask = ({
                     className=" space-y-6"
                     onSubmit={handleSubmit(onSubmit)}>
                     <FormInput
-                      label={"Title"}
-                      name={"title"}
+                      label={"Name"}
+                      name={"name"}
                       register={register}
                       control={control}
                       errors={errors}
-                      value={item && item?.cardName ? item.cardName : ""}
-                    />
-
-                    <FormTextArea
-                      label={"Description"}
-                      name={"description"}
-                      register={register}
-                      control={control}
-                      errors={errors}
-                      value={
-                        item && item?.cardDescription
-                          ? item.cardDescription
-                          : ""
-                      }
+                      value={boardIn ? boardIn?.boardName : ""}
                     />
 
                     <FormMultiInput
-                      label={"SubTasks"}
-                      name={"subtasks"}
+                      label={"Columns"}
+                      name={"columns"}
                       register={register}
                       errors={errors}
                       control={control}
-                    />
-                    <FormStatus
-                      name="status"
-                      label="Status"
-                      columns={columns}
-                      control={control}
-                      selectedCol={selectedCol}
-                      colId={colId}
+                      from={"board"}
                     />
 
                     <Button
@@ -107,7 +83,9 @@ const FormTask = ({
                       asChild>
                       <input
                         type="submit"
-                        value={`${colId ? "Save Changes" : "Create Task"} `}
+                        value={`${
+                          boardIn ? "Save Changes" : "Create New Board"
+                        } `}
                       />
                     </Button>
                   </form>
@@ -121,4 +99,4 @@ const FormTask = ({
   );
 };
 
-export default FormTask;
+export default FormBoard;

@@ -8,6 +8,7 @@ import { Dialog, Transition, Menu } from "@headlessui/react";
 
 import Sidebar from "./Sidebar";
 import FormTask from "./FormTask";
+import FormBoard from "./FormBoard";
 
 const Nav = ({
   data,
@@ -18,9 +19,18 @@ const Nav = ({
   columns,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false);
 
   const selectedCol = columns ? columns[0] : null;
+
+  const selectedBoard = data?.boardObjectList.find(
+    (board) => board.boardId === selected
+  );
+
+  const handleEditBoardButton = () => {
+    setIsEditBoardOpen(true);
+  };
 
   return (
     <>
@@ -97,6 +107,7 @@ const Nav = ({
                     <Menu.Item>
                       {({ active }) => (
                         <button
+                          onClick={handleEditBoardButton}
                           className={`${
                             active
                               ? "bg-main-light-grey text-gray-900"
@@ -124,53 +135,67 @@ const Nav = ({
           </div>
         </div>
       </nav>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative flex sm:hidden"
-          onClose={() => setIsOpen(false)}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0">
-            <div className="fixed inset-0 top-16 bg-black/25 darkbg" />
-          </Transition.Child>
+      {isOpen && (
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative flex sm:hidden"
+            onClose={() => setIsOpen(false)}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0">
+              <div className="fixed inset-0 top-16 bg-black/25 darkbg" />
+            </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto top-16">
-            <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95">
-                <Dialog.Panel className="w-full max-w-80 transform overflow-hidden bg-[var(--menu-background-color)] px-6 text-left align-middle  transition-all space-y-3">
-                  <Sidebar
-                    data={data}
-                    isThemeToggled={isThemeToggled}
-                    setIsThemeToggled={setIsThemeToggled}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                </Dialog.Panel>
-              </Transition.Child>
+            <div className="fixed inset-0 overflow-y-auto top-16">
+              <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95">
+                  <Dialog.Panel className="w-full max-w-80 transform overflow-hidden bg-[var(--menu-background-color)] px-6 text-left align-middle  transition-all space-y-3">
+                    <Sidebar
+                      data={data}
+                      isThemeToggled={isThemeToggled}
+                      setIsThemeToggled={setIsThemeToggled}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
             </div>
-          </div>
-        </Dialog>
-      </Transition>
-      <FormTask
-        label={"Add New Task"}
-        columns={columns}
-        selectedCol={selectedCol}
-        isViewOpen={addTaskModal}
-        setIsViewOpen={setAddTaskModal}
-      />
+          </Dialog>
+        </Transition>
+      )}
+      {addTaskModal && (
+        <FormTask
+          label={"Add New Task"}
+          columns={columns}
+          selectedCol={selectedCol}
+          isViewOpen={addTaskModal}
+          setIsViewOpen={setAddTaskModal}
+        />
+      )}
+
+      {isEditBoardOpen && (
+        <FormBoard
+          label={"Edit Board"}
+          isViewOpen={isEditBoardOpen}
+          setIsViewOpen={setIsEditBoardOpen}
+          allColumns={columns}
+          boardIn={selectedBoard}
+        />
+      )}
     </>
   );
 };
