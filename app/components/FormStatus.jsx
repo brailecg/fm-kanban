@@ -4,9 +4,6 @@ import { Transition, Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Label } from "./ui/Label";
 
-const classNames = (...classes) => {
-  return classes.filter(Boolean).join(" ");
-};
 const FormStatus = ({ name, label, columns, control, selectedCol, colId }) => {
   const colIn = colId
     ? columns.find((col) => col.columnId === colId)
@@ -47,21 +44,19 @@ const FormStatus = ({ name, label, columns, control, selectedCol, colId }) => {
                         <Listbox.Option
                           key={col.columnId}
                           className={({ active }) =>
-                            classNames(
+                            `relative cursor-pointer py-2 pl-3 pr-9 dark:text-white ${
                               active
                                 ? "bg-indigo-600 text-white"
-                                : "text-gray-900",
-                              "relative cursor-default select-none py-2 pl-3 pr-9 "
-                            )
+                                : "text-gray-900"
+                            }`
                           }
                           value={col}>
-                          {({ selectedCol, active }) => (
+                          {({ selectedCol }) => (
                             <>
                               <span
-                                className={classNames(
-                                  selectedCol ? "font-semibold" : "font-normal",
-                                  "block truncate dark:text-white"
-                                )}>
+                                className={`block truncate ${
+                                  selectedCol ? "font-semibold" : "font-normal"
+                                }`}>
                                 {col.columnName}
                               </span>
                             </>

@@ -38,9 +38,11 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
                     <React.Fragment>
                       <Input
                         className={`${
-                          errors[name] // TODO: all inputs get the border red even when only one has error. errors[name][index] does not work for empty
-                            ? "border-red-500 focus:border-red-500 focus:outline-none"
-                            : "focus:outline-main-purple"
+                          errors[name]
+                            ? errors[name][index] // TODO: all inputs get the border red even when only one has error. errors[name][index] does not work for empty
+                              ? "border-red-500 focus:border-red-500 focus:outline-none"
+                              : "focus:outline-main-purple"
+                            : ""
                         } dark:bg-main-dark-grey`}
                         placeholder="e.g. Make Cofee"
                         {...register(`${name}[${index}].title`, {

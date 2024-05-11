@@ -1,7 +1,6 @@
 "use client";
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
 
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Menu } from "@headlessui/react";
@@ -9,6 +8,7 @@ import { Dialog, Transition, Menu } from "@headlessui/react";
 import Sidebar from "./Sidebar";
 import FormTask from "./FormTask";
 import FormBoard from "./FormBoard";
+import { Button } from "./ui/Button";
 
 const Nav = ({
   data,
@@ -21,6 +21,7 @@ const Nav = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false);
+  const [isDeleteViewOpen, setIsDeleteViewOpen] = useState(false);
 
   const selectedCol = columns ? columns[0] : null;
 
@@ -30,6 +31,9 @@ const Nav = ({
 
   const handleEditBoardButton = () => {
     setIsEditBoardOpen(true);
+  };
+  const handleDeleteBoardButton = () => {
+    setIsDeleteViewOpen(true);
   };
 
   return (
@@ -121,6 +125,7 @@ const Nav = ({
                     <Menu.Item>
                       {({ active }) => (
                         <button
+                          onClick={handleDeleteBoardButton}
                           className={`${
                             active ? "bg-main-light-grey " : "text-gray-900 "
                           } text-main-red group flex rounded-md items-center w-full px-2 py-2 text-sm `}>
@@ -195,6 +200,59 @@ const Nav = ({
           allColumns={columns}
           boardIn={selectedBoard}
         />
+      )}
+      {isDeleteViewOpen && (
+        <Transition appear show={isDeleteViewOpen} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-20"
+            onClose={() => setIsDeleteViewOpen(false)}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0">
+              <div className="fixed inset-0 bg-black/25 darkbg" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto top-16">
+              <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95">
+                  <Dialog.Panel className="w-[480px] p-6 text-left bg-white dark:bg-main-dark-grey rounded-md space-y-6">
+                    <Dialog.Title className=" text-red-500 text-[18px] font-semibold">
+                      Delete this board?
+                    </Dialog.Title>
+                    <p className="text-sm text-main-medium-grey">
+                      Are you sure you want to delete the {"'"}
+                      {selectedBoard?.boardName}
+                      {"' "}
+                      board? This action will remove all columns and tasks and
+                      cannot be reversed.
+                    </p>
+                    <div className="flex space-x-2 justify-between">
+                      <Button className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
+                        Delete
+                      </Button>
+                      <Button className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">
+                        Cancel
+                      </Button>
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
       )}
     </>
   );

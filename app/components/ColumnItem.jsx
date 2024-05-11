@@ -179,24 +179,31 @@ const ColumnItem = ({ item, colId, columns }) => {
                           const taskId = task.id;
                           return (
                             <div key={task.id} className="space-y-5">
-                              <div className="relative rounded flex items-start bg-main-light-grey p-3 hover:bg-main-purple hover:opacity-25 dark:bg-main-very-dark-grey ">
-                                <div className="flex h-6 items-center">
-                                  <input
-                                    checked={isChecked}
-                                    onChange={() =>
-                                      handleCheckboxChange(isChecked, taskId)
+                              <div
+                                onClick={(e) => {
+                                  if (e.target === e.currentTarget) {
+                                    handleCheckboxChange(isChecked, taskId);
+                                  }
+                                }}
+                                className="relative rounded flex items-center bg-main-light-grey p-3 hover:bg-main-purple-hover  dark:bg-main-very-dark-grey ">
+                                <input
+                                  checked={isChecked}
+                                  onChange={(e) => {
+                                    if (e.target === e.currentTarget) {
+                                      handleCheckboxChange(isChecked, taskId);
                                     }
-                                    id={task.id}
-                                    aria-describedby={task.subTaskDescription}
-                                    name={task.id}
-                                    type="checkbox"
-                                    className="h-4 w-4 rounded-sm border-gray-300 text-main-purple"
-                                  />
-                                </div>
+                                  }}
+                                  id={task.id}
+                                  aria-describedby={task.subTaskDescription}
+                                  name={task.id}
+                                  type="checkbox"
+                                  className="h-4 w-4 rounded-sm border-gray-300 text-main-purple "
+                                />
+
                                 <div className="ml-3 text-sm leading-6">
                                   <label
                                     htmlFor={task.id}
-                                    className={`font-xs font-bold dark:text-white ${
+                                    className={`font-xs font-bold dark:text-white hover:text-main-black ${
                                       isChecked
                                         ? "line-through text-main-medium-grey"
                                         : "text-gray-900"
@@ -241,7 +248,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                                   <Listbox.Option
                                     key={col.columnId}
                                     className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-3 pr-9 dark:bg-main-dark-grey dark:text-white ${
+                                      `relative cursor-pointer py-2 pl-3 pr-9 dark:text-white ${
                                         active
                                           ? "bg-indigo-600 text-white"
                                           : "text-gray-900"
