@@ -45,7 +45,7 @@ const FormBoard = ({
         </Transition.Child>
 
         <div className="fixed inset-0  top-16">
-          <div className="flex justify-center w-screen ">
+          <div className="flex justify-center w-screen px-3 sm:px-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

@@ -93,7 +93,7 @@ const ColumnItem = ({ item, colId, columns }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 top-16">
-            <div className="flex max-h-fit pt-4 justify-center w-screen ">
+            <div className="flex max-h-fit pt-4 justify-center w-screen px-3 sm:px-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -102,7 +102,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <Dialog.Panel className=" min-w-[480px] p-8 space-y-6 overflow-visible bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
+                <Dialog.Panel className="p-8 space-y-6 overflow-visible bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
                   <div className="flex justify-between relative">
                     <p className="font-bold text-[18px]">{item.cardName}</p>
 
@@ -309,7 +309,7 @@ const ColumnItem = ({ item, colId, columns }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto top-16">
-            <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+            <div className="flex max-h-fit pt-4 justify-center text-center w-screen px-3 sm:px-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -318,7 +318,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <Dialog.Panel className="w-[480px] p-6 text-left bg-white dark:bg-main-dark-grey rounded-md space-y-6">
+                <Dialog.Panel className="p-6 text-left bg-white dark:bg-main-dark-grey rounded-md space-y-6">
                   <Dialog.Title className=" text-red-500 text-[18px] font-semibold">
                     Delete this task?
                   </Dialog.Title>

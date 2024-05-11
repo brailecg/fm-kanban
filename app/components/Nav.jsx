@@ -64,8 +64,8 @@ const Nav = ({
               />
             </div>
             <div className="flex items-center space-x-1">
-              <p className=" font-bold dark:text-white text-2xl">
-                Platform Launch
+              <p className=" font-bold dark:text-white text-lg sm:text-2xl truncate max-w-[50vw] sm:max-w-[25vw]">
+                {selectedBoard?.boardName}
               </p>
               <ChevronDownIcon className="flex sm:hidden h-4 w-4" />
             </div>
@@ -77,7 +77,7 @@ const Nav = ({
                 data?.boardObjectList.length > 0
                   ? "bg-main-purple"
                   : " bg-main-purple-hover "
-              }  w-12 sm:w-auto h-8 sm:h-12 sm:px-6 space-x-1 rounded-full flex justify-center items-center`}>
+              }  w-12 sm:w-auto h-8 sm:h-12 sm:px-6 space-x-1 rounded-full flex justify-center items-center min-w-fit`}>
               <Image
                 src="/assets/icon-add-task-mobile.svg"
                 alt="add task"
@@ -219,7 +219,7 @@ const Nav = ({
             </Transition.Child>
 
             <div className="fixed inset-0 overflow-y-auto top-16">
-              <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+              <div className="flex max-h-fit pt-4 justify-center text-center w-screen px-3 sm:px-0">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
