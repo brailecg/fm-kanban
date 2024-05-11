@@ -10,17 +10,17 @@
   },
   "boardObjectList": [
     {
-      "boardId": 1,
+      "id": 1,
       "boardName": "Platform UI",
       "boardDescription": "This board is for the platform launch",
       "columns": [
         {
-          "columnId": 1,
+          "id": 1,
           "columnColor": "#49C4E5",
           "columnName": "To Do",
           "cards": [
             {
-              "cardId": 111,
+              "id": 111,
               "cardName": "Create Desktop Figma design",
               "cardDescription": "Make this cover anything wider than 13-inch screens",
               "subtasks": [
@@ -37,7 +37,7 @@
               ]
             },
             {
-              "cardId": 112,
+              "id": 112,
               "cardName": "Review Accessibility Standards",
               "cardDescription": "Ensure designs meet all accessibility requirements",
               "subtasks": [
@@ -56,12 +56,12 @@
           ]
         },
         {
-          "columnId": 2,
+          "id": 2,
           "columnColor": "#8471F2",
           "columnName": "In Progress",
           "cards": [
             {
-              "cardId": 113,
+              "id": 113,
               "cardName": "Implement Responsive Layout",
               "cardDescription": "Adjust layouts for tablets and mobile devices",
               "subtasks": [
@@ -80,12 +80,12 @@
           ]
         },
         {
-          "columnId": 3,
+          "id": 3,
           "columnColor": "#67E2AE",
           "columnName": "Done",
           "cards": [
             {
-              "cardId": 114,
+              "id": 114,
               "cardName": "Finalize Icon Set",
               "cardDescription": "Complete the design for all required icons",
               "subtasks": [
@@ -106,17 +106,17 @@
       ]
     },
     {
-      "boardId": 2,
+      "id": 2,
       "boardName": "Platform Backend Architecture",
       "boardDescription": "What Backend tech stack will be used and how to build them",
       "columns": [
         {
-          "columnId": 4,
+          "id": 4,
           "columnColor": "#49C4E5",
           "columnName": "To Do",
           "cards": [
             {
-              "cardId": 211,
+              "id": 211,
               "cardName": "Define Database Schema",
               "cardDescription": "Plan and document the initial database schema for user data handling",
               "subtasks": [
@@ -135,12 +135,12 @@
           ]
         },
         {
-          "columnId": 5,
+          "id": 5,
           "columnColor": "#8471F2",
           "columnName": "Doing",
           "cards": [
             {
-              "cardId": 212,
+              "id": 212,
               "cardName": "Setup DevOps Pipeline",
               "cardDescription": "Create pipelines for continuous integration and deployment",
               "subtasks": [
@@ -159,7 +159,7 @@
           ]
         },
         {
-          "columnId": 6,
+          "id": 6,
           "columnColor": "#67E2AE",
           "columnName": "Done",
           "cards": []
@@ -167,17 +167,17 @@
       ]
     },
     {
-      "boardId": 3,
+      "id": 3,
       "boardName": "Platform Frontend Architecture",
       "boardDescription": "What frontend will be used and how to build them",
       "columns": [
         {
-          "columnId": 7,
+          "id": 7,
           "columnColor": "#49C4E5",
           "columnName": "To Do",
           "cards": [
             {
-              "cardId": 311,
+              "id": 311,
               "cardName": "Select JavaScript Framework",
               "cardDescription": "Decide on the JavaScript framework to be used across the platform",
               "subtasks": [
@@ -191,13 +191,13 @@
           ]
         },
         {
-          "columnId": 8,
+          "id": 8,
           "columnColor": "#8471F2",
           "columnName": "In Progress",
           "cards": []
         },
         {
-          "columnId": 9,
+          "id": 9,
           "columnColor": "#67E2AE",
           "columnName": "Done",
           "cards": []
@@ -205,47 +205,47 @@
       ]
     },
     {
-      "boardId": 4,
+      "id": 4,
       "boardName": "Another Sample Board With Long Title for Sampling, Making it Longer",
       "boardDescription": "What frontend will be used and how to build them",
       "columns": [
         {
-          "columnId": 1,
+          "id": 1,
           "columnColor": "#49C4E5",
           "columnName": "To Do Another",
           "cards": [
             {
-              "cardId": 1,
+              "id": 1,
               "cardName": "Another Card 1",
               "cardDescription": "This is card 1"
             },
             {
-              "cardId": 2,
+              "id": 2,
               "cardName": "Another Card 2",
               "cardDescription": "This is card 2"
             }
           ]
         },
         {
-          "columnId": 2,
+          "id": 2,
 
           "columnColor": "#8471F2",
           "columnName": "In Progress Another",
           "cards": [
             {
-              "cardId": 1,
+              "id": 1,
               "cardName": "Another Card 3",
               "cardDescription": "This is card 3"
             }
           ]
         },
         {
-          "columnId": 3,
+          "id": 3,
           "columnColor": "#67E2AE",
           "columnName": "Done Another",
           "cards": [
             {
-              "cardId": 1,
+              "id": 1,
               "cardName": "Another Card 4",
               "cardDescription": "This is card 4"
             }
@@ -254,7 +254,7 @@
       ]
     },
     {
-      "boardId": 5,
+      "id": 5,
       "boardName": "Empty Sample Board",
       "boardDescription": "This board is for another sample board",
       "columns": []

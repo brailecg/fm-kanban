@@ -58,21 +58,21 @@ const Sidebar = ({
               {boardList &&
                 boardList.map((list) => {
                   return (
-                    <li key={list.boardId} className="">
+                    <li key={list.id} className="">
                       <button
-                        name={list.boardId}
+                        name={list.id}
                         onClick={handleSelectBoard}
                         className={`w-full space-x-2 flex items-center group relative font-semibold text-[15px] min-h-12 -ml-8 pl-8  ${
-                          selected == list.boardId
+                          selected == list.id
                             ? "bg-main-purple rounded-r-full text-white"
                             : "bg-transparent hover:bg-main-light-grey hover:rounded-r-full"
                         }`}>
                         <div className="w-4">
-                          <IconBoardSvg selected={selected == list.boardId} />
+                          <IconBoardSvg selected={selected == list.id} />
                         </div>
                         <p
                           className={`${
-                            selected != list.boardId &&
+                            selected != list.id &&
                             "group-hover:text-main-purple"
                           } text-left truncate`}>
                           {list?.boardName}

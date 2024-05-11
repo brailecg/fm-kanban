@@ -8,14 +8,14 @@ import FormTask from "./FormTask";
 import { Button } from "./ui/Button";
 
 const ColumnItem = ({ item, colId, columns }) => {
-  const colIn = columns.find((col) => col.columnId === colId);
+  const colIn = columns.find((col) => col.id === colId);
   const [isOpenView, setIsOpenView] = useState(false);
   const [isEditViewOpen, setIsEditViewOpen] = useState(false);
   const [isDeleteViewOpen, setIsDeleteViewOpen] = useState(false);
   const [selectedCol, setSelectedCol] = useState(colIn);
 
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: item.cardId,
+    id: item.id,
     data: { colId: colId },
   });
   const style = transform
@@ -93,7 +93,7 @@ const ColumnItem = ({ item, colId, columns }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 top-16">
-            <div className="flex max-h-fit pt-4 justify-center w-screen ">
+            <div className="flex max-h-fit pt-4 justify-center w-screen  px-3 sm:px-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -102,7 +102,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <Dialog.Panel className=" min-w-[480px] p-8 space-y-6 overflow-visible bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
+                <Dialog.Panel className=" p-8 space-y-6 overflow-visible bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
                   <div className="flex justify-between relative">
                     <p className="font-bold text-[18px]">{item.cardName}</p>
 
@@ -246,7 +246,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:bg-main-dark-grey dark:text-white">
                                 {columns.map((col) => (
                                   <Listbox.Option
-                                    key={col.columnId}
+                                    key={col.id}
                                     className={({ active }) =>
                                       `relative cursor-pointer py-2 pl-3 pr-9 dark:text-white ${
                                         active
@@ -309,7 +309,7 @@ const ColumnItem = ({ item, colId, columns }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto top-16">
-            <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
+            <div className="flex max-h-fit pt-4 justify-center text-center w-screen  px-3 sm:px-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
