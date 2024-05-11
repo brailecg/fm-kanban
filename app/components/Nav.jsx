@@ -26,7 +26,7 @@ const Nav = ({
   const selectedCol = columns ? columns[0] : null;
 
   const selectedBoard = data?.boardObjectList.find(
-    (board) => board.id === selected
+    (board) => board.boardId === selected
   );
 
   const handleEditBoardButton = () => {
@@ -64,13 +64,10 @@ const Nav = ({
               />
             </div>
             <div className="flex items-center space-x-1">
-              <p className=" font-bold dark:text-white text-lg sm:text-2xl truncate max-w-[50vw] sm:max-w-[25vw]">
-                {selectedBoard?.boardName}
+              <p className=" font-bold dark:text-white text-2xl">
+                Platform Launch
               </p>
-              <ChevronDownIcon className="flex sm:hidden h-4 w-4 dark:text-white" />
-              <div className="absolute hidden group-hover:block bg-main-purple-hover text-white text-xs rounded py-1 px-2 top-0 right-0 z-10">
-                {selectedBoard?.boardName}
-              </div>
+              <ChevronDownIcon className="flex sm:hidden h-4 w-4" />
             </div>
           </div>
           <div className="flex items-center space-x-6">
@@ -80,7 +77,7 @@ const Nav = ({
                 data?.boardObjectList.length > 0
                   ? "bg-main-purple"
                   : " bg-main-purple-hover "
-              }  w-12 sm:w-auto h-8 sm:h-12 sm:px-6 space-x-1 rounded-full flex justify-center items-center min-w-fit`}>
+              }  w-12 sm:w-auto h-8 sm:h-12 sm:px-6 space-x-1 rounded-full flex justify-center items-center`}>
               <Image
                 src="/assets/icon-add-task-mobile.svg"
                 alt="add task"
@@ -222,7 +219,7 @@ const Nav = ({
             </Transition.Child>
 
             <div className="fixed inset-0 overflow-y-auto top-16">
-              <div className="flex max-h-fit pt-4 justify-center text-center w-screen  px-3 sm:px-0">
+              <div className="flex max-h-fit pt-4 justify-center text-center w-screen">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"

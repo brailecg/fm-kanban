@@ -16,7 +16,7 @@ const Dashboard = ({ data }) => {
   const boardList = data?.boardObjectList;
   useEffect(() => {
     if (boardList.length > 0 && selected === null) {
-      setSelected(boardList[0].id);
+      setSelected(boardList[0].boardId);
     }
   }, [boardList, selected]);
 
@@ -31,7 +31,7 @@ const Dashboard = ({ data }) => {
     let cardToMove = null;
 
     // Find the board
-    const board = boardList.find((board) => board.id === selectedBoardId);
+    const board = boardList.find((board) => board.boardId === selectedBoardId);
     if (!board) {
       console.log("Board not found.");
       return;
@@ -39,11 +39,11 @@ const Dashboard = ({ data }) => {
 
     // Find and remove the card from the original column
     const fromColumn = board.columns.find(
-      (column) => column.id === fromColumnId
+      (column) => column.columnId === fromColumnId
     );
     if (fromColumn) {
       const cardIndex = fromColumn.cards.findIndex(
-        (card) => card.id === cardId
+        (card) => card.cardId === cardId
       );
       if (cardIndex > -1) {
         cardToMove = fromColumn.cards.splice(cardIndex, 1)[0];
@@ -57,7 +57,9 @@ const Dashboard = ({ data }) => {
     }
 
     // Find and insert the card into the target column at the specified index
-    const toColumn = board.columns.find((column) => column.id === toColumnId);
+    const toColumn = board.columns.find(
+      (column) => column.columnId === toColumnId
+    );
     if (toColumn && cardToMove) {
       // Ensure the index is within the bounds of the target array
       const validIndex = Math.min(toColumn.cards.length, toIndex);
@@ -94,7 +96,7 @@ const Dashboard = ({ data }) => {
   };
 
   const columns = data?.boardObjectList.find(
-    (board) => board.id === selected
+    (board) => board.boardId === selected
   )?.columns;
 
   return (
@@ -123,9 +125,9 @@ const Dashboard = ({ data }) => {
           <main className="overflow-y-auto overflow-x-auto flex-grow p-4 sm:p-6 min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-96px)]">
             {boardList.length > 0 &&
               boardList?.map((board) => {
-                if (selected === board.id) {
+                if (selected === board.boardId) {
                   return (
-                    <React.Fragment key={board.id}>
+                    <React.Fragment key={board.boardId}>
                       {board?.columns.length == 0 && (
                         <div className="flex h-full w-full space-y-8 flex-col justify-center items-center">
                           <p className="text-main-medium-grey text-[18px] font-semibold text-center">
@@ -150,7 +152,7 @@ const Dashboard = ({ data }) => {
                         {board?.columns.length > 0 &&
                           board?.columns?.map((column) => {
                             return (
-                              <div key={column.id}>
+                              <div key={column.columnId}>
                                 <ColumnName
                                   name={column.columnName}
                                   color={column.columnColor}

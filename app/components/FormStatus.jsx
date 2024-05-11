@@ -5,7 +5,9 @@ import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Label } from "./ui/Label";
 
 const FormStatus = ({ name, label, columns, control, selectedCol, colId }) => {
-  const colIn = colId ? columns.find((col) => col.id === colId) : selectedCol;
+  const colIn = colId
+    ? columns.find((col) => col.columnId === colId)
+    : selectedCol;
 
   return (
     <div className="flex flex-col space-y-2">
@@ -40,7 +42,7 @@ const FormStatus = ({ name, label, columns, control, selectedCol, colId }) => {
                     <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:bg-main-dark-grey dark:text-white">
                       {columns.map((col) => (
                         <Listbox.Option
-                          key={col.id}
+                          key={col.columnId}
                           className={({ active }) =>
                             `relative cursor-pointer py-2 pl-3 pr-9 dark:text-white ${
                               active
