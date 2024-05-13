@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export function createClient() {
+export function supabaseServer() {
   const cookieStore = cookies();
 
   return createServerClient(
@@ -27,7 +27,7 @@ export function createClient() {
           } catch (error) {
             // The `delete` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
-            // user sessions.
+            // user sessions. 1845.80
           }
         },
       },

@@ -1,11 +1,11 @@
-import { createClient } from "../utils/supabase/server";
+import { supabaseServer } from "../utils/supabase/server";
 import Dashboard from "../components/Dashboard";
 import { promises as fs } from "fs";
 
 const DashboardPage = async () => {
   // const file = await fs.readFile(process.cwd() + "/app/sample.json", "utf8");
   // const data = await JSON.parse(file);
-  const supabase = createClient();
+  const supabase = supabaseServer();
 
   const { data, error } = await supabase.from("board").select(
     `boardId:board_id, boardName:board_name, boardDescription:board_description, 
