@@ -2,6 +2,8 @@
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
 
+import { supabaseBrowser } from "../utils/supabase/browser";
+
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 
@@ -36,9 +38,15 @@ const Nav = ({
     setIsDeleteViewOpen(true);
   };
 
+  const signOut = async () => {
+    const supabase = supabaseBrowser();
+    const { error } = await supabase.auth.signOut();
+    console.log({ error });
+  };
+
   return (
     <>
-      <nav className="flex z-0 bg-white min-h-16 sm:min-h-20 lg:min-h-24 dark:bg-main-dark-grey ">
+      <nav className="flex z-20 bg-white min-h-16 sm:min-h-20 lg:min-h-24 dark:bg-main-dark-grey ">
         <div
           className={`hidden border-r dark:border-main-dark-lines pl-8 min-w-[260px] md:w-[300px] border-b sm:flex items-center `}>
           <div>
@@ -107,7 +115,7 @@ const Nav = ({
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95">
                 <Menu.Items className="absolute right-8 w-56 mt-28  origin-top-right bg-white dark:bg-main-very-dark-grey divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                  <div className="px-1 py-1 ">
+                  <div className="py-1 ">
                     <Menu.Item>
                       {({ active }) => (
                         <button
@@ -130,6 +138,32 @@ const Nav = ({
                             active ? "bg-main-light-grey " : "text-gray-900 "
                           } text-main-red group flex rounded-md items-center w-full px-2 py-2 text-sm `}>
                           <p className="ml-2 ">Delete Board</p>
+                        </button>
+                      )}
+                    </Menu.Item>
+                    <div className="my-1 h-px bg-gray-100" />
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          onClick={handleEditBoardButton}
+                          className={`${
+                            active
+                              ? "bg-main-light-grey text-gray-900"
+                              : "text-gray-900 dark:text-white"
+                          } group flex rounded-md 
+                           items-center w-full px-2 py-2 text-sm`}>
+                          <p className="ml-2 ">Profile</p>
+                        </button>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          onClick={signOut}
+                          className={`${
+                            active ? "bg-main-light-grey " : "text-gray-900 "
+                          }  group flex rounded-md items-center w-full px-2 py-2 text-sm `}>
+                          <p className="ml-2 ">Sign Out</p>
                         </button>
                       )}
                     </Menu.Item>

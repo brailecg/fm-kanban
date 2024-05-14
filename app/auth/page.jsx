@@ -1,24 +1,16 @@
-"use client";
-import React from "react";
-import { Button } from "../components/ui/Button";
-import { supabaseBrowser } from "../utils/supabase/browser";
+import { login } from "./actions";
+
 const Auth = () => {
-  const handleLoginWithOAuth = async (provider) => {
-    const supabase = supabaseBrowser();
-    await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: location.origin + "/auth/callback?next=/dashboard",
-      },
-    });
-  };
   return (
     <div>
-      <Button
+      {/* <Button
         onClick={() => handleLoginWithOAuth("google")}
         className="border rounded-md">
         Google SignIn
-      </Button>
+      </Button> */}
+      <form action={login}>
+        <button>Sign in With Google</button>
+      </form>
     </div>
   );
 };
