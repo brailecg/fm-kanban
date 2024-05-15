@@ -25,7 +25,7 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
 
       {fields.map((item, index) => {
         return (
-          <div key={index} className="flex w-full items-center space-x-2">
+          <div key={item.id} className="flex w-full items-center space-x-2">
             <div className="grow">
               <Controller
                 name={`${name}[${index}].title`}
@@ -33,7 +33,7 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
                 defaultValue={
                   from === "board" ? item?.columnName : item?.subTaskDescription
                 }
-                render={() => {
+                render={({ field: { onChange } }) => {
                   return (
                     <React.Fragment>
                       <Input
