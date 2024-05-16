@@ -2,7 +2,7 @@ import React from "react";
 import ColumnItem from "./ColumnItem";
 
 import ColumnCardDropArea from "./ColumnCardDropArea";
-const ColumnArea = ({ column, columns }) => {
+const ColumnArea = ({ column, columns, user }) => {
   return (
     <div className="flex flex-col ">
       <ColumnCardDropArea
@@ -13,7 +13,12 @@ const ColumnArea = ({ column, columns }) => {
       {column.cards.map((item, index) => {
         return (
           <React.Fragment key={item.cardId}>
-            <ColumnItem item={item} colId={column.columnId} columns={columns} />
+            <ColumnItem
+              user={user}
+              item={item}
+              colId={column.columnId}
+              columns={columns}
+            />
             <ColumnCardDropArea
               id={column.columnId + "-" + (index + 1).toString()}
               colId={column.columnId}

@@ -17,6 +17,7 @@ const Sidebar = ({
   setIsThemeToggled,
   selected,
   setSelected,
+  user,
 }) => {
   const [isAddBoardOpen, setIsAddBoardOpen] = useState(false);
 
@@ -105,6 +106,7 @@ const Sidebar = ({
                   label={"Add New Board"}
                   isViewOpen={isAddBoardOpen}
                   setIsViewOpen={setIsAddBoardOpen}
+                  user={user}
                 />
               </li>
             </ul>

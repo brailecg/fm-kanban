@@ -8,7 +8,7 @@ import { Button } from "./ui/Button";
 import FormInput from "./FormInput";
 import FormMultiInput from "./FormMultiInput";
 
-import { insertBoard } from "../utils/supabase/db_actions";
+import { actionBoard } from "../utils/supabase/db_actions";
 
 const FormBoard = ({
   label,
@@ -16,6 +16,7 @@ const FormBoard = ({
   setIsViewOpen,
   allColumns,
   boardIn,
+  user,
 }) => {
   const {
     register,
@@ -28,7 +29,7 @@ const FormBoard = ({
     },
   });
 
-  const onSubmit = (data) => insertBoard({ boardIn, ...data });
+  const onSubmit = (data) => actionBoard({ boardIn, ...data });
   // const onSubmit = (data) => console.log({ boardIn, ...data });
   return (
     <Transition appear show={isViewOpen} as={Fragment}>

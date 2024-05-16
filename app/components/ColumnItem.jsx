@@ -7,7 +7,7 @@ import { Label } from "./ui/Label";
 import FormTask from "./FormTask";
 import { Button } from "./ui/Button";
 
-const ColumnItem = ({ item, colId, columns }) => {
+const ColumnItem = ({ item, colId, columns, user }) => {
   const colIn = columns.find((col) => col.columnId === colId);
   const [isOpenView, setIsOpenView] = useState(false);
   const [isEditViewOpen, setIsEditViewOpen] = useState(false);

@@ -21,7 +21,7 @@ const DashboardPage = async () => {
     .eq("profile_id", user?.user?.id);
   const returnData = { boardObjectList: data };
 
-  return <Dashboard data={returnData} />;
+  return <Dashboard data={returnData} user={user} />;
 };
 
 export default DashboardPage;

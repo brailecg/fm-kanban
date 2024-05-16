@@ -7,6 +7,8 @@ import { supabaseBrowser } from "../utils/supabase/browser";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 
+import { actionBoard } from "../utils/supabase/db_actions";
+
 import Sidebar from "./Sidebar";
 import FormTask from "./FormTask";
 import FormBoard from "./FormBoard";
@@ -19,6 +21,7 @@ const Nav = ({
   selected,
   setSelected,
   columns,
+  user,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
@@ -36,6 +39,10 @@ const Nav = ({
   };
   const handleDeleteBoardButton = () => {
     setIsDeleteViewOpen(true);
+  };
+
+  const handleDeleteBoard = () => {
+    actionBoard({ action: "delete", boardIn: selectedBoard });
   };
 
   const signOut = async () => {
@@ -223,6 +230,7 @@ const Nav = ({
           selectedCol={selectedCol}
           isViewOpen={addTaskModal}
           setIsViewOpen={setAddTaskModal}
+          user={user}
         />
       )}
 
@@ -233,6 +241,7 @@ const Nav = ({
           setIsViewOpen={setIsEditBoardOpen}
           allColumns={columns}
           boardIn={selectedBoard}
+          user={user}
         />
       )}
       {isDeleteViewOpen && (
@@ -274,10 +283,14 @@ const Nav = ({
                       cannot be reversed.
                     </p>
                     <div className="flex space-x-2 justify-between">
-                      <Button className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
+                      <Button
+                        onClick={handleDeleteBoard}
+                        className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
                         Delete
                       </Button>
-                      <Button className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">
+                      <Button
+                        onClick={() => setIsDeleteViewOpen(false)}
+                        className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">
                         Cancel
                       </Button>
                     </div>
