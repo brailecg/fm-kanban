@@ -17,7 +17,6 @@ const Sidebar = ({
   setIsThemeToggled,
   selected,
   setSelected,
-  user,
 }) => {
   const [isAddBoardOpen, setIsAddBoardOpen] = useState(false);
 
@@ -102,12 +101,6 @@ const Sidebar = ({
                     <span className=" text-main-purple"> Create New Board</span>
                   </p>
                 </button>
-                <FormBoard
-                  label={"Add New Board"}
-                  isViewOpen={isAddBoardOpen}
-                  setIsViewOpen={setIsAddBoardOpen}
-                  user={user}
-                />
               </li>
             </ul>
           </div>
@@ -142,6 +135,12 @@ const Sidebar = ({
           </div>
         </div>
       </Transition>
+
+      <FormBoard
+        label={"Add New Board"}
+        isViewOpen={isAddBoardOpen}
+        setIsViewOpen={setIsAddBoardOpen}
+      />
     </>
   );
 };

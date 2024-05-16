@@ -3,29 +3,22 @@ import { supabaseServer } from "./server";
 
 const supabase = supabaseServer();
 
-const getUser = async () => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user;
-};
-
-export async function actionBoard({ action, boardIn, name, columns }) {
-  const user = await getUser();
-
+export async function actionBoard({ user, action, boardIn, name, columns }) {
+  console.log({ user });
+  return;
   if (user) {
     //delete
     if (action && action === "delete") {
       console.log({ action, boardIn });
-      // await supabase.from("board").delete().eq("board_id", boardIn?.boardId);
+      await supabase.from("board").delete().eq("board_id", boardIn?.boardId);
     } else {
       if (boardIn && boardIn?.boardId) {
         // upsert
         if (boardIn.boardName.trim() !== name.trim()) {
           console.log({ newName: name.trim() });
-          // await supabase
-          //   .from("board")
-          //   .upsert([{ board_id: boardIn?.boardId, board_name: name }]);
+          await supabase
+            .from("board")
+            .upsert([{ board_id: boardIn?.boardId, board_name: name }]);
         }
         if (columns) {
           let toUpsertArray = [];
@@ -53,11 +46,11 @@ export async function actionBoard({ action, boardIn, name, columns }) {
           });
           if (toUpsertArray) {
             console.log({ upsert: toUpsertArray });
-            //   await supabase.from("board_column").upsert(toUpsertArray);
+            await supabase.from("board_column").upsert(toUpsertArray);
           }
           if (toInsertArray) {
             console.log({ insert: toInsertArray });
-            //   await supabase.from("board_column").insert(toInsertArray);
+            await supabase.from("board_column").insert(toInsertArray);
           }
           // check if there's something to delete
           const oldColumnIds = boardIn?.columns.map((col) => col.columnId);
@@ -65,10 +58,10 @@ export async function actionBoard({ action, boardIn, name, columns }) {
             (old) => !newColumnIds.includes(old)
           );
           if (columnIdsToDelete) {
-            //   await supabase
-            //     .from("board_column")
-            //     .delete()
-            //     .in("board_id", columnIdsToDelete);
+            await supabase
+              .from("board_column")
+              .delete()
+              .in("board_id", columnIdsToDelete);
             console.log({ toDelete: columnIdsToDelete });
           }
         }
@@ -85,7 +78,7 @@ export async function actionBoard({ action, boardIn, name, columns }) {
           }));
           if (colsToInsertArray) {
             console.log({ colsToInsertArray });
-            //   await supabase.from("board_column").insert(colsToInsertArray);
+            await supabase.from("board_column").insert(colsToInsertArray);
           }
         }
       }

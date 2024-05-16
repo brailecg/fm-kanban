@@ -19,7 +19,6 @@ const FormTask = ({
   isViewOpen,
   setIsViewOpen,
   allSubtasks,
-  user,
 }) => {
   const {
     register,

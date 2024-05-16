@@ -8,7 +8,7 @@ import ShowSidebarIcon from "./ShowSidebarIcon";
 import ColumnArea from "./ColumnArea";
 import ColumnName from "./ColumnName";
 import FormBoard from "./FormBoard";
-const Dashboard = ({ data, user }) => {
+const Dashboard = ({ data }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -110,7 +110,6 @@ const Dashboard = ({ data, user }) => {
         selected={selected}
         setSelected={setSelected}
         columns={columns}
-        user={user}
       />
       <div className="flex flex-grow bg-main-light-lines dark:bg-main-very-dark-grey ">
         <div className="hidden sm:flex">
@@ -122,7 +121,6 @@ const Dashboard = ({ data, user }) => {
             setIsThemeToggled={setIsThemeToggled}
             selected={selected}
             setSelected={setSelected}
-            user={user}
           />
         </div>
         <DndContext onDragEnd={handleDragend}>
@@ -163,11 +161,7 @@ const Dashboard = ({ data, user }) => {
                                   color={column.columnColor}
                                   count={column.cards.length}
                                 />
-                                <ColumnArea
-                                  column={column}
-                                  columns={columns}
-                                  user={user}
-                                />
+                                <ColumnArea column={column} columns={columns} />
                               </div>
                             );
                           })}
@@ -190,7 +184,6 @@ const Dashboard = ({ data, user }) => {
           setIsViewOpen={setIsEditBoardOpen}
           allColumns={columns}
           boardIn={selectedBoard}
-          user={user}
         />
       )}
     </div>

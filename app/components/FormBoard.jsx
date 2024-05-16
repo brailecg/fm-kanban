@@ -16,7 +16,6 @@ const FormBoard = ({
   setIsViewOpen,
   allColumns,
   boardIn,
-  user,
 }) => {
   const {
     register,
@@ -28,7 +27,6 @@ const FormBoard = ({
       columns: allColumns ? allColumns : [],
     },
   });
-
   const onSubmit = (data) => actionBoard({ boardIn, ...data });
   // const onSubmit = (data) => console.log({ boardIn, ...data });
   return (

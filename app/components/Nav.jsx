@@ -21,7 +21,6 @@ const Nav = ({
   selected,
   setSelected,
   columns,
-  user,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
@@ -230,7 +229,6 @@ const Nav = ({
           selectedCol={selectedCol}
           isViewOpen={addTaskModal}
           setIsViewOpen={setAddTaskModal}
-          user={user}
         />
       )}
 
@@ -241,7 +239,6 @@ const Nav = ({
           setIsViewOpen={setIsEditBoardOpen}
           allColumns={columns}
           boardIn={selectedBoard}
-          user={user}
         />
       )}
       {isDeleteViewOpen && (
