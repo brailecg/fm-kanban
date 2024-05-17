@@ -8,6 +8,7 @@ import ShowSidebarIcon from "./ShowSidebarIcon";
 import ColumnArea from "./ColumnArea";
 import ColumnName from "./ColumnName";
 import FormBoard from "./FormBoard";
+import { actionTaskMove } from "../utils/supabase/db_actions";
 const Dashboard = ({ data }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
@@ -22,7 +23,7 @@ const Dashboard = ({ data }) => {
     }
   }, [boardList, selected]);
 
-  const moveCard = (
+  const moveCard = async (
     boardList,
     selectedBoardId,
     fromColumnId,
@@ -66,7 +67,12 @@ const Dashboard = ({ data }) => {
       // Ensure the index is within the bounds of the target array
       const validIndex = Math.min(toColumn.cards.length, toIndex);
       toColumn.cards.splice(validIndex, 0, cardToMove);
-      console.log("Card moved successfully.");
+      const moveCard = await actionTaskMove(cardToMove, toColumn);
+      if (moveCard.length > 0 && moveCard[0]?.card_id) {
+        console.log("Card moved successfully.");
+      } else {
+        console.log("Error received");
+      }
     } else if (!toColumn) {
       console.log("Target column not found.");
     }

@@ -15,7 +15,7 @@ const DashboardPage = async () => {
     .select(
       `boardId:board_id, boardName:board_name, boardDescription:board_description,
       columns:board_column (columnId:column_id, columnName:column_name, columnColor:column_color,
-      cards:card(cardId:card_id, cardName:card_name, cardDescription:card_description, 
+      cards:card(cardId:card_id, cardName:card_name, cardDescription:card_description, columnId:column_id,
       subtasks:subtask(id:subtask_id, subTaskDescription:subtask_description, status:subtask_status)))`
     )
     .eq("profile_id", user?.user?.id);

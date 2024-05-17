@@ -94,3 +94,22 @@ export async function actionBoard({ action, boardIn, name, columns }) {
     }
   }
 }
+
+export async function actionTaskMove(cardToMove, toColumn) {
+  const user = await getCurrentUser();
+  if (!user)
+    return { error: true, errorMessage: "User not Found. Session Expired" };
+
+  if (!cardToMove) return { error: true, errorMessage: "No Task Selected" };
+
+  if (!toColumn)
+    return { error: true, errorMessage: "No column to Transfer to" };
+
+  const { data, error } = await supabase
+    .from("card")
+    .update({ column_id: toColumn?.columnId })
+    .eq("card_id", cardToMove?.cardId)
+    .select();
+
+  if (!error) return data;
+}
