@@ -24,13 +24,7 @@ const FormBoard = ({
     formState: { errors },
   } = useForm({
     defaultValues: {
-      columns: allColumns
-        ? allColumns
-        : [
-            { columnName: "Todo" },
-            { columnName: "In Progress" },
-            { columnName: "Done" },
-          ],
+      columns: allColumns ? allColumns : [],
     },
   });
   const onSubmit = (data) => actionBoard({ boardIn, ...data });
