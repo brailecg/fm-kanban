@@ -113,3 +113,18 @@ export async function actionTaskMove(cardToMove, toColumn) {
 
   if (!error) return data;
 }
+
+export async function actionSubTaskStatusChange(taskToUpdate) {
+  const user = await getCurrentUser();
+  if (!user)
+    return { error: true, errorMessage: "User not Found. Session Expired" };
+  if (!taskToUpdate) return { error: true, errorMessage: "No Task to Update" };
+
+  const { data, error } = await supabase
+    .from("subtask")
+    .update({ subtask_status: taskToUpdate.status })
+    .eq("subtask_id", taskToUpdate.id)
+    .select();
+
+  if (!error) return data;
+}

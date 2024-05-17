@@ -85,7 +85,7 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
         className="text-main-purple w-full rounded-full dark:bg-white bg-[#635FC7] bg-opacity-10 hover:bg-opacity-25 cursor-pointer"
         type="button"
         onClick={handleAddInput}>
-        + Add New Column
+        {`+ Add New ${label.includes("Task") ? "Task" : "Column"}`}
       </Button>
     </div>
   );
