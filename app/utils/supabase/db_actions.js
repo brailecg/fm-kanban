@@ -3,9 +3,13 @@ import { supabaseServer } from "./server";
 
 const supabase = supabaseServer();
 
-export async function actionBoard({ user, action, boardIn, name, columns }) {
-  console.log({ user });
-  return;
+const getCurrentUser = async () => {
+  const { data: user } = await supabase.auth.getUser();
+  return user;
+};
+export async function actionBoard({ action, boardIn, name, columns }) {
+  const user = await getCurrentUser();
+  const oldColumnIds = boardIn?.columns?.map((col) => col.columnId);
   if (user) {
     //delete
     if (action && action === "delete") {
@@ -20,7 +24,7 @@ export async function actionBoard({ user, action, boardIn, name, columns }) {
             .from("board")
             .upsert([{ board_id: boardIn?.boardId, board_name: name }]);
         }
-        if (columns) {
+        if (columns.length > 0 || oldColumnIds.length > 0) {
           let toUpsertArray = [];
           let toInsertArray = [];
           let newColumnIds = [];
@@ -32,7 +36,7 @@ export async function actionBoard({ user, action, boardIn, name, columns }) {
             ) {
               toUpsertArray.push({
                 column_id: col?.columnId,
-                colum_name: col?.title.trim(),
+                column_name: col?.title.trim(),
               });
             }
 
@@ -44,41 +48,46 @@ export async function actionBoard({ user, action, boardIn, name, columns }) {
             }
             newColumnIds.push(col?.columnId);
           });
-          if (toUpsertArray) {
+          if (toUpsertArray.length > 0) {
             console.log({ upsert: toUpsertArray });
             await supabase.from("board_column").upsert(toUpsertArray);
           }
-          if (toInsertArray) {
+          if (toInsertArray.length > 0) {
             console.log({ insert: toInsertArray });
             await supabase.from("board_column").insert(toInsertArray);
           }
           // check if there's something to delete
-          const oldColumnIds = boardIn?.columns.map((col) => col.columnId);
+          console.log({ newColumnIds });
           const columnIdsToDelete = oldColumnIds.filter(
             (old) => !newColumnIds.includes(old)
           );
-          if (columnIdsToDelete) {
+          if (columnIdsToDelete.length > 0) {
             await supabase
               .from("board_column")
               .delete()
-              .in("board_id", columnIdsToDelete);
+              .in("column_id", columnIdsToDelete);
             console.log({ toDelete: columnIdsToDelete });
           }
+        } else {
         }
       } else {
         //insert
         const { data, error } = await supabase
           .from("board")
-          .insert({ board_name: name })
+          .insert({ board_name: name, profile_id: user?.user.id })
           .select();
-        if (columns && !error) {
+        if (columns.length > 0 && !error) {
           const colsToInsertArray = columns.map((col) => ({
-            board_id: data?.board_id,
-            column_name: col.columName,
+            board_id: data[0]?.board_id,
+            column_name: col.title.trim(),
           }));
-          if (colsToInsertArray) {
+          if (colsToInsertArray.length > 0) {
             console.log({ colsToInsertArray });
-            await supabase.from("board_column").insert(colsToInsertArray);
+            const { data, error } = await supabase
+              .from("board_column")
+              .insert(colsToInsertArray)
+              .select();
+            console.log({ data });
           }
         }
       }
