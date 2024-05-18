@@ -9,6 +9,7 @@ import FormInput from "./FormInput";
 import FormTextArea from "./FormTextArea";
 import FormMultiInput from "./FormMultiInput";
 import FormStatus from "./FormStatus";
+import { actionTask } from "../utils/supabase/db_actions";
 
 const FormTask = ({
   label,
@@ -30,7 +31,9 @@ const FormTask = ({
       subtasks: allSubtasks ? allSubtasks : [],
     },
   });
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => actionTask({ item, data });
+  //const onSubmit = (data) => console.log({ item, data });
   return (
     <Transition appear show={isViewOpen} as={Fragment}>
       <Dialog

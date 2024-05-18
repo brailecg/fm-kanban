@@ -9,6 +9,7 @@ import { Button } from "./ui/Button";
 
 import {
   actionSubTaskStatusChange,
+  actionTask,
   actionTaskMove,
 } from "../utils/supabase/db_actions";
 
@@ -66,6 +67,10 @@ const ColumnItem = ({ item, colId, columns }) => {
     setIsEditViewOpen(false);
     setIsDeleteViewOpen(true);
     handleCloseView();
+  };
+
+  const handleDeleteTask = () => {
+    actionTask({ action: "delete", item });
   };
 
   const handleCloseView = async () => {
@@ -345,10 +350,14 @@ const ColumnItem = ({ item, colId, columns }) => {
                     task and its subtasks? This action cannot be reversed.
                   </p>
                   <div className="flex space-x-2 justify-between">
-                    <Button className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
+                    <Button
+                      onClick={handleDeleteTask}
+                      className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
                       Delete
                     </Button>
-                    <Button className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">
+                    <Button
+                      onClick={() => setIsDeleteViewOpen(false)}
+                      className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">
                       Cancel
                     </Button>
                   </div>
