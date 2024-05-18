@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { useForm } from "react-hook-form";
 
 import { Dialog, Transition } from "@headlessui/react";
-
+import { DndContext } from "@dnd-kit/core";
 import { Button } from "./ui/Button";
 import FormInput from "./FormInput";
 import FormMultiInput from "./FormMultiInput";
@@ -29,6 +29,10 @@ const FormBoard = ({
   });
   const onSubmit = (data) => actionBoard({ boardIn, ...data });
   // const onSubmit = (data) => console.log({ boardIn, ...data });
+
+  const handleDragOrderEnd = (event) => {
+    console.log({ event });
+  };
   return (
     <Transition appear show={isViewOpen} as={Fragment}>
       <Dialog
@@ -59,38 +63,40 @@ const FormBoard = ({
               <Dialog.Panel className=" overflow-visible w-[480px] max-h-[600px] p-8 overflow-y-auto bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
                 <div className="">
                   <p className=" font-semibold text-[18px]">{label}</p>
-                  <form
-                    className=" space-y-6"
-                    onSubmit={handleSubmit(onSubmit)}>
-                    <FormInput
-                      label={"Name"}
-                      name={"name"}
-                      register={register}
-                      control={control}
-                      errors={errors}
-                      value={boardIn ? boardIn?.boardName : ""}
-                    />
-
-                    <FormMultiInput
-                      label={"Columns"}
-                      name={"columns"}
-                      register={register}
-                      errors={errors}
-                      control={control}
-                      from={"board"}
-                    />
-
-                    <Button
-                      className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer"
-                      asChild>
-                      <input
-                        type="submit"
-                        value={`${
-                          boardIn ? "Save Changes" : "Create New Board"
-                        } `}
+                  <DndContext onDragEnd={handleDragOrderEnd}>
+                    <form
+                      className=" space-y-6"
+                      onSubmit={handleSubmit(onSubmit)}>
+                      <FormInput
+                        label={"Name"}
+                        name={"name"}
+                        register={register}
+                        control={control}
+                        errors={errors}
+                        value={boardIn ? boardIn?.boardName : ""}
                       />
-                    </Button>
-                  </form>
+
+                      <FormMultiInput
+                        label={"Columns"}
+                        name={"columns"}
+                        register={register}
+                        errors={errors}
+                        control={control}
+                        from={"board"}
+                      />
+
+                      <Button
+                        className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer"
+                        asChild>
+                        <input
+                          type="submit"
+                          value={`${
+                            boardIn ? "Save Changes" : "Create New Board"
+                          } `}
+                        />
+                      </Button>
+                    </form>
+                  </DndContext>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

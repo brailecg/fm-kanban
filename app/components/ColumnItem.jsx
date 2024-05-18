@@ -123,7 +123,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                   leave="ease-in duration-200"
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95">
-                  <Dialog.Panel className="p-8 space-y-6 overflow-visible bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
+                  <Dialog.Panel className=" min-w-[400px] p-8 space-y-6 overflow-visible bg-[var(--menu-background-color)] bg-white dark:bg-main-dark-grey dark:text-white rounded-md">
                     <div className="flex justify-between relative">
                       <p className="font-bold text-[18px]">{item.cardName}</p>
 
