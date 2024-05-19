@@ -14,7 +14,7 @@ const DashboardPage = async () => {
     .from("board")
     .select(
       `boardId:board_id, boardName:board_name, boardDescription:board_description,
-      columns:board_column (columnId:column_id, columnName:column_name, columnColor:column_color,
+      columns:board_column (columnId:column_id, columnName:column_name, columnColor:column_color, columnOrder:column_order,
       cards:card(cardId:card_id, cardName:card_name, cardDescription:card_description, columnId:column_id,
       subtasks:subtask(id:subtask_id, subTaskDescription:subtask_description, status:subtask_status)))`
     )
