@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Label } from "./ui/Label";
 import { Button } from "./ui/Button";
@@ -23,14 +23,12 @@ import {
 } from "@dnd-kit/sortable";
 
 const FormMultiInput = ({ label, name, register, errors, control, from }) => {
-  const { fields, append, remove } = useFieldArray({
+  let { fields, append, remove, replace } = useFieldArray({
     control,
     name,
   });
 
   const [activeId, setActiveId] = useState(null);
-
-  const fieldsIdsArray = fields.map((fld) => fld.id);
 
   const [items, setItems] = useState(fields);
   const sensors = useSensors(
@@ -48,24 +46,28 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
 
   function handleDragEnd(event) {
     const { active, over } = event;
-    console.log({ active, over });
+
     if (active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = active?.data.current.sortable.index;
-        const newIndex = over?.data.current.sortable.index;
-        console.log({ oldIndex, newIndex });
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      const oldIndex = active?.data.current.sortable.index;
+      const newIndex = over?.data.current.sortable.index;
+      // setItems((items) => {
+      //   return arrayMove(items, oldIndex, newIndex);
+      // });
+      const newFields = arrayMove(fields, oldIndex, newIndex);
+      console.log({ newFields });
+      replace(newFields);
     }
 
     setActiveId(null);
   }
-  const handleAddInput = () => {
-    append({ title: "" }); // Append a new empty subtask
-
-    console.log({ fields });
+  const handleAddInput = (e) => {
+    append(); // Append a new empty subtask
   };
-  console.log({ items });
+  const handleRemoveInput = (index) => {
+    console.log({ index });
+    remove(index); // Remove the subtask at given index
+  };
+
   return (
     <div className="space-y-2">
       <Label name={label} />
@@ -74,18 +76,17 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
         collisionDetection={closestCenter}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}>
-        <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          {items.map((item, index) => {
+        <SortableContext items={fields} strategy={verticalListSortingStrategy}>
+          {fields.map((item, index) => {
             return (
               <SubtaskDraggable
                 key={item.id}
-                id={item.id}
                 item={item}
                 index={index}
                 register={register}
                 errors={errors}
                 from={from}
-                remove={remove}
+                handleRemoveInput={handleRemoveInput}
                 control={control}
                 name={name}
               />

@@ -71,7 +71,6 @@ export async function actionBoard({ action, boardIn, name, columns }) {
             .in("column_id", columnIdsToDelete);
           console.log({ toDelete: columnIdsToDelete });
         }
-      } else {
       }
     } else {
       //insert

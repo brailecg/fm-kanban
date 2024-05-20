@@ -27,8 +27,8 @@ const FormBoard = ({
       columns: allColumns ? allColumns : [],
     },
   });
-  const onSubmit = (data) => actionBoard({ boardIn, ...data });
-  // const onSubmit = (data) => console.log({ boardIn, ...data });
+  // const onSubmit = (data) => actionBoard({ boardIn, ...data });
+  const onSubmit = (data) => console.log({ boardIn, ...data });
 
   return (
     <Transition appear show={isViewOpen} as={Fragment}>
@@ -82,16 +82,13 @@ const FormBoard = ({
                       from={"board"}
                     />
 
-                    <Button
-                      className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer"
-                      asChild>
-                      <input
-                        type="submit"
-                        value={`${
-                          boardIn ? "Save Changes" : "Create New Board"
-                        } `}
-                      />
-                    </Button>
+                    <input
+                      className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer h-10"
+                      type="submit"
+                      value={`${
+                        boardIn ? "Save Changes" : "Create New Board"
+                      } `}
+                    />
                   </form>
                 </div>
               </Dialog.Panel>
