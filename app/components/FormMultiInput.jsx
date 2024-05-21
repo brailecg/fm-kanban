@@ -22,7 +22,16 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-const FormMultiInput = ({ label, name, register, errors, control, from }) => {
+const FormMultiInput = ({
+  label,
+  name,
+  register,
+  errors,
+  control,
+  from,
+  setValue,
+  useWatch,
+}) => {
   let { fields, append, remove, replace } = useFieldArray({
     control,
     name,
@@ -30,7 +39,6 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
 
   const [activeId, setActiveId] = useState(null);
 
-  const [items, setItems] = useState(fields);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -40,7 +48,6 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
 
   function handleDragStart(event) {
     const { active } = event;
-
     setActiveId(active.id);
   }
 
@@ -50,9 +57,6 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
     if (active.id !== over.id) {
       const oldIndex = active?.data.current.sortable.index;
       const newIndex = over?.data.current.sortable.index;
-      // setItems((items) => {
-      //   return arrayMove(items, oldIndex, newIndex);
-      // });
       const newFields = arrayMove(fields, oldIndex, newIndex);
       console.log({ newFields });
       replace(newFields);
@@ -61,13 +65,12 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
     setActiveId(null);
   }
   const handleAddInput = (e) => {
-    append(); // Append a new empty subtask
+    append({ title: "" }); // Append a new empty subtask
   };
   const handleRemoveInput = (index) => {
-    console.log({ index });
     remove(index); // Remove the subtask at given index
   };
-
+  fields.sort((a, b) => a.columnOrder - b.columnOrder);
   return (
     <div className="space-y-2">
       <Label name={label} />
@@ -86,9 +89,10 @@ const FormMultiInput = ({ label, name, register, errors, control, from }) => {
                 register={register}
                 errors={errors}
                 from={from}
-                handleRemoveInput={handleRemoveInput}
                 control={control}
+                handleRemoveInput={handleRemoveInput}
                 name={name}
+                setValue={setValue}
               />
             );
           })}

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import { Dialog, Transition } from "@headlessui/react";
 
@@ -22,6 +22,7 @@ const FormBoard = ({
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       columns: allColumns ? allColumns : [],
@@ -80,6 +81,8 @@ const FormBoard = ({
                       errors={errors}
                       control={control}
                       from={"board"}
+                      setValue={setValue}
+                      useWatch={useWatch}
                     />
 
                     <input
