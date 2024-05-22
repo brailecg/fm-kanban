@@ -26,6 +26,7 @@ const FormTask = ({
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       subtasks: allSubtasks ? allSubtasks : [],
@@ -95,6 +96,7 @@ const FormTask = ({
                       register={register}
                       errors={errors}
                       control={control}
+                      setValue={setValue}
                     />
                     <FormStatus
                       name="status"

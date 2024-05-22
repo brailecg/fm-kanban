@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { Dialog, Transition } from "@headlessui/react";
 
@@ -28,8 +28,8 @@ const FormBoard = ({
       columns: allColumns ? allColumns : [],
     },
   });
-  // const onSubmit = (data) => actionBoard({ boardIn, ...data });
-  const onSubmit = (data) => console.log({ boardIn, ...data });
+  const onSubmit = (data) => actionBoard({ boardIn, ...data });
+  // const onSubmit = (data) => console.log({ boardIn, ...data });
 
   return (
     <Transition appear show={isViewOpen} as={Fragment}>
@@ -82,7 +82,6 @@ const FormBoard = ({
                       control={control}
                       from={"board"}
                       setValue={setValue}
-                      useWatch={useWatch}
                     />
 
                     <input

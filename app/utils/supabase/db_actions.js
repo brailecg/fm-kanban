@@ -31,15 +31,30 @@ export async function actionBoard({ action, boardIn, name, columns }) {
         let toUpsertArray = [];
         let toInsertArray = [];
         let newColumnIds = [];
-        columns.forEach((col) => {
+        columns.forEach((col, index) => {
           if (
-            col?.title &&
-            col?.columnName &&
-            col?.columnName.trim() !== col?.title.trim()
+            (col?.columnId &&
+              col?.title &&
+              col?.columnName &&
+              col?.columnName.trim() !== col?.title.trim()) ||
+            col?.columnOrder !== index
           ) {
+            // const colObj = {};
+            // colObj.column_id = col?.columnId;
+            // if (
+            //   col?.title &&
+            //   col?.columnName &&
+            //   col?.columnName.trim() !== col?.title.trim()
+            // ) {
+            //   colObj.column_name = col?.title.trim();
+            // }
+            // if (col?.columnOrder !== index) {
+            //   colObj.column_order = index;
+            // }
             toUpsertArray.push({
               column_id: col?.columnId,
               column_name: col?.title.trim(),
+              column_order: index,
             });
           }
 
@@ -47,6 +62,7 @@ export async function actionBoard({ action, boardIn, name, columns }) {
             toInsertArray.push({
               board_id: boardIn?.boardId,
               column_name: col?.title.trim(),
+              column_order: index,
             });
           }
           newColumnIds.push(col?.columnId);
@@ -60,7 +76,7 @@ export async function actionBoard({ action, boardIn, name, columns }) {
           await supabase.from("board_column").insert(toInsertArray);
         }
         // check if there's something to delete
-        console.log({ newColumnIds });
+
         const columnIdsToDelete = oldColumnIds.filter(
           (old) => !newColumnIds.includes(old)
         );
@@ -79,9 +95,10 @@ export async function actionBoard({ action, boardIn, name, columns }) {
         .insert({ board_name: name, profile_id: user?.user.id })
         .select();
       if (columns.length > 0 && !error) {
-        const colsToInsertArray = columns.map((col) => ({
+        const colsToInsertArray = columns.map((col, index) => ({
           board_id: data[0]?.board_id,
           column_name: col.title.trim(),
+          column_order: index,
         }));
         if (colsToInsertArray.length > 0) {
           console.log({ colsToInsertArray });
@@ -139,7 +156,7 @@ export async function actionTask({ action, item, data }) {
     //delete
     if (action && action === "delete") {
       console.log({ action, item });
-      // await supabase.from("card").delete().eq("card_id", item?.cardId);
+      await supabase.from("card").delete().eq("card_id", item?.cardId);
     } else {
       const itemUpdateObject = {};
       if (item?.cardName.trim() !== data?.title.trim()) {
@@ -153,12 +170,12 @@ export async function actionTask({ action, item, data }) {
       }
 
       if (Object.keys(itemUpdateObject).length > 0) {
-        // const { data, error } = await supabase
-        //   .from("card")
-        //   .update(itemUpdateObject)
-        //   .eq("card_id", item?.cardId)
-        //   .select();
-        // console.log({ data, error });
+        const { data, error } = await supabase
+          .from("card")
+          .update(itemUpdateObject)
+          .eq("card_id", item?.cardId)
+          .select();
+        console.log({ data, error });
       }
 
       if (item?.subtasks.length > 0 || data?.subtasks.length > 0) {

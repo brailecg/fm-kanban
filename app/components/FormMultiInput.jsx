@@ -30,7 +30,6 @@ const FormMultiInput = ({
   control,
   from,
   setValue,
-  useWatch,
 }) => {
   let { fields, append, remove, replace } = useFieldArray({
     control,
@@ -70,7 +69,7 @@ const FormMultiInput = ({
   const handleRemoveInput = (index) => {
     remove(index); // Remove the subtask at given index
   };
-  fields.sort((a, b) => a.columnOrder - b.columnOrder);
+  console.log({ fields });
   return (
     <div className="space-y-2">
       <Label name={label} />
@@ -89,7 +88,6 @@ const FormMultiInput = ({
                 register={register}
                 errors={errors}
                 from={from}
-                control={control}
                 handleRemoveInput={handleRemoveInput}
                 name={name}
                 setValue={setValue}

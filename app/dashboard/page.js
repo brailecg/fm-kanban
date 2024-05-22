@@ -18,7 +18,12 @@ const DashboardPage = async () => {
       cards:card(cardId:card_id, cardName:card_name, cardDescription:card_description, columnId:column_id,
       subtasks:subtask(id:subtask_id, subTaskDescription:subtask_description, status:subtask_status)))`
     )
-    .eq("profile_id", user?.user?.id);
+    .eq("profile_id", user?.user?.id)
+    .order("column_order", {
+      referencedTable: "board_column",
+      ascending: true,
+    });
+
   const returnData = { boardObjectList: data };
 
   return <Dashboard data={returnData} />;

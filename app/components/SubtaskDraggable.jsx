@@ -10,11 +10,9 @@ const SubtaskDraggable = ({
   register,
   errors,
   from,
-  control,
   handleRemoveInput,
   name,
   setValue,
-  replace,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: item.id });
@@ -29,6 +27,8 @@ const SubtaskDraggable = ({
       ? item?.title
         ? item?.title
         : item?.columnName
+      : item?.title
+      ? item?.title
       : item?.subTaskDescription;
   const handleInputChange = (e) => {
     item.title = e.target.value;
@@ -59,7 +59,7 @@ const SubtaskDraggable = ({
             <Input
               className={`${
                 errors[name]
-                  ? errors[name][index] // TODO: all inputs get the border red even when only one has error. errors[name][index] does not work for empty
+                  ? errors[name][index]
                     ? "border-red-500 focus:border-red-500 focus:outline-none"
                     : "focus:outline-main-purple"
                   : ""

@@ -17,6 +17,7 @@ const Dashboard = ({ data }) => {
 
   const [isDropped, setIsDropped] = useState(false);
   const boardList = data?.boardObjectList;
+
   useEffect(() => {
     if (boardList.length > 0 && selected === null) {
       setSelected(boardList[0].boardId);
@@ -102,9 +103,7 @@ const Dashboard = ({ data }) => {
     );
     setIsDropped((prev) => !prev);
   };
-  const selectedBoard = data?.boardObjectList.find(
-    (board) => board.boardId === selected
-  );
+  const selectedBoard = boardList.find((board) => board.boardId === selected);
   const columns = selectedBoard?.columns;
 
   return (
