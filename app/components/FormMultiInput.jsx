@@ -69,7 +69,7 @@ const FormMultiInput = ({
   const handleRemoveInput = (index) => {
     remove(index); // Remove the subtask at given index
   };
-  console.log({ fields });
+
   return (
     <div className="space-y-2">
       <Label name={label} />

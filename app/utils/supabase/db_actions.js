@@ -7,6 +7,24 @@ const getCurrentUser = async () => {
   const { data: user } = await supabase.auth.getUser();
   return user;
 };
+
+export async function getAllData() {
+  const { data, error } = await supabase
+    .from("board")
+    .select(
+      `boardId:board_id, boardName:board_name, boardDescription:board_description,
+    columns:board_column (columnId:column_id, columnName:column_name, columnColor:column_color, columnOrder:column_order,
+    cards:card(cardId:card_id, cardName:card_name, cardDescription:card_description, columnId:column_id,
+    subtasks:subtask(id:subtask_id, subTaskDescription:subtask_description, status:subtask_status)))`
+    )
+    .order("column_order", {
+      referencedTable: "board_column",
+      ascending: true,
+    }); // no need to filter by user since there is an RLS in the database that covers it
+
+  if (data) return { boardObjectList: data };
+}
+
 export async function actionBoard({ action, boardIn, name, columns }) {
   const user = await getCurrentUser();
   const oldColumnIds = boardIn?.columns?.map((col) => col.columnId);
@@ -19,13 +37,13 @@ export async function actionBoard({ action, boardIn, name, columns }) {
     console.log({ action, boardIn });
     await supabase.from("board").delete().eq("board_id", boardIn?.boardId);
   } else {
-    if (boardIn && boardIn?.boardId) {
+    if (boardIn && boardIn.boardId) {
       // upsert
       if (boardIn.boardName.trim() !== name.trim()) {
-        console.log({ newName: name.trim() });
         await supabase
           .from("board")
-          .upsert([{ board_id: boardIn?.boardId, board_name: name }]);
+          .update({ board_name: name.trim() })
+          .eq("board_id", boardIn.boardId);
       }
       if (columns.length > 0 || oldColumnIds.length > 0) {
         let toUpsertArray = [];
@@ -33,24 +51,12 @@ export async function actionBoard({ action, boardIn, name, columns }) {
         let newColumnIds = [];
         columns.forEach((col, index) => {
           if (
-            (col?.columnId &&
-              col?.title &&
-              col?.columnName &&
-              col?.columnName.trim() !== col?.title.trim()) ||
-            col?.columnOrder !== index
+            (col.columnId &&
+              col.title &&
+              col.columnName &&
+              col.columnName.trim() !== col.title.trim()) ||
+            col.columnOrder !== index
           ) {
-            // const colObj = {};
-            // colObj.column_id = col?.columnId;
-            // if (
-            //   col?.title &&
-            //   col?.columnName &&
-            //   col?.columnName.trim() !== col?.title.trim()
-            // ) {
-            //   colObj.column_name = col?.title.trim();
-            // }
-            // if (col?.columnOrder !== index) {
-            //   colObj.column_order = index;
-            // }
             toUpsertArray.push({
               column_id: col?.columnId,
               column_name: col?.title.trim(),
@@ -90,6 +96,7 @@ export async function actionBoard({ action, boardIn, name, columns }) {
       }
     } else {
       //insert
+      console.log({ boardIn, name, user });
       const { data, error } = await supabase
         .from("board")
         .insert({ board_name: name, profile_id: user?.user.id })

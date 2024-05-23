@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { supabaseBrowser } from "../utils/supabase/browser";
 import { DndContext } from "@dnd-kit/core";
 import Sidebar from "../components/Sidebar";
 import Nav from "./Nav";
@@ -9,23 +10,48 @@ import ColumnArea from "./ColumnArea";
 import ColumnName from "./ColumnName";
 import FormBoard from "./FormBoard";
 import { actionTaskMove } from "../utils/supabase/db_actions";
-const Dashboard = ({ data }) => {
+import { getAllData } from "../utils/supabase/db_actions";
+const Dashboard = ({ returnData }) => {
+  const boardList = returnData?.boardObjectList;
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(boardList[0].boardId);
   const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
 
   const [isDropped, setIsDropped] = useState(false);
-  const boardList = data?.boardObjectList;
-
+  const [boards, setBoards] = useState(boardList);
+  const [data, setData] = useState(returnData);
   useEffect(() => {
-    if (boardList.length > 0 && selected === null) {
-      setSelected(boardList[0].boardId);
-    }
-  }, [boardList, selected]);
+    const channel = supabaseBrowser()
+      .channel("schema-public-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+        },
+        async (payload) => {
+          console.log({ payload });
+          const newData = await getAllData();
+          const newBoardList = newData?.boardObjectList;
+
+          setData(newData);
+          setBoards(newBoardList);
+          if (payload.eventType === "DELETE" && payload.table === "board") {
+            setSelected(newBoardList[0].boardId);
+          }
+          // return setBoards([...boards, payload.new]);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabaseBrowser().removeChannel(channel);
+    };
+  }, [boards, data]);
 
   const moveCard = async (
-    boardList,
+    boards,
     selectedBoardId,
     fromColumnId,
     toColumnId,
@@ -35,7 +61,7 @@ const Dashboard = ({ data }) => {
     let cardToMove = null;
 
     // Find the board
-    const board = boardList.find((board) => board.boardId === selectedBoardId);
+    const board = boards.find((board) => board.boardId === selectedBoardId);
     if (!board) {
       console.log("Board not found.");
       return;
@@ -93,17 +119,11 @@ const Dashboard = ({ data }) => {
     const columnFromId = activeData.colId;
     const cardId = active.id;
 
-    moveCard(
-      boardList,
-      selected,
-      columnFromId,
-      columnToId,
-      cardId,
-      columnToIndex
-    );
+    moveCard(boards, selected, columnFromId, columnToId, cardId, columnToIndex);
     setIsDropped((prev) => !prev);
   };
-  const selectedBoard = boardList.find((board) => board.boardId === selected);
+
+  const selectedBoard = boards.find((board) => board.boardId === selected);
   const columns = selectedBoard?.columns;
 
   return (
@@ -130,8 +150,8 @@ const Dashboard = ({ data }) => {
         </div>
         <DndContext onDragEnd={handleDragend}>
           <main className="overflow-y-auto overflow-x-auto flex-grow p-4 sm:p-6 min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-96px)]">
-            {boardList.length > 0 &&
-              boardList?.map((board) => {
+            {boards.length > 0 &&
+              boards?.map((board) => {
                 if (selected === board.boardId) {
                   return (
                     <React.Fragment key={board.boardId}>
