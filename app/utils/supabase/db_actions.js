@@ -1,14 +1,14 @@
 "use server";
 import { supabaseServer } from "./server";
 
-const supabase = supabaseServer();
-
 const getCurrentUser = async () => {
+  const supabase = await supabaseServer();
   const { data: user } = await supabase.auth.getUser();
   return user;
 };
 
 export async function getAllData() {
+  const supabase = await supabaseServer();
   const { data, error } = await supabase
     .from("board")
     .select(
