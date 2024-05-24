@@ -52,7 +52,6 @@ const Nav = ({
     if (!error) {
       router.push("/auth");
     }
-    console.log({ error });
   };
 
   return (

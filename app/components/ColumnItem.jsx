@@ -51,11 +51,6 @@ const ColumnItem = ({ item, colId, columns }) => {
   const handleChangeTaskStatus = async (e) => {
     setSelectedCol(e);
     const moveCard = await actionTaskMove(item, e);
-    if (moveCard.length > 0 && moveCard[0]?.card_id) {
-      console.log("Card moved successfully.");
-    } else {
-      console.log("Error received");
-    }
   };
 
   const handleTaskButton = () => {

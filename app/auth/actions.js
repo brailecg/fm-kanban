@@ -14,9 +14,7 @@ export async function login(formData) {
     },
   });
 
-  if (error) {
-    console.log({ error });
-  } else {
+  if (!error) {
     return redirect(data.url);
   }
 }

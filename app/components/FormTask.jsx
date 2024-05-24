@@ -34,7 +34,6 @@ const FormTask = ({
   });
 
   const onSubmit = (data) => actionTask({ item, data });
-  //const onSubmit = (data) => console.log({ item, data });
   return (
     <Transition appear show={isViewOpen} as={Fragment}>
       <Dialog

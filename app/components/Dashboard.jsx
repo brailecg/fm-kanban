@@ -62,7 +62,6 @@ const Dashboard = ({ returnData }) => {
     // Find the board
     const board = boards.find((board) => board.boardId === selectedBoardId);
     if (!board) {
-      console.log("Board not found.");
       return;
     }
 
@@ -77,11 +76,9 @@ const Dashboard = ({ returnData }) => {
       if (cardIndex > -1) {
         cardToMove = fromColumn.cards.splice(cardIndex, 1)[0];
       } else {
-        console.log("Card not found in the source column.");
         return;
       }
     } else {
-      console.log("Source column not found.");
       return;
     }
 
@@ -94,13 +91,6 @@ const Dashboard = ({ returnData }) => {
       const validIndex = Math.min(toColumn.cards.length, toIndex);
       toColumn.cards.splice(validIndex, 0, cardToMove);
       const moveCard = await actionTaskMove(cardToMove, toColumn);
-      if (moveCard.length > 0 && moveCard[0]?.card_id) {
-        console.log("Card moved successfully.");
-      } else {
-        console.log("Error received");
-      }
-    } else if (!toColumn) {
-      console.log("Target column not found.");
     }
   };
 
