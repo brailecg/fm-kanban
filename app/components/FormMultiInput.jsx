@@ -57,7 +57,7 @@ const FormMultiInput = ({
       const oldIndex = active?.data.current.sortable.index;
       const newIndex = over?.data.current.sortable.index;
       const newFields = arrayMove(fields, oldIndex, newIndex);
-      console.log({ newFields });
+
       replace(newFields);
     }
 
@@ -74,6 +74,7 @@ const FormMultiInput = ({
     <div className="space-y-2">
       <Label name={label} />
       <DndContext
+        id="dnd-form-id"
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragStart={handleDragStart}

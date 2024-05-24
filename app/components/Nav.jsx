@@ -1,6 +1,7 @@
 "use client";
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { supabaseBrowser } from "../utils/supabase/browser";
 
@@ -22,6 +23,7 @@ const Nav = ({
   setSelected,
   columns,
 }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false);
@@ -47,6 +49,9 @@ const Nav = ({
   const signOut = async () => {
     const supabase = supabaseBrowser();
     const { error } = await supabase.auth.signOut();
+    if (!error) {
+      router.push("/auth");
+    }
     console.log({ error });
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const ColumnName = ({ name = "TODO", color = "colBlue", count = 0 }) => {
+const ColumnName = ({ name = "TODO", color = "#8471F2", count = 0 }) => {
   return (
     <div className="flex items-center space-x-2 min-w-[280px] mb-4">
       <span

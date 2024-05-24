@@ -34,7 +34,6 @@ export async function actionBoard({ action, boardIn, name, columns }) {
 
   //delete
   if (action && action === "delete") {
-    console.log({ action, boardIn });
     await supabase.from("board").delete().eq("board_id", boardIn?.boardId);
   } else {
     if (boardIn && boardIn.boardId) {
@@ -58,6 +57,7 @@ export async function actionBoard({ action, boardIn, name, columns }) {
             col.columnOrder !== index
           ) {
             toUpsertArray.push({
+              board_id: boardIn?.boardId,
               column_id: col?.columnId,
               column_name: col?.title.trim(),
               column_order: index,
@@ -74,11 +74,9 @@ export async function actionBoard({ action, boardIn, name, columns }) {
           newColumnIds.push(col?.columnId);
         });
         if (toUpsertArray.length > 0) {
-          console.log({ upsert: toUpsertArray });
           await supabase.from("board_column").upsert(toUpsertArray);
         }
         if (toInsertArray.length > 0) {
-          console.log({ insert: toInsertArray });
           await supabase.from("board_column").insert(toInsertArray);
         }
         // check if there's something to delete
@@ -91,12 +89,10 @@ export async function actionBoard({ action, boardIn, name, columns }) {
             .from("board_column")
             .delete()
             .in("column_id", columnIdsToDelete);
-          console.log({ toDelete: columnIdsToDelete });
         }
       }
     } else {
       //insert
-      console.log({ boardIn, name, user });
       const { data, error } = await supabase
         .from("board")
         .insert({ board_name: name, profile_id: user?.user.id })
@@ -108,12 +104,10 @@ export async function actionBoard({ action, boardIn, name, columns }) {
           column_order: index,
         }));
         if (colsToInsertArray.length > 0) {
-          console.log({ colsToInsertArray });
           const { data, error } = await supabase
             .from("board_column")
             .insert(colsToInsertArray)
             .select();
-          console.log({ data });
         }
       }
     }
@@ -162,7 +156,6 @@ export async function actionTask({ action, item, data }) {
   if (item !== undefined) {
     //delete
     if (action && action === "delete") {
-      console.log({ action, item });
       await supabase.from("card").delete().eq("card_id", item?.cardId);
     } else {
       const itemUpdateObject = {};
@@ -182,7 +175,6 @@ export async function actionTask({ action, item, data }) {
           .update(itemUpdateObject)
           .eq("card_id", item?.cardId)
           .select();
-        console.log({ data, error });
       }
 
       if (item?.subtasks.length > 0 || data?.subtasks.length > 0) {
@@ -193,10 +185,12 @@ export async function actionTask({ action, item, data }) {
         data?.subtasks?.forEach((sub) => {
           // upsert/update
           if (
+            sub.id &&
             sub?.subTaskDescription &&
             sub.subTaskDescription.trim() !== sub.title.trim()
           ) {
             toUpsertArray.push({
+              card_id: item?.cardId,
               subtask_id: sub?.id,
               subtask_description: sub?.title.trim(),
             });
@@ -214,11 +208,11 @@ export async function actionTask({ action, item, data }) {
         });
 
         if (toUpsertArray.length > 0) {
-          console.log({ upsert: toUpsertArray });
-          await supabase.from("subtask").upsert(toUpsertArray);
+          const { error } = await supabase
+            .from("subtask")
+            .upsert(toUpsertArray);
         }
         if (toInsertArray.length > 0) {
-          console.log({ insert: toInsertArray });
           await supabase.from("subtask").insert(toInsertArray);
         }
         // check if there's something to delete
@@ -231,7 +225,6 @@ export async function actionTask({ action, item, data }) {
             .from("subtask")
             .delete()
             .in("subtask_id", subtaskIdsToDelete);
-          console.log({ toDelete: subtaskIdsToDelete });
         }
       }
     }
@@ -255,12 +248,10 @@ export async function actionTask({ action, item, data }) {
         subtask_description: sub.title.trim(),
       }));
       if (subToInsertArray.length > 0) {
-        console.log({ subToInsertArray });
         const { data, error } = await supabase
           .from("subtask")
           .insert(subToInsertArray)
           .select();
-        console.log({ data });
       }
     }
   }

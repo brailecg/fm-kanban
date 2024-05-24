@@ -9,8 +9,8 @@ import ShowSidebarIcon from "./ShowSidebarIcon";
 import ColumnArea from "./ColumnArea";
 import ColumnName from "./ColumnName";
 import FormBoard from "./FormBoard";
-import { actionTaskMove } from "../utils/supabase/db_actions";
-import { getAllData } from "../utils/supabase/db_actions";
+import { actionTaskMove, getAllData } from "../utils/supabase/db_actions";
+
 const Dashboard = ({ returnData }) => {
   const boardList = returnData?.boardObjectList;
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -31,7 +31,6 @@ const Dashboard = ({ returnData }) => {
           schema: "public",
         },
         async (payload) => {
-          console.log({ payload });
           const newData = await getAllData();
           const newBoardList = newData?.boardObjectList;
 
@@ -148,7 +147,7 @@ const Dashboard = ({ returnData }) => {
             setSelected={setSelected}
           />
         </div>
-        <DndContext onDragEnd={handleDragend}>
+        <DndContext onDragEnd={handleDragend} id="dnd-dashboard-id">
           <main className="overflow-y-auto overflow-x-auto flex-grow p-4 sm:p-6 min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-96px)]">
             {boards.length > 0 &&
               boards?.map((board) => {
@@ -183,7 +182,11 @@ const Dashboard = ({ returnData }) => {
                               <div key={column.columnId}>
                                 <ColumnName
                                   name={column.columnName}
-                                  color={column.columnColor}
+                                  color={
+                                    column.columnColor
+                                      ? column.columnColor
+                                      : "#8471F2"
+                                  }
                                   count={column.cards.length}
                                 />
                                 <ColumnArea column={column} columns={columns} />

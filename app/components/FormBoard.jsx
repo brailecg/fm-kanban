@@ -29,7 +29,6 @@ const FormBoard = ({
     },
   });
   const onSubmit = (data) => actionBoard({ boardIn, ...data });
-  // const onSubmit = (data) => console.log({ boardIn, ...data });
 
   return (
     <Transition appear show={isViewOpen} as={Fragment}>

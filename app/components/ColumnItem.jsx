@@ -1,4 +1,5 @@
-import React, { useState, Fragment, useRef } from "react";
+"use client";
+import React, { useState, Fragment, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useDraggable } from "@dnd-kit/core";
 import { Dialog, Transition, Menu, Listbox } from "@headlessui/react";
@@ -239,7 +240,7 @@ const ColumnItem = ({ item, colId, columns }) => {
                     <div>
                       <Listbox
                         value={selectedCol}
-                        onChange={(e) => handleChangeTaskStatus(e)}>
+                        onChange={handleChangeTaskStatus}>
                         {({ open }) => (
                           <>
                             <Label name="Current Status" />
