@@ -2,7 +2,7 @@ import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Controller } from "react-hook-form";
 import { Textarea } from "./ui/Textarea";
-import { Label } from "./ui/Label";
+import { Label } from "./ui/label";
 
 const FormTextArea = ({ label, name, register, errors, control, value }) => {
   return (

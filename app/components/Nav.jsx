@@ -13,7 +13,7 @@ import { actionBoard } from "../utils/supabase/db_actions";
 import Sidebar from "./Sidebar";
 import FormTask from "./FormTask";
 import FormBoard from "./FormBoard";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 
 const Nav = ({
   data,

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { Dialog, Transition } from "@headlessui/react";
 
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 import FormInput from "./FormInput";
 import FormTextArea from "./FormTextArea";
 import FormMultiInput from "./FormMultiInput";

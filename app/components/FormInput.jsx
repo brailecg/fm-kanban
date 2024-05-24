@@ -1,8 +1,8 @@
 import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Controller } from "react-hook-form";
-import { Input } from "./ui/Input";
-import { Label } from "./ui/Label";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 const FormInput = ({ label, name, register, errors, control, value }) => {
   return (
     <div className="space-y-2">

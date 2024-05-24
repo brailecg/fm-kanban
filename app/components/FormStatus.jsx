@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Controller } from "react-hook-form";
 import { Transition, Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { Label } from "./ui/Label";
+import { Label } from "./ui/label";
 
 const FormStatus = ({ name, label, columns, control, selectedCol, colId }) => {
   const colIn = colId

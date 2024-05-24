@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import { Label } from "./ui/Label";
-import { Button } from "./ui/Button";
+import { Label } from "./ui/label";
+import { Button } from "./ui/button";
 import { useFieldArray } from "react-hook-form";
 
 import SubtaskDraggable from "./SubtaskDraggable";

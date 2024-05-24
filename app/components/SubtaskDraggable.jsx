@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import Image from "next/image";
 import { ErrorMessage } from "@hookform/error-message";
-import { Input } from "./ui/Input";
+import { Input } from "./ui/input";
 
 const SubtaskDraggable = ({
   item,

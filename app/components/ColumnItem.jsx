@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useDraggable } from "@dnd-kit/core";
 import { Dialog, Transition, Menu, Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { Label } from "./ui/Label";
+import { Label } from "./ui/label";
 import FormTask from "./FormTask";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 
 import {
   actionSubTaskStatusChange,
