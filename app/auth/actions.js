@@ -5,7 +5,7 @@ import { supabaseServer } from "../utils/supabase/server";
 import { headers } from "next/headers";
 
 export async function login() {
-  const supabase = supabaseServer();
+  const supabase = await supabaseServer();
   const origin = headers().get("origin");
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: "google",
