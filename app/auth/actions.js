@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { supabaseServer } from "../utils/supabase/server";
 import { headers } from "next/headers";
 
-export async function login(formData) {
+export async function login() {
   const supabase = supabaseServer();
   const origin = headers().get("origin");
   const { error, data } = await supabase.auth.signInWithOAuth({
