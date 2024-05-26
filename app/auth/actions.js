@@ -2,23 +2,18 @@
 
 import { redirect } from "next/navigation";
 import { supabaseServer } from "../utils/supabase/server";
-import { headers } from "next/headers";
 
 const getURL = () => {
-  let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
-    "http://localhost:3000/";
-  // Make sure to include `https://` when not localhost.
-  // url = url.includes("http") ? url : `https://${url}`;
-  // Make sure to include a trailing `/`.
-  // url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+  const siteURL = process?.env?.NEXT_PUBLIC_SITE_URL;
+  const vercelURL = process?.env?.NEXT_PUBLIC_VERCEL_URL;
+  let url = siteURL ?? vercelURL ?? "http://localhost:3000/";
+
+  console.log("Resolved URL:", url); // Log the resolved URL for debugging
   return url;
 };
 
 export async function login() {
   const supabase = await supabaseServer();
-  // const origin = headers().get("origin");
 
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -27,7 +22,10 @@ export async function login() {
     },
   });
 
-  if (!error) {
+  if (error) {
+    console.error("OAuth sign-in error:", error); // Log any errors
+  } else {
+    console.log("Redirecting to:", data.url); // Log the redirect URL
     return redirect(data.url);
   }
 }
