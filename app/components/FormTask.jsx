@@ -33,7 +33,10 @@ const FormTask = ({
     },
   });
 
-  const onSubmit = (data) => actionTask({ item, data });
+  const onSubmit = async (data) => {
+    await actionTask({ item, data });
+    setIsViewOpen(false);
+  };
   return (
     <Transition appear show={isViewOpen} as={Fragment}>
       <Dialog

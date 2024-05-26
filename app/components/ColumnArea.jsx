@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ColumnItem from "./ColumnItem";
 
 import ColumnCardDropArea from "./ColumnCardDropArea";
 const ColumnArea = ({ column, columns }) => {
+  const [cols, setCols] = useState(columns);
+  const [col, setCol] = useState(column);
+  useEffect(() => {
+    setCols(columns);
+    setCol(column);
+  }, [column, columns]);
+
   return (
     <div className="flex flex-col ">
       <ColumnCardDropArea
-        id={column.columnId + "-0"}
-        colId={column.columnId}
+        id={col.columnId + "-0"}
+        colId={col.columnId}
         idx={0}
       />
-      {column.cards.map((item, index) => {
+      {col.cards.map((item, index) => {
         return (
           <React.Fragment key={item.cardId}>
-            <ColumnItem item={item} colId={column.columnId} columns={columns} />
+            <ColumnItem col={item} colId={col.columnId} cols={cols} />
             <ColumnCardDropArea
-              id={column.columnId + "-" + (index + 1).toString()}
-              colId={column.columnId}
+              id={col.columnId + "-" + (index + 1).toString()}
+              colId={col.columnId}
               idx={index + 1}
             />
           </React.Fragment>

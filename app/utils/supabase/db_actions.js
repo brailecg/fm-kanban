@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { supabaseServer } from "./server";
 
 const getCurrentUser = async () => {
@@ -111,6 +112,8 @@ export async function actionBoard({ action, boardIn, name, columns }) {
             .select();
         }
       }
+
+      revalidatePath("/dashboard");
     }
   }
 }

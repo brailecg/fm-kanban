@@ -42,8 +42,9 @@ const Nav = ({
     setIsDeleteViewOpen(true);
   };
 
-  const handleDeleteBoard = () => {
-    actionBoard({ action: "delete", boardIn: selectedBoard });
+  const handleDeleteBoard = async () => {
+    await actionBoard({ action: "delete", boardIn: selectedBoard });
+    setIsDeleteViewOpen(false);
   };
 
   const signOut = async () => {

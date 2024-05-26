@@ -28,7 +28,10 @@ const FormBoard = ({
       columns: allColumns ? allColumns : [],
     },
   });
-  const onSubmit = (data) => actionBoard({ boardIn, ...data });
+  const onSubmit = async (data) => {
+    await actionBoard({ boardIn, ...data });
+    setIsViewOpen(false);
+  };
 
   return (
     <Transition appear show={isViewOpen} as={Fragment}>

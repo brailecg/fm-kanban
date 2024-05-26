@@ -14,9 +14,17 @@ import {
   actionTaskMove,
 } from "../utils/supabase/db_actions";
 
-const ColumnItem = ({ item, colId, columns }) => {
-  // const originalItemRef = useRef(null); // use this when updating when closing the modal to have the old values still
-  // originalItemRef.current = JSON.parse(JSON.stringify(item));
+const ColumnItem = ({ col, colId, cols }) => {
+  const [item, setItem] = useState(col);
+  const [columns, setColumns] = useState(cols);
+
+  const [allSubtasks, setAllSubtasks] = useState(Array.from(item?.subtasks));
+  useEffect(() => {
+    setItem(col);
+    setColumns(cols);
+    setAllSubtasks(col?.subtasks);
+  }, [col, cols]);
+
   const colIn = columns.find((col) => col.columnId === colId);
   const [isOpenView, setIsOpenView] = useState(false);
   const [isEditViewOpen, setIsEditViewOpen] = useState(false);
@@ -32,10 +40,6 @@ const ColumnItem = ({ item, colId, columns }) => {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
       }
     : undefined;
-
-  const allSubtasksList = item?.subtasks ? item?.subtasks : null;
-
-  const [allSubtasks, setAllSubtasks] = useState(Array.from(allSubtasksList));
 
   const handleCheckboxChange = async (isChecked, task) => {
     let newAllSubtasks;
@@ -65,8 +69,9 @@ const ColumnItem = ({ item, colId, columns }) => {
     handleCloseView();
   };
 
-  const handleDeleteTask = () => {
-    actionTask({ action: "delete", item });
+  const handleDeleteTask = async () => {
+    await actionTask({ action: "delete", item });
+    setIsDeleteViewOpen(false);
   };
 
   const handleCloseView = async () => {
