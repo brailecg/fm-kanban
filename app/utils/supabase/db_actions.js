@@ -26,6 +26,7 @@ export async function getAllData() {
 }
 
 export async function actionBoard({ action, boardIn, name, columns }) {
+  const supabase = await supabaseServer();
   const user = await getCurrentUser();
   const oldColumnIds = boardIn?.columns?.map((col) => col.columnId);
 
@@ -115,6 +116,7 @@ export async function actionBoard({ action, boardIn, name, columns }) {
 }
 
 export async function actionTaskMove(cardToMove, toColumn) {
+  const supabase = await supabaseServer();
   const user = await getCurrentUser();
   if (!user)
     return { error: true, errorMessage: "User not Found. Session Expired" };
@@ -134,6 +136,7 @@ export async function actionTaskMove(cardToMove, toColumn) {
 }
 
 export async function actionSubTaskStatusChange(taskToUpdate) {
+  const supabase = await supabaseServer();
   const user = await getCurrentUser();
   if (!user)
     return { error: true, errorMessage: "User not Found. Session Expired" };
@@ -149,6 +152,7 @@ export async function actionSubTaskStatusChange(taskToUpdate) {
 }
 
 export async function actionTask({ action, item, data }) {
+  const supabase = await supabaseServer();
   const user = await getCurrentUser();
   if (!user)
     return { error: true, errorMessage: "User not Found. Session Expired" };
@@ -244,7 +248,7 @@ export async function actionTask({ action, item, data }) {
 
     if (data?.subtasks.length > 0 && !error) {
       const subToInsertArray = data?.subtasks.map((sub) => ({
-        board_id: card[0]?.card_id,
+        card_id: card[0]?.card_id,
         subtask_description: sub.title.trim(),
       }));
       if (subToInsertArray.length > 0) {
