@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { supabaseServer } from "../utils/supabase/server";
+import { headers } from "next/headers";
 
 const getURL = () => {
   const siteURL = process?.env?.NEXT_PUBLIC_SITE_URL;
@@ -14,6 +15,10 @@ const getURL = () => {
 
 export async function login() {
   const supabase = await supabaseServer();
+
+  // Debug headers if needed
+  const reqHeaders = headers();
+  console.log("Request Headers:", reqHeaders);
 
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: "google",
