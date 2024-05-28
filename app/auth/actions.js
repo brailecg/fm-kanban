@@ -10,7 +10,7 @@ const getURL = () => {
   return url;
 };
 
-export async function login() {
+export async function continueWithGoogle() {
   const supabase = await supabaseServer();
 
   const { error, data } = await supabase.auth.signInWithOAuth({

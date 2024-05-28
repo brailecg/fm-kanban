@@ -6,8 +6,8 @@ import { redirect } from "next/navigation";
 import { getAllData } from "../utils/supabase/db_actions";
 const DashboardPage = async () => {
   const supabase = await supabaseServer();
-  const { data: user } = await supabase.auth.getUser();
-  if (!user?.user) {
+  const { error, data: user } = await supabase.auth.getUser();
+  if (!user?.user && !error) {
     redirect("/auth");
   }
 

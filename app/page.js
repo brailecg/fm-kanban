@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <div className=" bg-main-light-lines h-screen">
-      main webpage - outside app
-    </div>
-  );
+"use server";
+import { redirect } from "next/navigation";
+export default async function Home() {
+  redirect("/auth");
 }
