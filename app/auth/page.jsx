@@ -9,8 +9,8 @@ const Auth = async () => {
     redirect("/dashboard");
   }
   return (
-    <div className="flex justify-center sm:justify-normal items-center h-dvh max-w-5xl mx-auto ">
-      <div className="hidden sm:block max-w-[50vw]">
+    <div className="flex justify-center sm:justify-normal items-center h-dvh max-w-5xl mx-auto px-4 min-w-40 ">
+      <div className="hidden sm:flex sm:justify-around flex-col  space-y-4 max-w-[50vw] ">
         <Image
           src={`/assets/logo-dark.svg`}
           alt="logo light"
