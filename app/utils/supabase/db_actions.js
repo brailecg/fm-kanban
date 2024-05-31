@@ -97,7 +97,7 @@ export async function actionBoard({ action, boardIn, name, columns }) {
       //insert
       const { data, error } = await supabase
         .from("board")
-        .insert({ board_name: name, profile_id: user?.user.id })
+        .insert({ board_name: name, profile_id: user.id })
         .select();
       if (columns.length > 0 && !error) {
         const colsToInsertArray = columns.map((col, index) => ({
