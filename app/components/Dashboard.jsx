@@ -9,11 +9,7 @@ import ShowSidebarIcon from "./ShowSidebarIcon";
 import ColumnArea from "./ColumnArea";
 import ColumnName from "./ColumnName";
 import FormBoard from "./FormBoard";
-import {
-  actionTaskMove,
-  actionToggleTheme,
-  getAllData,
-} from "../utils/supabase/db_actions";
+import { actionTaskMove, getAllData } from "../utils/supabase/db_actions";
 
 const Dashboard = ({ returnData, returnTheme }) => {
   const boardList = returnData?.boardObjectList;
@@ -26,18 +22,10 @@ const Dashboard = ({ returnData, returnTheme }) => {
   const [boards, setBoards] = useState(boardList);
   const [data, setData] = useState(returnData);
 
-  const handleToggleTheme = async () => {
-    document.querySelector(".dashboard").classList.toggle("dark");
-    setIsThemeToggled((prev) => {
-      return !prev;
-    });
-    actionToggleTheme();
-  };
-
   useEffect(() => {
     if (returnTheme[0]?.theme) {
       setIsThemeToggled(true);
-      document.querySelector(".dashboard").classList.add("dark");
+      document.querySelector("body").classList.add("dark");
     }
 
     const channel = supabaseBrowser()
@@ -150,7 +138,7 @@ const Dashboard = ({ returnData, returnTheme }) => {
             setIsSidebarVisible={setIsSidebarVisible}
             isSidebarVisible={isSidebarVisible}
             isThemeToggled={isThemeToggled}
-            handleToggleTheme={handleToggleTheme}
+            setIsThemeToggled={setIsThemeToggled}
             selected={selected}
             setSelected={setSelected}
           />

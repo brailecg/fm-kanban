@@ -15,7 +15,7 @@ const Sidebar = ({
   isSidebarVisible,
   setIsSidebarVisible,
   isThemeToggled,
-  handleToggleTheme,
+  setIsThemeToggled,
   selected,
   setSelected,
 }) => {
@@ -29,16 +29,11 @@ const Sidebar = ({
       closeModal();
     }
   };
-  // const handleToggleTheme = () => {
-  //   document.querySelector("body").classList.toggle("dark");
-  //   setIsThemeToggled((prev) => {
-  //     handleActionToggleTheme(!prev);
-  //     return !prev;
-  //   });
-  // };
 
-  const handleActionToggleTheme = (boolVal) => {
-    actionToggleTheme(boolVal);
+  const handleToggleTheme = async () => {
+    document.querySelector("body").classList.toggle("dark");
+    setIsThemeToggled((prev) => !prev);
+    actionToggleTheme();
   };
 
   const boardList = data?.boardObjectList;

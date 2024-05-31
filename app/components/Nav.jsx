@@ -88,7 +88,7 @@ const Nav = ({
                   ? selectedBoard.boardName
                   : "Add New Board"}
               </p>
-              <ChevronDownIcon className="flex sm:hidden h-4 w-4" />
+              <ChevronDownIcon className="flex dark:text-white sm:hidden h-4 w-4" />
             </div>
           </div>
           <div className="flex items-center space-x-6">
@@ -155,7 +155,7 @@ const Nav = ({
                       )}
                     </Menu.Item>
                     <div className="my-1 h-px bg-gray-100" />
-                    <Menu.Item>
+                    {/* <Menu.Item>
                       {({ active }) => (
                         <button
                           onClick={handleEditBoardButton}
@@ -168,13 +168,15 @@ const Nav = ({
                           <p className="ml-2 ">Profile</p>
                         </button>
                       )}
-                    </Menu.Item>
+                    </Menu.Item> */}
                     <Menu.Item>
                       {({ active }) => (
                         <button
                           onClick={signOut}
                           className={`${
-                            active ? "bg-main-light-grey " : "text-gray-900 "
+                            active
+                              ? "bg-main-light-grey text-gray-900"
+                              : "text-gray-900 dark:text-white"
                           }  group flex rounded-md items-center w-full px-2 py-2 text-sm `}>
                           <p className="ml-2 ">Sign Out</p>
                         </button>
