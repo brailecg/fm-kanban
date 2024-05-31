@@ -9,18 +9,17 @@ const Auth = async () => {
     redirect("/dashboard");
   }
   return (
-    <div className="flex justify-center sm:justify-normal items-center h-dvh max-w-5xl mx-auto px-4 min-w-40 ">
-      <div className="hidden sm:flex sm:justify-around flex-col  space-y-4 max-w-[50vw] ">
+    <div className="flex justify-center flex-col sm:flex-row sm:justify-normal items-center h-dvh max-w-5xl mx-auto px-4 min-w-40 ">
+      <div className="items-center flex mb-4 sm:items-start sm:justify-around flex-col space-y-4 sm:max-w-[50vw] ">
         <Image
           src={`/assets/logo-dark.svg`}
           alt="logo light"
           width={153}
           height={26}
           priority
-          className="hidden sm:flex"
         />
-        <p className="hidden sm:flex sm:text-4xl md:text-5xl lg:text-6xl font-bold">
-          Personal Task Management
+        <p className="sm:flex sm:text-3xl lg:text-6xl font-bold">
+          Your Personal Task Management App
         </p>
       </div>
       <div className=" bg-[#F8F8F8] sm:max-w-fit p-5 rounded-lg space-y-4">
