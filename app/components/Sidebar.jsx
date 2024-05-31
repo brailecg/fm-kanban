@@ -7,6 +7,7 @@ import { Transition } from "@headlessui/react";
 import IconBoardSvg from "./IconBoardSvg";
 import IconHideSidebar from "./IconHideSidebar";
 import FormBoard from "./FormBoard";
+import { actionToggleTheme } from "../utils/supabase/db_actions";
 
 const Sidebar = ({
   data,
@@ -14,7 +15,7 @@ const Sidebar = ({
   isSidebarVisible,
   setIsSidebarVisible,
   isThemeToggled,
-  setIsThemeToggled,
+  handleToggleTheme,
   selected,
   setSelected,
 }) => {
@@ -28,10 +29,18 @@ const Sidebar = ({
       closeModal();
     }
   };
-  const handleToggleTheme = () => {
-    document.querySelector("body").classList.toggle("dark");
-    setIsThemeToggled((prev) => !prev);
+  // const handleToggleTheme = () => {
+  //   document.querySelector("body").classList.toggle("dark");
+  //   setIsThemeToggled((prev) => {
+  //     handleActionToggleTheme(!prev);
+  //     return !prev;
+  //   });
+  // };
+
+  const handleActionToggleTheme = (boolVal) => {
+    actionToggleTheme(boolVal);
   };
+
   const boardList = data?.boardObjectList;
 
   const handleAddBoardButton = () => {

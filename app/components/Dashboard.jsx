@@ -9,9 +9,13 @@ import ShowSidebarIcon from "./ShowSidebarIcon";
 import ColumnArea from "./ColumnArea";
 import ColumnName from "./ColumnName";
 import FormBoard from "./FormBoard";
-import { actionTaskMove, getAllData } from "../utils/supabase/db_actions";
+import {
+  actionTaskMove,
+  actionToggleTheme,
+  getAllData,
+} from "../utils/supabase/db_actions";
 
-const Dashboard = ({ returnData }) => {
+const Dashboard = ({ returnData, returnTheme }) => {
   const boardList = returnData?.boardObjectList;
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
@@ -21,7 +25,21 @@ const Dashboard = ({ returnData }) => {
   const [isDropped, setIsDropped] = useState(false);
   const [boards, setBoards] = useState(boardList);
   const [data, setData] = useState(returnData);
+
+  const handleToggleTheme = async () => {
+    document.querySelector(".dashboard").classList.toggle("dark");
+    setIsThemeToggled((prev) => {
+      return !prev;
+    });
+    actionToggleTheme();
+  };
+
   useEffect(() => {
+    if (returnTheme[0]?.theme) {
+      setIsThemeToggled(true);
+      document.querySelector(".dashboard").classList.add("dark");
+    }
+
     const channel = supabaseBrowser()
       .channel("schema-public-changes")
       .on(
@@ -47,7 +65,7 @@ const Dashboard = ({ returnData }) => {
     return () => {
       supabaseBrowser().removeChannel(channel);
     };
-  }, [boards, data]);
+  }, [boards, data, returnTheme[0]?.theme]);
 
   const moveCard = async (
     boards,
@@ -132,7 +150,7 @@ const Dashboard = ({ returnData }) => {
             setIsSidebarVisible={setIsSidebarVisible}
             isSidebarVisible={isSidebarVisible}
             isThemeToggled={isThemeToggled}
-            setIsThemeToggled={setIsThemeToggled}
+            handleToggleTheme={handleToggleTheme}
             selected={selected}
             setSelected={setSelected}
           />

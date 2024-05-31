@@ -5,7 +5,7 @@ import { supabaseServer } from "./server";
 const getCurrentUser = async () => {
   const supabase = await supabaseServer();
   const { data: user } = await supabase.auth.getUser();
-  return user;
+  return user?.user;
 };
 
 export async function getAllData() {
@@ -262,4 +262,32 @@ export async function actionTask({ action, item, data }) {
       }
     }
   }
+}
+
+export async function actionToggleTheme() {
+  const supabase = await supabaseServer();
+  const user = await getCurrentUser();
+  if (!user)
+    return { error: true, errorMessage: "User not Found. Session Expired" };
+  const user_id = user.id;
+  let { data, error } = await supabase.rpc("toggle_theme", {
+    user_id,
+  });
+
+  if (!error) return data;
+}
+
+export async function getTheme() {
+  const supabase = await supabaseServer();
+  const user = await getCurrentUser();
+
+  if (!user)
+    return { error: true, errorMessage: "User not Found. Session Expired" };
+
+  let { data: theme, error } = await supabase
+    .from("profile")
+    .select("theme, profile_id")
+    .eq("profile_id", user.id);
+
+  if (!error) return theme;
 }
