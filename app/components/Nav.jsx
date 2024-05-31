@@ -84,7 +84,9 @@ const Nav = ({
             </div>
             <div className="flex items-center space-x-1">
               <p className=" font-bold dark:text-white text-lg sm:text-2xl truncate max-w-[50vw] sm:max-w-[25vw]">
-                {selectedBoard?.boardName}
+                {selectedBoard?.boardName
+                  ? selectedBoard.boardName
+                  : "Add New Board"}
               </p>
               <ChevronDownIcon className="flex sm:hidden h-4 w-4" />
             </div>
