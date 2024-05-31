@@ -15,7 +15,7 @@ const Dashboard = ({ returnData }) => {
   const boardList = returnData?.boardObjectList;
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isThemeToggled, setIsThemeToggled] = useState(false);
-  const [selected, setSelected] = useState(boardList[0].boardId);
+  const [selected, setSelected] = useState(boardList[0]?.boardId);
   const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
 
   const [isDropped, setIsDropped] = useState(false);
@@ -37,7 +37,7 @@ const Dashboard = ({ returnData }) => {
           setData(newData);
           setBoards(newBoardList);
           if (payload.eventType === "DELETE" && payload.table === "board") {
-            setSelected(newBoardList[0].boardId);
+            setSelected(newBoardList[0]?.boardId);
           }
           // return setBoards([...boards, payload.new]);
         }
@@ -60,18 +60,18 @@ const Dashboard = ({ returnData }) => {
     let cardToMove = null;
 
     // Find the board
-    const board = boards.find((board) => board.boardId === selectedBoardId);
+    const board = boards.find((board) => board?.boardId === selectedBoardId);
     if (!board) {
       return;
     }
 
     // Find and remove the card from the original column
     const fromColumn = board.columns.find(
-      (column) => column.columnId === fromColumnId
+      (column) => column?.columnId === fromColumnId
     );
     if (fromColumn) {
       const cardIndex = fromColumn.cards.findIndex(
-        (card) => card.cardId === cardId
+        (card) => card?.cardId === cardId
       );
       if (cardIndex > -1) {
         cardToMove = fromColumn.cards.splice(cardIndex, 1)[0];
@@ -139,6 +139,26 @@ const Dashboard = ({ returnData }) => {
         </div>
         <DndContext onDragEnd={handleDragend} id="dnd-dashboard-id">
           <main className="overflow-y-auto overflow-x-auto flex-grow p-4 sm:p-6 min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh-96px)]">
+            {boards.length === 0 && (
+              <div className="flex h-full w-full space-y-8 flex-col justify-center items-center">
+                <p className="text-main-medium-grey text-[18px] font-semibold text-center">
+                  No project listed. Add a new board.
+                </p>
+                <button
+                  onClick={() => setIsEditBoardOpen(true)}
+                  className={`bg-main-purple hover:bg-main-purple-hover h-12 px-6 space-x-1 rounded-full flex justify-center items-center`}>
+                  <Image
+                    src="/assets/icon-add-task-mobile.svg"
+                    alt="add task"
+                    width={12}
+                    height={12}
+                  />
+                  <p className=" text-white text-[15px] font-semibold">
+                    Add New Board
+                  </p>
+                </button>
+              </div>
+            )}
             {boards.length > 0 &&
               boards?.map((board) => {
                 if (selected === board.boardId) {
@@ -197,7 +217,7 @@ const Dashboard = ({ returnData }) => {
       </div>
       {isEditBoardOpen && (
         <FormBoard
-          label={"Edit Board"}
+          label={selectedBoard ? "Edit Board" : "Create Board"}
           isViewOpen={isEditBoardOpen}
           setIsViewOpen={setIsEditBoardOpen}
           allColumns={columns}
