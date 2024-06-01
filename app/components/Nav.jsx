@@ -55,6 +55,12 @@ const Nav = ({
     }
   };
 
+  const handleAddTask = () => {
+    if (data?.boardObjectList.length > 0 && columns?.length > 0) {
+      setAddTaskModal(true);
+    }
+  };
+
   return (
     <>
       <nav className="flex z-20 bg-white min-h-16 sm:min-h-20 lg:min-h-24 dark:bg-main-dark-grey ">
@@ -93,9 +99,9 @@ const Nav = ({
           </div>
           <div className="flex items-center space-x-6">
             <button
-              onClick={() => setAddTaskModal(true)}
+              onClick={handleAddTask}
               className={`${
-                data?.boardObjectList.length > 0
+                data?.boardObjectList.length > 0 && columns?.length > 0
                   ? "bg-main-purple"
                   : " bg-main-purple-hover "
               }  w-12 sm:w-auto h-8 sm:h-12 sm:px-6 space-x-1 rounded-full flex justify-center items-center min-w-fit`}>
@@ -129,32 +135,38 @@ const Nav = ({
                 leaveTo="transform opacity-0 scale-95">
                 <Menu.Items className="absolute right-8 w-56 mt-28  origin-top-right bg-white dark:bg-main-very-dark-grey divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                   <div className="py-1 ">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={handleEditBoardButton}
-                          className={`${
-                            active
-                              ? "bg-main-light-grey text-gray-900"
-                              : "text-gray-900 dark:text-white"
-                          } group flex rounded-md 
+                    {data?.boardObjectList.length > 0 && (
+                      <>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={handleEditBoardButton}
+                              className={`${
+                                active
+                                  ? "bg-main-light-grey text-gray-900"
+                                  : "text-gray-900 dark:text-white"
+                              } group flex rounded-md 
                            items-center w-full px-2 py-2 text-sm`}>
-                          <p className="ml-2 ">Edit Board</p>
-                        </button>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={handleDeleteBoardButton}
-                          className={`${
-                            active ? "bg-main-light-grey " : "text-gray-900 "
-                          } text-main-red group flex rounded-md items-center w-full px-2 py-2 text-sm `}>
-                          <p className="ml-2 ">Delete Board</p>
-                        </button>
-                      )}
-                    </Menu.Item>
-                    <div className="my-1 h-px bg-gray-100" />
+                              <p className="ml-2 ">Edit Board</p>
+                            </button>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={handleDeleteBoardButton}
+                              className={`${
+                                active
+                                  ? "bg-main-light-grey "
+                                  : "text-gray-900 "
+                              } text-main-red group flex rounded-md items-center w-full px-2 py-2 text-sm `}>
+                              <p className="ml-2 ">Delete Board</p>
+                            </button>
+                          )}
+                        </Menu.Item>
+                        <div className="my-1 h-px bg-gray-100" />{" "}
+                      </>
+                    )}
                     {/* <Menu.Item>
                       {({ active }) => (
                         <button

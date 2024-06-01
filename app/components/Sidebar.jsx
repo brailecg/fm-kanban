@@ -36,11 +36,11 @@ const Sidebar = ({
     actionToggleTheme();
   };
 
-  const boardList = data?.boardObjectList;
-
   const handleAddBoardButton = () => {
-    setIsAddBoardOpen(true);
+    setIsAddBoardOpen((prev) => !prev);
   };
+
+  const boardList = data?.boardObjectList;
 
   return (
     <>
