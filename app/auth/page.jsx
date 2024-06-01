@@ -5,6 +5,7 @@ import Image from "next/image";
 const Auth = async () => {
   const supabase = await supabaseServer();
   const { data, error } = await supabase.auth.getUser();
+  redirect("/");
   if (data?.user && !error) {
     redirect("/dashboard");
   }

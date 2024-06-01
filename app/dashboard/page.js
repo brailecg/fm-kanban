@@ -7,7 +7,7 @@ import { getAllData, getTheme } from "../utils/supabase/db_actions";
 const DashboardPage = async () => {
   const supabase = await supabaseServer();
   const { error, data: user } = await supabase.auth.getUser();
-
+  redirect("/");
   if (!user?.user || error) {
     redirect("/auth");
   }
