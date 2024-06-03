@@ -102,8 +102,8 @@ const Nav = ({
               onClick={handleAddTask}
               className={`${
                 data?.boardObjectList.length > 0 && columns?.length > 0
-                  ? "bg-main-purple"
-                  : " bg-main-purple-hover "
+                  ? "bg-main-purple cursor-pointer"
+                  : " bg-main-purple-hover cursor-default"
               }  w-12 sm:w-auto h-8 sm:h-12 sm:px-6 space-x-1 rounded-full flex justify-center items-center min-w-fit`}>
               <Image
                 src="/assets/icon-add-task-mobile.svg"

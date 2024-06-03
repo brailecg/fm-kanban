@@ -69,7 +69,11 @@ const FormMultiInput = ({
   const handleRemoveInput = (index) => {
     remove(index); // Remove the subtask at given index
   };
-
+  const overlayValue = (activeId) => {
+    const field = fields.find((item) => item.id === activeId);
+    if (field?.title) return field?.title;
+    return field?.columnName;
+  };
   return (
     <div className="space-y-2">
       <Label name={label} />
@@ -97,7 +101,7 @@ const FormMultiInput = ({
           })}
         </SortableContext>
         <DragOverlay>
-          {activeId ? <div id={activeId}>{activeId}</div> : null}
+          {activeId ? <div id={activeId}>{overlayValue(activeId)}</div> : null}
         </DragOverlay>
       </DndContext>
       <Button

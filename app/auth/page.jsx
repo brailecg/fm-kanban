@@ -1,11 +1,12 @@
-import { continueWithGoogle } from "./actions";
+import { continueWithGoogle, continueAnonymously } from "./actions";
 import { redirect } from "next/navigation";
 import { supabaseServer } from "../utils/supabase/server";
 import Image from "next/image";
+
 const Auth = async () => {
   const supabase = await supabaseServer();
   const { data, error } = await supabase.auth.getUser();
-  redirect("/");
+
   if (data?.user && !error) {
     redirect("/dashboard");
   }
@@ -39,6 +40,22 @@ const Auth = async () => {
             </span>
           </button>
         </form>
+        <form action={continueAnonymously}>
+          <button className="flex gap-3 shadow-md rounded-md p-2 w-80 bg-white">
+            <Image
+              width={24}
+              height={24}
+              alt="Supabase Icon"
+              src={
+                "https://fdksslojrpadbebswbsg.supabase.co/storage/v1/object/public/icons/supabase-logo-icon.png?t=2024-06-01T03%3A18%3A03.958Z"
+              }
+            />
+            <span className=" text-black/50 font-semibold">
+              Continue Anonymously
+            </span>
+          </button>
+        </form>
+
         {/* <form action={continueWithGoogle}> */}
         <button
           disabled

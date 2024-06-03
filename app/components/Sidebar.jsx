@@ -140,11 +140,13 @@ const Sidebar = ({
         </div>
       </Transition>
 
-      <FormBoard
-        label={"Add New Board"}
-        isViewOpen={isAddBoardOpen}
-        setIsViewOpen={setIsAddBoardOpen}
-      />
+      {isAddBoardOpen && (
+        <FormBoard
+          label={"Add New Board"}
+          isViewOpen={isAddBoardOpen}
+          setIsViewOpen={setIsAddBoardOpen}
+        />
+      )}
     </>
   );
 };

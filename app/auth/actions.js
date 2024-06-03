@@ -23,6 +23,21 @@ export async function continueWithGoogle() {
   if (error) {
     console.error("OAuth sign-in error:", error); // Log any errors
   } else {
-    return redirect(data.url);
+    redirect(data.url);
+  }
+}
+
+export async function continueAnonymously() {
+  const supabase = await supabaseServer();
+
+  const { data, error } = await supabase.auth.signInAnonymously({
+    options: {
+      redirectTo: getURL() + "/auth/callback?next=/dashboard",
+    },
+  });
+  if (error) {
+    console.error("Anonymous sign-in error:", error); // Log any errors
+  } else {
+    redirect("/dashboard");
   }
 }
