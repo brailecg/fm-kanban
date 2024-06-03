@@ -54,6 +54,9 @@ const Auth = async () => {
               Continue Anonymously
             </span>
           </button>
+          <div className=" italic text-xs mt-1 text-main-grey-hover">
+            Anonynous users will be deleted at the end of each day.
+          </div>
         </form>
 
         {/* <form action={continueWithGoogle}> */}
