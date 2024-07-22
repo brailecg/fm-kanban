@@ -1,13 +1,10 @@
-import React, { Fragment } from "react";
-
+import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
-
 import { Dialog, Transition } from "@headlessui/react";
-
 import FormInput from "./FormInput";
 import FormMultiInput from "./FormMultiInput";
-
 import { actionBoard } from "../utils/supabase/db_actions";
+import Loader from "./Loader";
 
 const FormBoard = ({
   label,
@@ -16,6 +13,7 @@ const FormBoard = ({
   allColumns,
   boardIn,
 }) => {
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -28,7 +26,9 @@ const FormBoard = ({
     },
   });
   const onSubmit = async (data) => {
+    setLoading(true);
     await actionBoard({ boardIn, ...data });
+    setLoading(false);
     setIsViewOpen(false);
   };
 
@@ -84,14 +84,17 @@ const FormBoard = ({
                       from={"board"}
                       setValue={setValue}
                     />
-
-                    <input
-                      className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer h-10"
-                      type="submit"
-                      value={`${
-                        boardIn ? "Save Changes" : "Create New Board"
-                      } `}
-                    />
+                    <div className="relative">
+                      {loading && <Loader />}
+                      <input
+                        disabled={loading}
+                        className="disabled:opacity-50 bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer h-10"
+                        type="submit"
+                        value={`${
+                          boardIn ? "Save Changes" : "Create New Board"
+                        } `}
+                      />
+                    </div>
                   </form>
                 </div>
               </Dialog.Panel>

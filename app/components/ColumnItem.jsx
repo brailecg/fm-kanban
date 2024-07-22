@@ -13,8 +13,10 @@ import {
   actionTask,
   actionTaskMove,
 } from "../utils/supabase/db_actions";
+import Loader from "./Loader";
 
 const ColumnItem = ({ col, colId, cols }) => {
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [item, setItem] = useState(col);
   const [columns, setColumns] = useState(cols);
 
@@ -70,7 +72,9 @@ const ColumnItem = ({ col, colId, cols }) => {
   };
 
   const handleDeleteTask = async () => {
+    setDeleteLoading(true);
     await actionTask({ action: "delete", item });
+    setDeleteLoading(false);
     setIsDeleteViewOpen(false);
   };
 
@@ -351,11 +355,16 @@ const ColumnItem = ({ col, colId, cols }) => {
                     task and its subtasks? This action cannot be reversed.
                   </p>
                   <div className="flex space-x-2 justify-between">
-                    <Button
-                      onClick={handleDeleteTask}
-                      className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
-                      Delete
-                    </Button>
+                    <div className="grow relative">
+                      {deleteLoading && <Loader />}
+                      <Button
+                        disabled={deleteLoading}
+                        onClick={handleDeleteTask}
+                        className="disabled:bg-red-500/75 w-full grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
+                        Delete
+                      </Button>
+                    </div>
+
                     <Button
                       onClick={() => setIsDeleteViewOpen(false)}
                       className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">

@@ -14,6 +14,7 @@ import Sidebar from "./Sidebar";
 import FormTask from "./FormTask";
 import FormBoard from "./FormBoard";
 import { Button } from "./ui/button";
+import Loader from "./Loader";
 
 const Nav = ({
   data,
@@ -24,6 +25,7 @@ const Nav = ({
   columns,
 }) => {
   const router = useRouter();
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
   const [addTaskModal, setAddTaskModal] = useState(false);
@@ -43,7 +45,9 @@ const Nav = ({
   };
 
   const handleDeleteBoard = async () => {
+    setDeleteLoading(true);
     await actionBoard({ action: "delete", boardIn: selectedBoard });
+    setDeleteLoading(false);
     setIsDeleteViewOpen(false);
   };
 
@@ -301,11 +305,15 @@ const Nav = ({
                       cannot be reversed.
                     </p>
                     <div className="flex space-x-2 justify-between">
-                      <Button
-                        onClick={handleDeleteBoard}
-                        className="grow bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
-                        Delete
-                      </Button>
+                      <div className="grow relative">
+                        {deleteLoading && <Loader />}
+                        <Button
+                          disabled={deleteLoading}
+                          onClick={handleDeleteBoard}
+                          className="disabled:bg-red-500/75 w-full bg-red-500 text-white rounded-full hover:bg-red-500/75 cursor-pointer dark:hover:bg-red-300">
+                          Delete
+                        </Button>
+                      </div>
                       <Button
                         onClick={() => setIsDeleteViewOpen(false)}
                         className="grow bg-main-purple/10 dark:bg-white  text-main-purple rounded-full hover:bg-main-purple/25 dark:hover:bg-slate-100 cursor-pointer">

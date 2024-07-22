@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
 import { useForm } from "react-hook-form";
 
@@ -10,7 +10,7 @@ import FormTextArea from "./FormTextArea";
 import FormMultiInput from "./FormMultiInput";
 import FormStatus from "./FormStatus";
 import { actionTask } from "../utils/supabase/db_actions";
-
+import Loader from "./Loader";
 const FormTask = ({
   label,
   item,
@@ -21,6 +21,7 @@ const FormTask = ({
   setIsViewOpen,
   allSubtasks,
 }) => {
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -34,7 +35,9 @@ const FormTask = ({
   });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     await actionTask({ item, data });
+    setLoading(false);
     setIsViewOpen(false);
   };
   return (
@@ -108,15 +111,18 @@ const FormTask = ({
                       selectedCol={selectedCol}
                       colId={colId}
                     />
-
-                    <Button
-                      className="bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer"
-                      asChild>
-                      <input
-                        type="submit"
-                        value={`${colId ? "Save Changes" : "Create Task"} `}
-                      />
-                    </Button>
+                    <div className="relative">
+                      {loading && <Loader />}
+                      <Button
+                        className="disabled:bg-main-purple-hover bg-main-purple text-white w-full rounded-full hover:bg-main-purple-hover cursor-pointer"
+                        asChild>
+                        <input
+                          disabled={loading}
+                          type="submit"
+                          value={`${colId ? "Save Changes" : "Create Task"} `}
+                        />
+                      </Button>
+                    </div>
                   </form>
                 </div>
               </Dialog.Panel>
