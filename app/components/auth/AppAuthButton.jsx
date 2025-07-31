@@ -6,15 +6,14 @@ import { useState } from "react";
 
 const buttonVariant = {
   google: {
-    imgSrc: "/assets/google-icon.webp",
+    imgSrc: "/assets/supabase-logo-icon.png",
     text: "Continue With Google",
     alt: "Google Icon",
     width: 24,
     height: 24,
   },
   anonymous: {
-    imgSrc:
-      "https://fdksslojrpadbebswbsg.supabase.co/storage/v1/object/public/icons/supabase-logo-icon.png?t=2024-06-01T03%3A18%3A03.958Z",
+    imgSrc: "/assets/supabase-logo-icon.png",
     text: "Continue Anonymously",
     alt: "Supabase Icon",
     width: 24,
