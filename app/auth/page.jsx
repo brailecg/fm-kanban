@@ -28,40 +28,6 @@ const Auth = async () => {
       <div className=" bg-[#F8F8F8] sm:max-w-fit p-5 rounded-lg space-y-4">
         <AppAuthButton variant="google" />
         <AppAuthButton variant="anonymous" />
-
-        {/* TODO: functionalities for facebook and apple auth */}
-        <button
-          disabled
-          className="disabled:opacity-50 flex gap-3 shadow-md rounded-md p-2 w-80 bg-[#1877F2]">
-          <div className="flex items-end justify-center bg-white rounded-full w-6 h-6">
-            <Image
-              width={21}
-              height={21}
-              alt="Facebook Icon"
-              src={
-                "https://fdksslojrpadbebswbsg.supabase.co/storage/v1/object/public/icons/icon-facebook.png?t=2024-05-28T02%3A48%3A13.217Z"
-              }
-              className="bg-transparent"
-            />
-          </div>
-          <span className=" text-white ">Continue With Facebook</span>
-        </button>
-
-        <button
-          disabled
-          className="disabled:opacity-50 flex gap-3 shadow-md rounded-md p-2 w-80 bg-black">
-          <div className="flex items-end justify-center bg-black ">
-            <Image
-              width={24}
-              height={24}
-              alt="Apple Icon"
-              src={
-                "https://fdksslojrpadbebswbsg.supabase.co/storage/v1/object/public/icons/icon-apple__1_.png?t=2024-05-28T03%3A00%3A52.652Z"
-              }
-            />
-          </div>
-          <span className=" text-white">Continue With Apple</span>
-        </button>
       </div>
     </div>
   );
