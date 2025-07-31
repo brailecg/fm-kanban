@@ -6,8 +6,7 @@ import { useState } from "react";
 
 const buttonVariant = {
   google: {
-    imgSrc:
-      "https://fdksslojrpadbebswbsg.supabase.co/storage/v1/object/public/icons/icon-google.png?t=2024-05-28T02%3A26%3A18.354Z",
+    imgSrc: {`/assets/google-icon.webp`},
     text: "Continue With Google",
     alt: "Google Icon",
     width: 24,
