@@ -28,8 +28,10 @@ const Auth = async () => {
       <div className=" bg-[#F8F8F8] sm:max-w-fit p-5 rounded-lg space-y-4">
         <AppAuthButton variant="google" />
         <AppAuthButton variant="anonymous" />
-        <p className="text-red-500 text-xs">Supabase backend service has expired.</p> 
-        <p className="text-red-500 text-xs">Subscribe for database access</p>
+        <div>
+          <p className="text-red-500 text-xs">Supabase backend service has expired.</p> 
+          <p className="text-red-500 text-xs">Subscribe again for full database access</p>
+        </div>
       </div>
     </div>
   );
